@@ -10,36 +10,35 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanchit.funda.R;
-import com.sanchit.funda.model.HomeSummary1Model;
-import com.sanchit.funda.model.HomeSummary2Model;
+import com.sanchit.funda.model.HomeSummary3Model;
 
 import java.util.List;
 
-public class HomeSummary2Adapter extends RecyclerView.Adapter<HomeSummary2Adapter.InvestmentSynopsis2ViewHolder> {
+public class HomeSummary3Adapter extends RecyclerView.Adapter<HomeSummary3Adapter.ViewHolder> {
 
-    private final List<HomeSummary2Model> itemList;
+    private final List<HomeSummary3Model> itemList;
     private final Context context;
 
-    public HomeSummary2Adapter(Context context,
-                               List<HomeSummary2Model> itemList) {
+    public HomeSummary3Adapter(Context context,
+                               List<HomeSummary3Model> itemList) {
         this.context = context;
         this.itemList = itemList;
     }
 
 
     @Override
-    public InvestmentSynopsis2ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.cards_home_summary_2, null);
-        InvestmentSynopsis2ViewHolder rcv = new InvestmentSynopsis2ViewHolder(layoutView, context);
+                R.layout.cards_home_summary_3, null);
+        ViewHolder rcv = new ViewHolder(layoutView, context);
         return rcv;
     }
 
     @Override
-    public void onBindViewHolder(InvestmentSynopsis2ViewHolder holder, int position) {
-        holder.textViewBoxHeader.setText(itemList.get(position).getHeader());
-        holder.textViewBoxContent.setText(itemList.get(position).getContent());
-        holder.textViewBoxSubContent.setText(itemList.get(position).getSubContent());
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.textViewIndex.setText(itemList.get(position).getIndex());
+        holder.textViewPrice.setText(itemList.get(position).getPriceString());
+        holder.textViewChange.setText(itemList.get(position).getChangeString());
     }
 
     @Override
@@ -48,20 +47,20 @@ public class HomeSummary2Adapter extends RecyclerView.Adapter<HomeSummary2Adapte
     }
 
 
-    public static class InvestmentSynopsis2ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final CardView card;
-        private final TextView textViewBoxHeader;
-        private final TextView textViewBoxContent;
-        private final TextView textViewBoxSubContent;
+        private final TextView textViewIndex;
+        private final TextView textViewPrice;
+        private final TextView textViewChange;
         private final Context context;
 
-        public InvestmentSynopsis2ViewHolder(View itemView, Context context) {
+        public ViewHolder(View itemView, Context context) {
             super(itemView);
             itemView.setOnClickListener(this);
-            this.textViewBoxHeader = itemView.findViewById(R.id.home_summary_2_header);
-            this.textViewBoxContent = itemView.findViewById(R.id.home_summary_2_content);
-            this.textViewBoxSubContent = itemView.findViewById(R.id.home_summary_2_sub_content);
-            this.card = itemView.findViewById(R.id.home_summary_1_card_view);
+            this.textViewIndex = itemView.findViewById(R.id.home_summary_3_index);
+            this.textViewPrice = itemView.findViewById(R.id.home_summary_3_price);
+            this.textViewChange = itemView.findViewById(R.id.home_summary_3_change);
+            this.card = itemView.findViewById(R.id.home_summary_3_card_view);
             this.context = context;
         }
 

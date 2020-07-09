@@ -1,48 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/synopsis2_card_view"
-    android:layout_width="wrap_content"
+    android:id="@+id/home_summary_1_card_view"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="5dp"
+    android:layout_width="wrap_content"
+    card_view:cardCornerRadius="15dp"
     card_view:cardElevation="5dp"
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:padding="15dp">
 
         <TextView
-            android:id="@+id/synopsis2_box_header"
+            android:id="@+id/home_summary_1_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
             android:text="THIS IS HEADER"
-            android:textColor="@color/synopsis2_box_header"
-            android:textSize="@dimen/synopsis2_box_header" />
+            android:textColor="@color/home_summary_1_text"
+            android:textSize="@dimen/home_summary_1_header"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/synopsis2_box_name"
+            android:id="@+id/home_summary_1_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
             android:text="THIS IS A VERY VERY VERY VERY LONG NAME"
-            android:textColor="@color/synopsis2_box_header"
-            android:textSize="@dimen/synopsis2_box_name" />
-
-        <TextView
-            android:id="@+id/synopsis2_box_data"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="THIS IS DATA"
-            android:textColor="@color/synopsis2_box_header"
-            android:textSize="@dimen/synopsis2_box_data" />
+            android:textColor="@color/home_summary_1_text"
+            android:textSize="@dimen/home_summary_1_content"
+            android:textStyle="italic" />
 
     </LinearLayout>
 

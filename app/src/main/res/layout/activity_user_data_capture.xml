@@ -1,10 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.UserDataCaptureActivity">
+    android:orientation="vertical"
+    tools:context=".activity.UserDataCaptureActivity"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp">
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:paddingRight="15dp"
+            android:gravity="right|bottom"
+            android:text="Investor Name" />
+
+        <EditText
+            android:id="@+id/user_data_name"
+            android:width="100dp"
+            android:gravity="left"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:paddingRight="15dp"
+            android:gravity="right|bottom"
+            android:text="PAN" />
+
+        <EditText
+            android:id="@+id/user_data_pan"
+            android:width="100dp"
+            android:gravity="left"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:paddingRight="15dp"
+            android:gravity="right|bottom"
+            android:text="NSDL eCAS File Path" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4">
+            <Button
+                android:id="@+id/user_data_ecas_button"
+                android:text="Select PDF"
+                android:onClick="onClickECASFileSelectButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:paddingRight="15dp"
+            android:gravity="right|bottom"
+            android:text="  " />
+
+        <TextView
+            android:id="@+id/user_data_ecas_path"
+            android:text="  "
+            android:textSize="11sp"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:paddingBottom="10dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/user_data_submit"
+        android:text="Submit"
+        android:gravity="center"
+        android:onClick="onClickSubmit"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

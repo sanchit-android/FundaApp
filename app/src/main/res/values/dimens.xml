@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <dimen name="home_summary_1_header">14sp</dimen>
+    <dimen name="home_summary_1_content">12sp</dimen>
+
+    <dimen name="home_summary_2_header">12sp</dimen>
+    <dimen name="home_summary_2_content">12sp</dimen>
+    <dimen name="home_summary_2_sub_content">12sp</dimen>
+
+    <dimen name="welcome_text">16sp</dimen>
+</resources>

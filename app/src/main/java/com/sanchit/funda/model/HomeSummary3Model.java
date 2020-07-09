@@ -1,41 +1,53 @@
 package com.sanchit.funda.model;
 
-public class HomeSummary2Model {
+import com.sanchit.funda.utils.NumberUtils;
 
-    private String header;
-    private String content;
-    private String subContent;
+import java.math.BigDecimal;
 
-    public HomeSummary2Model() {
+public class HomeSummary3Model {
+
+    private String index;
+    private BigDecimal price;
+    private BigDecimal change;
+
+    public HomeSummary3Model(String index, BigDecimal price, BigDecimal change) {
+        this.index = index;
+        this.price = price;
+        this.change = change;
     }
 
-    public HomeSummary2Model(String header, String content, String subContent) {
-        this.header = header;
-        this.content = content;
-        this.subContent = subContent;
+    public HomeSummary3Model() {
     }
 
-    public String getHeader() {
-        return header;
+    public String getIndex() {
+        return index;
     }
 
-    public void setHeader(String header) {
-        this.header = header;
+    public void setIndex(String index) {
+        this.index = index;
     }
 
-    public String getContent() {
-        return content;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
-    public String getSubContent() {
-        return subContent;
+    public String getPriceString() {
+        return NumberUtils.formatMoney(price);
     }
 
-    public void setSubContent(String subContent) {
-        this.subContent = subContent;
+    public BigDecimal getChange() {
+        return change;
+    }
+
+    public void setChange(BigDecimal change) {
+        this.change = change;
+    }
+
+    public String getChangeString() {
+        return NumberUtils.formatMoney(change);
     }
 }
