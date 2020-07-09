@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#fbf0f0</color>
+    <color name="colorPrimaryDark">#dfd3d3</color>
+    <color name="colorAccent">#7c7575</color>
+    <color name="colorBackground">#ffffff</color>
+    <color name="colorDisabled">#CFCFCF</color>
+    <color name="colorText">#202020</color>
+
+    <color name="buttonColor">@color/colorPrimaryDark</color>
+
+    <color name="main_card_top_bg">@color/colorAccent</color>
+    <color name="main_card_top_text">@color/colorPrimary</color>
+    <color name="main_card_sec_bg">@color/colorPrimaryDark</color>
+    <color name="main_card_sec_text">@color/colorText</color>
+
+    <color name="home_summary_1_bg">@color/colorBackground</color>
+    <color name="home_summary_1_text">@color/colorText</color>
+    <color name="home_summary_2_bg">@color/colorBackground</color>
+    <color name="home_summary_2_text">@color/colorText</color>
+
+    <color name="welcome_text">@color/colorText</color>
+</resources>
