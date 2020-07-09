@@ -1,42 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/home_summary_3_card_view"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_summary_3_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:background="@color/home_summary_3_bg"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/home_summary_3_index"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:text="Index"
+        android:textColor="@color/home_summary_3_text" />
 
-        <TextView
-            android:id="@+id/home_summary_3_index"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:text="Index"
-            android:textColor="@color/main_card_sec_text" />
+    <TextView
+        android:id="@+id/home_summary_3_price"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="right"
+        android:text="Price"
+        android:textColor="@color/home_summary_3_text" />
 
-        <TextView
-            android:id="@+id/home_summary_3_price"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:gravity="right"
-            android:text="Price"
-            android:textColor="@color/main_card_sec_text" />
+    <TextView
+        android:id="@+id/home_summary_3_change"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="right"
+        android:text="% Change"
+        android:textColor="@color/home_summary_3_text" />
 
-        <TextView
-            android:id="@+id/home_summary_3_change"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:gravity="right"
-            android:text="% Change"
-            android:textColor="@color/main_card_sec_text" />
-
-    </LinearLayout>
-
-</androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -48,6 +48,6 @@ public class HomeSummary3Model {
     }
 
     public String getChangeString() {
-        return NumberUtils.formatMoney(change);
+        return NumberUtils.toPercentage(change, 2);
     }
 }

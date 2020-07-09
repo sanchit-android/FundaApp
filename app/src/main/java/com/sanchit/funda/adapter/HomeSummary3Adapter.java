@@ -1,9 +1,11 @@
 package com.sanchit.funda.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -48,7 +50,7 @@ public class HomeSummary3Adapter extends RecyclerView.Adapter<HomeSummary3Adapte
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final CardView card;
+        private final LinearLayout parent;
         private final TextView textViewIndex;
         private final TextView textViewPrice;
         private final TextView textViewChange;
@@ -60,7 +62,7 @@ public class HomeSummary3Adapter extends RecyclerView.Adapter<HomeSummary3Adapte
             this.textViewIndex = itemView.findViewById(R.id.home_summary_3_index);
             this.textViewPrice = itemView.findViewById(R.id.home_summary_3_price);
             this.textViewChange = itemView.findViewById(R.id.home_summary_3_change);
-            this.card = itemView.findViewById(R.id.home_summary_3_card_view);
+            this.parent = itemView.findViewById(R.id.home_summary_3_linear_layout);
             this.context = context;
         }
 
