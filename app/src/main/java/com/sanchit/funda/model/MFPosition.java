@@ -1,8 +1,9 @@
 package com.sanchit.funda.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class MFPosition {
+public class MFPosition implements Serializable {
 
     private MutualFund fund;
     private BigDecimal quantity;

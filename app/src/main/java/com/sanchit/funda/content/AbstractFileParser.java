@@ -21,7 +21,7 @@ public abstract class AbstractFileParser<T> {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    public abstract List<T> parse(Activity mainActivity, Uri uri) throws IOException;
+    public abstract List<T> parse(Activity activity, Uri uri) throws IOException;
 
     protected boolean checkPermission(Activity activity) {
         int result = ContextCompat.checkSelfPermission(activity, android.Manifest.permission.READ_EXTERNAL_STORAGE);

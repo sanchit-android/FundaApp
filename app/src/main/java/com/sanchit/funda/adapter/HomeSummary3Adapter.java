@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanchit.funda.R;
 import com.sanchit.funda.model.HomeSummary3Model;
+import com.sanchit.funda.utils.ViewUtils;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class HomeSummary3Adapter extends RecyclerView.Adapter<HomeSummary3Adapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.cards_home_summary_3, null);
+        ViewUtils.setRecyclerViewItemLayoutParams(layoutView);
         ViewHolder rcv = new ViewHolder(layoutView, context);
         return rcv;
     }

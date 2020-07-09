@@ -57,7 +57,7 @@ public class UserDataCaptureActivity extends AppCompatActivity {
 
     public void onClickSubmit(View view) {
         Intent i = new Intent(this, MainActivity.class);
-        i.putExtra("uri", uri);
+        i.putExtra("uri", (Uri) uri);
         startActivity(i);
     }
 }

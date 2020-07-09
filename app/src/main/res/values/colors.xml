@@ -21,5 +21,8 @@
     <color name="home_summary_3_bg">@color/main_card_sec_bg</color>
     <color name="home_summary_3_text">@color/colorText</color>
 
+    <color name="positions_view_bg">@color/colorBackground</color>
+    <color name="positions_view_text">@color/colorText</color>
+
     <color name="welcome_text">@color/colorText</color>
 </resources>

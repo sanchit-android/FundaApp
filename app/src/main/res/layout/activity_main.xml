@@ -53,7 +53,7 @@
             android:textSize="12sp"
             android:textColor="@color/main_card_sec_text" />
 
-        <include layout="@layout/include_layout_home_market_today_header" />
+        <include layout="@layout/include_layout_table_header_home_market_today" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_home_summary_3"

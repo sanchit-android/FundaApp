@@ -1,6 +1,8 @@
 package com.sanchit.funda.model;
 
-public class MutualFund {
+import java.io.Serializable;
+
+public class MutualFund implements Serializable {
     private String fundName;
     private String fundHouse;
     private String category;

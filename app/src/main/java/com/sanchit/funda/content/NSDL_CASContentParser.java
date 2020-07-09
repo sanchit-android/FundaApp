@@ -44,13 +44,14 @@ public class NSDL_CASContentParser extends AbstractFileParser<MFPosition> {
                 if (i == 0) {
                     String[] words = line.split(" ");
                     for (int j = 1; j < words.length; j++) {
-                        if (!isNumeric(words[j])) {
+                        if (!isNumeric(words[j]) || words[j].length() <= 3) {
                             fundName.append(words[j]).append(" ");
                         } else {
                             folioIndex = j;
                             break;
                         }
                     }
+                    position.getFund().setIsin(words[0]);
                     position.setFolioNo(words[folioIndex]);
                     position.setQuantity(NumberUtils.parseNumber(words[folioIndex + 1]));
                     position.setCostPrice(NumberUtils.parseNumber(words[folioIndex + 2]));

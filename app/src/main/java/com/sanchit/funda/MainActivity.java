@@ -1,30 +1,39 @@
 package com.sanchit.funda;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sanchit.funda.activity.PositionsViewActivity;
 import com.sanchit.funda.adapter.HomeSummary1Adapter;
 import com.sanchit.funda.adapter.HomeSummary2Adapter;
 import com.sanchit.funda.adapter.HomeSummary3Adapter;
+import com.sanchit.funda.async.FundsRawDataAsyncLoader;
 import com.sanchit.funda.async.NSDL_CASAsyncLoader;
+import com.sanchit.funda.async.event.OnEnrichmentCompleted;
 import com.sanchit.funda.model.HomeSummary1Model;
 import com.sanchit.funda.model.HomeSummary2Model;
 import com.sanchit.funda.model.HomeSummary3Model;
 import com.sanchit.funda.model.MFPosition;
+import com.sanchit.funda.model.MutualFund;
 import com.sanchit.funda.utils.DummyDataGenerator;
+import com.sanchit.funda.utils.NumberUtils;
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int PICK_PDF_FILE = 2;
 
     private final List<MFPosition> positions = new ArrayList<>();
+    private final List<MutualFund> funds = new ArrayList<>();
 
     private RecyclerView recyclerViewHomeSummary1;
     private List<HomeSummary1Model> homeSummary1Model;
@@ -45,17 +55,22 @@ public class MainActivity extends AppCompatActivity {
     private List<HomeSummary3Model> homeSummary3Model;
     private HomeSummary3Adapter homeSummary3Adapter;
 
+    private ProgressBar spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //getSupportActionBar().hide();
         getSupportActionBar().setElevation(0);
         setContentView(R.layout.activity_main);
 
-        //findViewById(R.id.layout_home_summary).setVisibility(View.INVISIBLE);
+        spinner = (ProgressBar) findViewById(R.id.progressBar_home_summary);
+        spinner.setVisibility(View.VISIBLE);
+
+        Uri ecasFilePath = (Uri) getIntent().getParcelableExtra("uri");
 
         PDFBoxResourceLoader.init(getApplicationContext());
+        new NSDL_CASAsyncLoader(this, new OnECASFileLoadedHandler()).execute(ecasFilePath);
+        new FundsRawDataAsyncLoader(this, new FundsRawDataLoadedHandler()).execute(Uri.EMPTY);
 
         recyclerViewHomeSummary1 = findViewById(R.id.recycler_view_home_summary_1);
         recyclerViewHomeSummary1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -76,30 +91,61 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewHomeSummary3.setAdapter(homeSummary3Adapter);
     }
 
-    public void onClickButtonLoadData(View view) {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
-        startActivityForResult(intent, PICK_PDF_FILE);
+    public void onClickHomeSummary(View view) {
+        Intent i = new Intent(this, PositionsViewActivity.class);
+        i.putExtra("positions", (ArrayList) positions);
+        startActivity(i);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent resultData) {
-        if (requestCode == PICK_PDF_FILE
-                && resultCode == Activity.RESULT_OK) {
-            // The result data contains a URI for the document or directory that
-            // the user selected.
-            Uri uri = null;
-            if (resultData != null) {
-                uri = resultData.getData();
-                //final Button loadButton = findViewById(R.id.button_main_load_data);
-                new NSDL_CASAsyncLoader(this, positions).execute(uri);
+    private class OnECASFileLoadedHandler implements OnEnrichmentCompleted<List<MFPosition>> {
 
-                //loadButton.setText("Loading...");
-                //loadButton.setBackgroundColor(getResources().getColor(R.color.colorDisabled, null));
-                //loadButton.setEnabled(false);
-            }
+        @Override
+        public void updateView(List<MFPosition> data) {
+            positions.addAll(data);
         }
-        super.onActivityResult(requestCode, resultCode, resultData);
+    }
+
+    private class FundsRawDataLoadedHandler implements OnEnrichmentCompleted<List<MutualFund>> {
+        @Override
+        public void updateView(List<MutualFund> data) {
+            funds.addAll(data);
+            Map<String, MutualFund> isinToFundMap = toISINMap(funds);
+
+            for (MFPosition position : positions) {
+                position.setFund(isinToFundMap.get(position.getFund().getIsin()));
+            }
+
+            updateSummary();
+        }
+
+        private void updateSummary() {
+            BigDecimal investment = BigDecimal.ZERO;
+            BigDecimal valuation = BigDecimal.ZERO;
+            Set<String> funds = new HashSet<>();
+            Set<String> categories = new HashSet<>();
+            for (MFPosition position : positions) {
+                investment = investment.add(position.getCost());
+                valuation = valuation.add(position.getCurrentValue());
+                funds.add(position.getFund().getFundName());
+                categories.add(position.getFund().getAppDefinedCategory());
+            }
+            BigDecimal pnl = (valuation.subtract(investment)).divide(investment, 4, BigDecimal.ROUND_HALF_UP);
+
+            ((TextView) findViewById(R.id.home_summary_investment)).setText(NumberUtils.formatMoney(investment));
+            ((TextView) findViewById(R.id.home_summary_valuation)).setText(NumberUtils.formatMoney(valuation));
+            ((TextView) findViewById(R.id.home_summary_fund_count)).setText(String.valueOf(funds.size()));
+            ((TextView) findViewById(R.id.home_summary_category_count)).setText(String.valueOf(categories.size()));
+            ((TextView) findViewById(R.id.home_summary_pnl)).setText(NumberUtils.toPercentage(pnl, 2));
+
+            spinner.setVisibility(View.GONE);
+        }
+
+        private Map<String, MutualFund> toISINMap(List<MutualFund> funds) {
+            Map<String, MutualFund> isinToFundMap = new HashMap<>();
+            for (MutualFund fund : funds) {
+                isinToFundMap.put(fund.getIsin(), fund);
+            }
+            return isinToFundMap;
+        }
     }
 }
