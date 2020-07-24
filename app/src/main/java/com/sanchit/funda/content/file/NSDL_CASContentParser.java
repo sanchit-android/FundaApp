@@ -1,4 +1,4 @@
-package com.sanchit.funda.content;
+package com.sanchit.funda.content.file;
 
 import android.app.Activity;
 import android.net.Uri;

@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 
 import com.sanchit.funda.async.event.OnEnrichmentCompleted;
-import com.sanchit.funda.content.NSDL_CASContentParser;
+import com.sanchit.funda.content.file.NSDL_CASContentParser;
 import com.sanchit.funda.model.MFPosition;
 
 import java.io.IOException;

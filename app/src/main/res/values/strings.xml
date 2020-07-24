@@ -1,7 +1,20 @@
 <resources>
-    <string name="app_name">HOME</string>
+    <string name="app_name">Funda</string>
 
     <string name="Rs">\u20B9</string>
 
     <string name="welcome_text">Welcome to Funda App. In this current world of \"Mutual Funds Sahi Hai\" we are eagerly pushing ourselves to invest more, SIP more. What though scares me is if we really know If the fund or category we selected to invest in is "Sahi hai ki nahi?"\n\nWe allow you to know in plain \"sadharan bhasha\" what is great about your portfolio and whats not.\n\nThe way we work is, we will read you NSDL CAS statement and load your investment profile locally.  Once you Begin, you will be asked to select the PDF statement file which we will parse to load your MF Positions.\n\nFor your safety &amp; relief, we will never take your data out of your phone.\n\nWe will load all your MF positions and generate a \"Health &amp; Growth\" profile for you that is both INTUITIVE &amp; SUGGESTIVE.</string>
+
+    <string name="positions_view_item_categories">Categories</string>
+
+    <string name="main_preference_file_key">com.sanchit.funda.MAIN_PREFERENCE_FILE_KEY</string>
+
+    <string name="preference_terms_accepted">preference_terms_accepted</string>
+
+    <string-array name="positions_view_grouping">
+        <item>Funds</item>
+        <item>Categories</item>
+        <item>Sub-Categories</item>
+        <item>Custom Categories</item>
+    </string-array>
 </resources>

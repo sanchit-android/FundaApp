@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#fbf0f0</color>
-    <color name="colorPrimaryDark">#dfd3d3</color>
-    <color name="colorAccent">#7c7575</color>
+    <color name="green_800">#2E7D32</color>
+    <color name="red_A700">#D50000</color>
+
+    <color name="colorPrimary">#C6ECDF</color><!-- C6ECDF -->
+    <color name="colorPrimaryDark">#B6D8D3</color><!-- B6D8D3 -->
+    <color name="colorAccent">#F2BFAB</color><!-- F2BFAB -->
     <color name="colorBackground">#ffffff</color>
     <color name="colorDisabled">#CFCFCF</color>
     <color name="colorText">#202020</color>
+    <color name="colorSubText">#616161</color>
 
     <color name="buttonColor">@color/colorPrimaryDark</color>
 
-    <color name="main_card_top_bg">@color/colorAccent</color>
-    <color name="main_card_top_text">@color/colorPrimary</color>
+    <color name="main_card_top_bg">@color/colorPrimary</color>
+    <color name="main_card_top_text">@color/colorText</color>
     <color name="main_card_sec_bg">@color/colorPrimaryDark</color>
     <color name="main_card_sec_text">@color/colorText</color>
 
@@ -23,6 +27,7 @@
 
     <color name="positions_view_bg">@color/colorBackground</color>
     <color name="positions_view_text">@color/colorText</color>
+    <color name="positions_view_subtext">@color/colorSubText</color>
 
     <color name="welcome_text">@color/colorText</color>
 </resources>

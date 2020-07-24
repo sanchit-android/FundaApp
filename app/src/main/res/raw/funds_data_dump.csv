@@ -549,7 +549,7 @@
 119133,Indiabulls Asset Management Company Ltd.,Indiabulls Blue Chip Fund,Direct,Growth,Open Ended,Equity Scheme,Large Cap Fund,119133,Large Cap Fund,INF666M01600
 119311,Union Asset Management Company Private Limited (formerly Union KBC Asset Management Co. Pvt. Ltd),Union Dynamic Bond Fund,Direct,Growth,Open Ended,Debt Scheme,Dynamic Bond,119311,Dynamic Bond,INF582M01799
 116811,IDBI Asset Management Limited,IDBI Dynamic Bond Fund,Direct,Growth,Open Ended,Debt Scheme,Dynamic Bond,116811,Dynamic Bond,INF397L01BN9
-118551,Franklin Templeton Asset Management (India) Private Limited,Franklin India Feeder - Franklin U. S. Opportunities Fund,Direct,Growth,Open Ended,Other Scheme,FoF Overseas,118551,FoF Overseas,INF090I01JR0
+118551,Franklin Templeton Asset Management (India) Private Limited,Franklin India Feeder - Franklin U. S. Opportunities Fund,Direct,Growth,Open Ended,Other Scheme,FoF Overseas,118551,FoF Overseas - US,INF090I01JR0
 120546,Aditya Birla Sun Life AMC Limited,Aditya Birla Sun Life Gold Fund,Direct,Growth,Open Ended,Other Scheme,FoF Domestic,120546,Gold Fund,INF209K01YU5
 120475,Axis Asset Management Company Ltd.,Axis Strategic Bond Fund,Direct,Growth,Open Ended,Debt Scheme,Medium Duration Fund,120475,Medium Duration Fund,INF846K01DT0
 118344,IDBI Asset Management Limited,IDBI India Top 100 Equity Fund,Direct,Growth,Open Ended,Equity Scheme,Large Cap Fund,118344,Large Cap Fund,INF397L01BV2
@@ -559,7 +559,7 @@
 119333,Baroda Asset Management India Limited (formerly known as Baroda Pioneer Asset Management Co. Ltd.),Baroda Banking and Financial Services Fund,Direct,Growth,Open Ended,Equity Scheme,Sectoral/ Thematic,119333,Sectoral/ Thematic,INF955L01971
 120468,Axis Asset Management Company Ltd.,Axis Focused 25 Fund,Direct,Growth,Open Ended,Equity Scheme,Focussed Fund,120468,Focussed Fund,INF846K01CQ8
 117608,Quantum Asset Management Company Private Limited,Quantum Multi Asset Fund of Funds,Direct,Growth,Open Ended,Other Scheme,FoF Domestic,117608,FoF Domestic,INF082J01168
-120186,ICICI Prudential Asset Management Company Limited,ICICI Prudential US Bluechip Equity Fund,Direct,Growth,Open Ended,Equity Scheme,Sectoral/ Thematic,120186,Sectoral/ Thematic,INF109K01Z71
+120186,ICICI Prudential Asset Management Company Limited,ICICI Prudential US Bluechip Equity Fund,Direct,Growth,Open Ended,Equity Scheme,Sectoral/ Thematic,120186,FoF Overseas - US,INF109K01Z71
 119337,Baroda Asset Management India Limited (formerly known as Baroda Pioneer Asset Management Co. Ltd.),Baroda Dynamic Bond Fund,Direct,Growth,Open Ended,Debt Scheme,Dynamic Bond,119337,Dynamic Bond,INF955L01AA3
 119252,DSP Investment Managers Private Limited,DSP US Flexible Equity Fund,Direct,Growth,Open Ended,Other Scheme,FoF Overseas,119252,FoF Overseas - US,INF740K01OH7
 119741,Kotak Mahindra Asset Management Company Limited(KMAMCL),Kotak Credit Risk Fund,Direct,Growth,Open Ended,Debt Scheme,Credit Risk Fund,119741,Credit Risk Fund,INF174K01LZ7
@@ -1046,8 +1046,8 @@
 130825,L&T Investment Management Limited,L&T Business Cycles Fund,Direct,Growth,Open Ended,Equity Scheme,Sectoral/ Thematic,130825,Sectoral/ Thematic,INF917K01RI2
 130831,SBI Funds Management Private Limited,SBI DEBT FUND SERIES A - 38 (1100 Days),Direct,Growth,Close Ended,Undefined,Income,130831,Income,INF200K018N0
 130838,HDFC Asset Management Company Limited (Corporate Identification Number - L65991MH1999PLC123027),HDFC FMP 1116D JULY 2014(1),Direct,Growth,Close Ended,Undefined,Income,130838,Income,INF179KA1UG2
-130860,Nippon Life India Asset Management Limited,Nippon India Japan Equity Fund,Direct,Growth,Open Ended,Equity Scheme,Sectoral/ Thematic,130860,Sectoral/ Thematic,INF204KA1SI1
-130861,Nippon Life India Asset Management Limited,Nippon India Japan Equity Fund,Direct,Growth,Open Ended,Equity Scheme,Sectoral/ Thematic,130861,Sectoral/ Thematic,INF204KA1SK7
+130860,Nippon Life India Asset Management Limited,Nippon India Japan Equity Fund,Direct,Growth,Open Ended,Equity Scheme,Sectoral/ Thematic,130860,FoF Overseas - Japan,INF204KA1SI1
+130861,Nippon Life India Asset Management Limited,Nippon India Japan Equity Fund,Direct,Growth,Open Ended,Equity Scheme,Sectoral/ Thematic,130861,FoF Overseas - Japan,INF204KA1SK7
 130867,SBI Funds Management Private Limited,SBI DEBT FUND SERIES A - 41 (91 DAYS),Direct,Growth,Close Ended,Undefined,Income,130867,Income,INF200K012O1
 130875,Nippon Life India Asset Management Limited,Reliance Fixed Horizon Fund XXVII- Series 3,Direct,Growth,Close Ended,Undefined,Income,130875,Income,INF204KA1SR2
 130879,Nippon Life India Asset Management Limited,Reliance Capital Builder Fund- Series B,Direct,Growth,Close Ended,Undefined,Growth,130879,Growth,INF204KA1SV4
@@ -1204,7 +1204,7 @@
 134813,Mirae Asset Investment Managers (India) Pvt. Ltd.,Mirae Asset Hybrid-Equity Fund,Direct,Growth,Open Ended,Hybrid Scheme,Aggressive Hybrid Fund,134813,Aggressive Hybrid Fund,INF769K01DH9
 134841,Kotak Mahindra Asset Management Company Limited(KMAMCL),Kotak FMP Series 175 (1100 Days),Direct,Growth,Close Ended,Undefined,Income,134841,Income,INF174K01R97
 134890,Nippon Life India Asset Management Limited,Reliance Interval Fund -IV - Series 2 (1110 days),Direct,Growth,Interval Fund,Undefined,Income,134890,Income,INF204KA13F2
-134923,Nippon Life India Asset Management Limited,Nippon India US Equity Opportunites Fund,Direct,Growth,Open Ended,Equity Scheme,Sectoral/ Thematic,134923,Sectoral/ Thematic,INF204KA15G5
+134923,Nippon Life India Asset Management Limited,Nippon India US Equity Opportunites Fund,Direct,Growth,Open Ended,Equity Scheme,Sectoral/ Thematic,134923,FoF Overseas - US,INF204KA15G5
 134935,HDFC Asset Management Company Limited (Corporate Identification Number - L65991MH1999PLC123027),HDFC FMP 1112D June 2015 (1),Direct,Growth,Close Ended,Undefined,Income,134935,Income,INF179KB1EY8
 134999,Nippon Life India Asset Management Limited,Reliance Interval Fund IV- Series 3,Direct,Growth,Interval Fund,Undefined,Income,134999,Income,INF204KA15I1
 135007,HDFC Asset Management Company Limited (Corporate Identification Number - L65991MH1999PLC123027),HDFC FMP 1134D July 2015 (1),Direct,Growth,Close Ended,Undefined,Income,135007,Income,INF179KB1FO6
@@ -2158,7 +2158,7 @@
 145528,Nippon Life India Asset Management Limited,Nippon India Fixed Horizon Fund - XXXIX- Series 15,Direct,Growth,Close Ended,Undefined,Income,145528,Income,INF204KB1N68
 145530,Franklin Templeton Asset Management (India) Private Limited,Franklin India Fixed Maturity Plans - Series 5- Plan B (1244 days),Direct,Growth,Close Ended,Undefined,Income,145530,Income,INF090I01QT1
 145536,ICICI Prudential Asset Management Company Limited,ICICI Prudential Overnight Fund,Direct,Growth,Open Ended,Debt Scheme,Overnight Fund,145536,Overnight Fund,INF109KC1OO2
-145552,Motilal Oswal Asset Management Company Limited,Motilal Oswal Nasdaq 100 Fund of Fund (MOFN100FOF),Direct,Growth,Open Ended,Other Scheme,FoF Domestic,145552,FoF Domestic,INF247L01718
+145552,Motilal Oswal Asset Management Company Limited,Motilal Oswal Nasdaq 100 Fund of Fund (MOFN100FOF),Direct,Growth,Open Ended,Other Scheme,FoF Domestic,145552,FoF Overseas - US,INF247L01718
 145553,UTI Asset Management Company Ltd,UTI - Fixed Term Income Fund Series XXX-XII (1254 Days),Direct,Growth,Close Ended,Undefined,Income,145553,Income,INF789F1AEF8
 145571,Aditya Birla Sun Life AMC Limited,Aditya Birla Sun Life Fixed Term Plan - Series RQ (1103 days),Direct,Growth,Close Ended,Undefined,Income,145571,Income,INF209KB1ZO8
 145576,Aditya Birla Sun Life AMC Limited,Aditya Birla Sun Life Fixed Term Plan - Series RO (1241 days),Direct,Growth,Close Ended,Undefined,Income,145576,Income,INF209KB1ZW1

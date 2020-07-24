@@ -6,12 +6,12 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/position_view_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:weightSum="13">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/positions_table_symbol"
@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:text="Fund"
+            android:textSize="@dimen/positions_view_text"
             android:textColor="@color/positions_view_text" />
 
         <LinearLayout
@@ -36,6 +37,7 @@
                 android:layout_gravity="right"
                 android:gravity="right"
                 android:text="Valuation"
+                android:textSize="@dimen/positions_view_text"
                 android:textColor="@color/positions_view_text" />
 
             <TextView
@@ -45,7 +47,8 @@
                 android:gravity="right"
                 android:layout_gravity="right"
                 android:text="Cost"
-                android:textColor="@color/positions_view_text" />
+                android:textSize="@dimen/positions_view_subtext"
+                android:textColor="@color/positions_view_subtext" />
 
         </LinearLayout>
 
@@ -56,6 +59,7 @@
             android:layout_weight="3"
             android:gravity="right"
             android:text="Day's P&amp;L"
+            android:textSize="@dimen/positions_view_text"
             android:textColor="@color/positions_view_text" />
 
         <TextView
@@ -65,9 +69,33 @@
             android:layout_weight="3"
             android:gravity="right"
             android:text="Overall P&amp;L"
+            android:textSize="@dimen/positions_view_text"
             android:textColor="@color/positions_view_text" />
 
-
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/positions_table_fund_weight"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:orientation="horizontal"
+        android:background="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/position_view_linear_layout">
+        <TextView
+            android:id="@+id/positions_table_fund_weight_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=""
+            android:textSize="1sp"
+            android:textColor="@color/colorAccent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/positions_table_fund_weight"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

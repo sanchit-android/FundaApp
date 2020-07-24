@@ -1,5 +1,6 @@
 package com.sanchit.funda;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,13 +17,16 @@ import com.sanchit.funda.adapter.HomeSummary1Adapter;
 import com.sanchit.funda.adapter.HomeSummary2Adapter;
 import com.sanchit.funda.adapter.HomeSummary3Adapter;
 import com.sanchit.funda.async.FundsRawDataAsyncLoader;
+import com.sanchit.funda.async.MFAPI_NAVAsyncLoader;
 import com.sanchit.funda.async.NSDL_CASAsyncLoader;
 import com.sanchit.funda.async.event.OnEnrichmentCompleted;
 import com.sanchit.funda.model.HomeSummary1Model;
 import com.sanchit.funda.model.HomeSummary2Model;
 import com.sanchit.funda.model.HomeSummary3Model;
 import com.sanchit.funda.model.MFPosition;
+import com.sanchit.funda.model.MFPriceModel;
 import com.sanchit.funda.model.MutualFund;
+import com.sanchit.funda.utils.Constants;
 import com.sanchit.funda.utils.DummyDataGenerator;
 import com.sanchit.funda.utils.NumberUtils;
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader;
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final List<MFPosition> positions = new ArrayList<>();
     private final List<MutualFund> funds = new ArrayList<>();
+    private final Map<String, MFPriceModel> priceMap = new HashMap<>();
 
     private RecyclerView recyclerViewHomeSummary1;
     private List<HomeSummary1Model> homeSummary1Model;
@@ -57,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressBar spinner;
 
+    private Integer priceRequestsPending = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         PDFBoxResourceLoader.init(getApplicationContext());
         new NSDL_CASAsyncLoader(this, new OnECASFileLoadedHandler()).execute(ecasFilePath);
-        new FundsRawDataAsyncLoader(this, new FundsRawDataLoadedHandler()).execute(Uri.EMPTY);
+        new FundsRawDataAsyncLoader(this, new FundsRawDataLoadedHandler(this)).execute(Uri.EMPTY);
 
         recyclerViewHomeSummary1 = findViewById(R.id.recycler_view_home_summary_1);
         recyclerViewHomeSummary1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -94,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
     public void onClickHomeSummary(View view) {
         Intent i = new Intent(this, PositionsViewActivity.class);
         i.putExtra("positions", (ArrayList) positions);
+        i.putExtra("prices", (HashMap) priceMap);
         startActivity(i);
     }
 
     private class OnECASFileLoadedHandler implements OnEnrichmentCompleted<List<MFPosition>> {
-
         @Override
         public void updateView(List<MFPosition> data) {
             positions.addAll(data);
@@ -106,16 +113,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class FundsRawDataLoadedHandler implements OnEnrichmentCompleted<List<MutualFund>> {
+
+        private final Activity activity;
+
+        public FundsRawDataLoadedHandler(Activity activity) {
+            this.activity = activity;
+        }
+
         @Override
         public void updateView(List<MutualFund> data) {
             funds.addAll(data);
             Map<String, MutualFund> isinToFundMap = toISINMap(funds);
+            updateFundDataIntoPositions(isinToFundMap);
+            updateSummary();
 
+            initiatePriceUpdateRequests();
+        }
+
+        private void initiatePriceUpdateRequests() {
+            for (MFPosition position : positions) {
+                String amfiID = position.getFund().getAmfiID();
+                new MFAPI_NAVAsyncLoader(activity, new OnMFAPI_PriceLoadedHandler()).execute(amfiID);
+                ++priceRequestsPending;
+            }
+        }
+
+        private void updateFundDataIntoPositions(Map<String, MutualFund> isinToFundMap) {
             for (MFPosition position : positions) {
                 position.setFund(isinToFundMap.get(position.getFund().getIsin()));
             }
-
-            updateSummary();
         }
 
         private void updateSummary() {
@@ -132,12 +158,8 @@ public class MainActivity extends AppCompatActivity {
             BigDecimal pnl = (valuation.subtract(investment)).divide(investment, 4, BigDecimal.ROUND_HALF_UP);
 
             ((TextView) findViewById(R.id.home_summary_investment)).setText(NumberUtils.formatMoney(investment));
-            ((TextView) findViewById(R.id.home_summary_valuation)).setText(NumberUtils.formatMoney(valuation));
             ((TextView) findViewById(R.id.home_summary_fund_count)).setText(String.valueOf(funds.size()));
             ((TextView) findViewById(R.id.home_summary_category_count)).setText(String.valueOf(categories.size()));
-            ((TextView) findViewById(R.id.home_summary_pnl)).setText(NumberUtils.toPercentage(pnl, 2));
-
-            spinner.setVisibility(View.GONE);
         }
 
         private Map<String, MutualFund> toISINMap(List<MutualFund> funds) {
@@ -146,6 +168,32 @@ public class MainActivity extends AppCompatActivity {
                 isinToFundMap.put(fund.getIsin(), fund);
             }
             return isinToFundMap;
+        }
+    }
+
+    private class OnMFAPI_PriceLoadedHandler implements OnEnrichmentCompleted<MFPriceModel> {
+        @Override
+        public void updateView(MFPriceModel data) {
+            priceMap.put(data.getAmfiID(), data);
+            --priceRequestsPending;
+
+            if (priceRequestsPending == 0) {
+                // Update the latest Valuation and enrich further data
+                BigDecimal valuation = BigDecimal.ZERO;
+                BigDecimal investment = BigDecimal.ZERO;
+                for (MFPosition position : positions) {
+                    MFPriceModel mfPriceModel = priceMap.get(position.getFund().getAmfiID());
+
+                    investment = investment.add(position.getCost());
+                    valuation = valuation.add(position.getQuantity().multiply(mfPriceModel.getPrice(Constants.Duration.T)));
+                }
+                BigDecimal pnl = (valuation.subtract(investment)).divide(investment, 4, BigDecimal.ROUND_HALF_UP);
+
+                ((TextView) findViewById(R.id.home_summary_valuation)).setText(NumberUtils.formatMoney(valuation));
+                ((TextView) findViewById(R.id.home_summary_pnl)).setText(NumberUtils.toPercentage(pnl, 2));
+
+                spinner.setVisibility(View.GONE);
+            }
         }
     }
 }

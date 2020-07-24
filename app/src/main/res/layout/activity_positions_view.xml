@@ -7,7 +7,9 @@
     tools:context=".activity.PositionsViewActivity"
     android:background="@color/positions_view_bg">
 
-    <include layout="@layout/include_layout_table_header_positions" />
+    <include layout="@layout/include_menu_positions_view" />
+
+    <include layout="@layout/include_layout_table_header_positions_view" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_positions_view_table"

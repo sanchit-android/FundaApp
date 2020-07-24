@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +21,7 @@ public class UserDataCaptureActivity extends AppCompatActivity {
     private static final int PICK_PDF_FILE = 2;
 
     private Button submitButton;
+    private TextView ecasPathTextView;
 
     private Uri uri;
 
@@ -30,7 +32,14 @@ public class UserDataCaptureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_data_capture);
 
         submitButton = findViewById(R.id.user_data_submit);
-        //submitButton.setEnabled(false);
+        ecasPathTextView = findViewById(R.id.user_data_ecas_path);
+
+        if (savedInstanceState != null) {
+            uri = savedInstanceState.getParcelable("ecas");
+            if (uri != null) {
+                ecasPathTextView.setText(uri.toString());
+            }
+        }
     }
 
     public void onClickECASFileSelectButton(View view) {
@@ -47,9 +56,10 @@ public class UserDataCaptureActivity extends AppCompatActivity {
             // The result data contains a URI for the document or directory that the user selected.
             if (resultData != null) {
                 uri = resultData.getData();
-                final TextView ecasPathTextView = findViewById(R.id.user_data_ecas_path);
-                ecasPathTextView.setText(uri.toString());
-                submitButton.setEnabled(true);
+                if (uri != null) {
+                    ecasPathTextView.setText(uri.toString());
+                    submitButton.setEnabled(true);
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, resultData);
@@ -59,5 +69,20 @@ public class UserDataCaptureActivity extends AppCompatActivity {
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("uri", (Uri) uri);
         startActivity(i);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("ecas", uri);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        uri = savedInstanceState.getParcelable("ecas");
+        if (uri != null) {
+            ecasPathTextView.setText(uri.toString());
+        }
     }
 }

@@ -10,10 +10,16 @@ public class MFPosition implements Serializable {
     private BigDecimal costPrice;
     private BigDecimal cost;
 
+    // As specified in NSDL-CAS
     private BigDecimal currentNAV;
     private BigDecimal currentValue;
     private BigDecimal unrealizedProfit;
     private BigDecimal annualizedReturn;
+
+    // As per latest prices for MF held
+    private BigDecimal pnlOverall;
+    private BigDecimal pnlDay;
+    private BigDecimal valuation;
 
     private String folioNo;
 
@@ -87,5 +93,29 @@ public class MFPosition implements Serializable {
 
     public void setFolioNo(String folioNo) {
         this.folioNo = folioNo;
+    }
+
+    public BigDecimal getPnlOverall() {
+        return pnlOverall;
+    }
+
+    public void setPnlOverall(BigDecimal pnlOverall) {
+        this.pnlOverall = pnlOverall;
+    }
+
+    public BigDecimal getPnlDay() {
+        return pnlDay;
+    }
+
+    public void setPnlDay(BigDecimal pnlDay) {
+        this.pnlDay = pnlDay;
+    }
+
+    public BigDecimal getValuation() {
+        return valuation;
+    }
+
+    public void setValuation(BigDecimal valuation) {
+        this.valuation = valuation;
     }
 }

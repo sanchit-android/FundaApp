@@ -1,4 +1,4 @@
-package com.sanchit.funda.content;
+package com.sanchit.funda.content.file;
 
 import android.Manifest;
 import android.app.Activity;

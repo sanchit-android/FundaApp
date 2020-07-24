@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 
 import com.sanchit.funda.async.event.OnEnrichmentCompleted;
-import com.sanchit.funda.content.FundsRawDataParser;
+import com.sanchit.funda.content.file.FundsRawDataParser;
 import com.sanchit.funda.model.MutualFund;
 
 import java.io.IOException;
