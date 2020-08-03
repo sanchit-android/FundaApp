@@ -19,6 +19,11 @@ import java.util.List;
 public class NSDL_CASContentParser extends AbstractFileParser<MFPosition> {
 
     private static final String NA = "NOT AVAILABLE";
+    private final String PAN;
+
+    public NSDL_CASContentParser(String PAN) {
+        this.PAN = PAN;
+    }
 
     private List<MFPosition> cleanupPositions(List<MFPosition> positions) {
         for (MFPosition position : positions) {
@@ -140,7 +145,7 @@ public class NSDL_CASContentParser extends AbstractFileParser<MFPosition> {
         }
 
         try (InputStream inputStream = activity.getContentResolver().openInputStream(uri)) {
-            PDDocument document = PDDocument.load(inputStream, "BPLPS4073L");
+            PDDocument document = PDDocument.load(inputStream, PAN);
             PDFTextStripper stripper = new PDFTextStripper();
             stripper.setSortByPosition(true);
 

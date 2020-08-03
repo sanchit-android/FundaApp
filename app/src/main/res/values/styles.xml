@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/colorBackground</item>
-        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textColor">@color/colorTextDark</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="fontFamily">sans-serif-condensed</item>
 
@@ -33,4 +33,10 @@
         <item name="android:background">@color/buttonColor</item>
         <item name="android:textColor">#400000</item>
     </style>
+
+    <style name="MyTimePickerDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

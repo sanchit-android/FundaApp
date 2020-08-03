@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sanchit.funda">
+    package="com.sanchit.funda"
+    android:installLocation="internalOnly">
 
     <application
         android:allowBackup="true"
@@ -9,21 +10,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.IntroLogoActivity"></activity>
-        <activity android:name=".activity.PositionsViewActivity" />
-        <activity android:name=".activity.UserDataCaptureActivity" />
-        <activity android:name=".activity.WelcomeActivity">
+        <activity android:name=".activity.PositionLineItemDetailActivity"></activity>
+        <activity android:name=".activity.MFTradeEntryActivity" />
+        <activity
+            android:name=".activity.IntroLogoActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.PositionsViewActivity" />
+        <activity
+            android:name=".activity.UserDataCaptureActivity"
+            android:noHistory="false" />
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask" />
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

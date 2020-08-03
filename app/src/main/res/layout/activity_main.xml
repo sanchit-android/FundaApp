@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/colorPrimaryLight"
     tools:context=".MainActivity">
 
     <include layout="@layout/include_layout_home_summary" />
@@ -14,7 +15,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/round_rect_2"
         android:orientation="vertical"
-        android:padding="10dp"
         android:layout_marginTop="15dp">
 
         <TextView
@@ -22,27 +22,30 @@
             android:layout_height="wrap_content"
             android:text="Key Highlights"
             android:textStyle="bold|italic"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
             android:textSize="12sp"
             android:textColor="@color/main_card_sec_text" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_home_summary_1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_home_summary_2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"/>
 
     </LinearLayout>
 
-    <LinearLayout
+    <!--LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/round_rect_2"
         android:orientation="vertical"
-        android:padding="10dp"
         android:layout_marginTop="15dp">
 
         <TextView
@@ -52,6 +55,8 @@
             android:textStyle="bold|italic"
             android:textSize="12sp"
             android:layout_marginLeft="8dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
             android:textColor="@color/main_card_sec_text" />
 
         <include layout="@layout/include_layout_table_header_home_market_today" />
@@ -61,6 +66,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </LinearLayout>
+    </LinearLayout-->
 
 </LinearLayout>

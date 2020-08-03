@@ -16,6 +16,8 @@ import com.sanchit.funda.R;
 import com.sanchit.funda.adapter.PositionsViewTableAdapter;
 import com.sanchit.funda.model.MFPosition;
 import com.sanchit.funda.model.MFPriceModel;
+import com.sanchit.funda.model.MFTrade;
+import com.sanchit.funda.model.MutualFund;
 import com.sanchit.funda.model.PositionViewModel;
 import com.sanchit.funda.utils.Constants;
 
@@ -31,6 +33,7 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
 
     private List<MFPosition> originalPositions;
     private Map<String, MFPriceModel> priceMap;
+    private List<MFTrade> trades;
 
     private Spinner spinner;
 
@@ -46,11 +49,11 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
-        setTitle("Positions...");
         setContentView(R.layout.activity_positions_view);
 
         originalPositions = (List<MFPosition>) getIntent().getSerializableExtra("positions");
         priceMap = (Map<String, MFPriceModel>) getIntent().getSerializableExtra("prices");
+        trades = (List<MFTrade>) getIntent().getSerializableExtra("trades");
 
         setupCustomActionBar();
         setupPositions();
@@ -70,7 +73,7 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
         Map<String, PositionViewModel> data = new HashMap<>();
         BigDecimal total = BigDecimal.ZERO;
         for (MFPosition mfPosition : originalPositions) {
-            String keyValue = getKeyValue(mfPosition, key);
+            String keyValue = getKeyValue(mfPosition.getFund(), key);
             if (!data.containsKey(keyValue)) {
                 data.put(keyValue, new PositionViewModel());
                 data.get(keyValue).setHead(keyValue);
@@ -88,23 +91,42 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
 
             total = total.add(mfPosition.getCost());
         }
+        for (MFTrade trade : trades) {
+            String keyValue = getKeyValue(trade.getFund(), key);
+            if (!data.containsKey(keyValue)) {
+                data.put(keyValue, new PositionViewModel());
+                data.get(keyValue).setHead(keyValue);
+            }
+
+            MFPriceModel priceModel = priceMap.get(trade.getFund().getAmfiID());
+            BigDecimal priceLatest = priceModel.getPrice(Constants.Duration.T);
+            BigDecimal priceLast = priceModel.getPrice(Constants.Duration.T_1);
+            BigDecimal valuation = trade.getQuantity().multiply(priceLatest);
+            BigDecimal valuationLast = trade.getQuantity().multiply(priceLast);
+
+            data.get(keyValue).addPreviousValuation(valuationLast);
+            data.get(keyValue).addValuation(valuation);
+            data.get(keyValue).addInvestment(trade.getCost());
+
+            total = total.add(trade.getCost());
+        }
         for (Map.Entry<String, PositionViewModel> entry : data.entrySet()) {
             entry.getValue().setTotalCost(total);
         }
         positions.addAll(data.values());
     }
 
-    private String getKeyValue(MFPosition position, String key) {
+    private String getKeyValue(MutualFund fund, String key) {
         if (getResources().getStringArray(R.array.positions_view_grouping)[0].equals(key)) {
-            return position.getFund().getFundName();
+            return fund.getFundName();
         } else if (getResources().getStringArray(R.array.positions_view_grouping)[1].equals(key)) {
-            return position.getFund().getCategory();
+            return fund.getCategory();
         } else if (getResources().getStringArray(R.array.positions_view_grouping)[2].equals(key)) {
-            return position.getFund().getSubCategory();
+            return fund.getSubCategory();
         } else if (getResources().getStringArray(R.array.positions_view_grouping)[3].equals(key)) {
-            return position.getFund().getAppDefinedCategory();
+            return fund.getAppDefinedCategory();
         }
-        return position.getFund().getFundName();
+        return fund.getFundName();
     }
 
     private void setupCustomActionBar() {
@@ -120,6 +142,8 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
         String item = parent.getItemAtPosition(position).toString();
         setupPositions(item);
         recyclerViewPositionsView.invalidate();
+
+        positionsViewAdapter.setGrouping(item);
         positionsViewAdapter.notifyDataSetChanged();
     }
 

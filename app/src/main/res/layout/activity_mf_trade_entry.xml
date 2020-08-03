@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.MFTradeEntryActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:paddingRight="15dp"
+            android:gravity="right|bottom"
+            android:text="Fund Name" />
+
+        <AutoCompleteTextView
+            android:id="@+id/mf_trade_entry_fund_name"
+            android:width="100dp"
+            android:gravity="left"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:background="@drawable/edit_text_background_1"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:paddingRight="15dp"
+            android:gravity="right|bottom"
+            android:text="Order Date" />
+
+        <EditText
+            android:id="@+id/mf_trade_entry_date"
+            android:width="100dp"
+            android:gravity="left"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:onClick="onClickEditTextEntryDate"
+            android:background="@drawable/edit_text_background_1"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:paddingRight="15dp"
+            android:gravity="right|bottom"
+            android:text="Fund Units/Quantity" />
+
+        <EditText
+            android:id="@+id/mf_trade_entry_quantity"
+            android:width="100dp"
+            android:gravity="left"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:background="@drawable/edit_text_background_1"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:paddingRight="15dp"
+            android:gravity="right|bottom"
+            android:text="Price" />
+
+        <EditText
+            android:id="@+id/mf_trade_entry_price"
+            android:width="100dp"
+            android:gravity="left"
+            android:layout_weight="5"
+            android:background="@drawable/edit_text_background_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:paddingRight="15dp"
+            android:gravity="right|bottom"
+            android:text="Cost of Investment" />
+
+        <EditText
+            android:id="@+id/mf_trade_entry_cost"
+            android:width="100dp"
+            android:gravity="left"
+            android:layout_weight="5"
+            android:background="@drawable/edit_text_background_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/user_data_submit"
+        android:text="Submit"
+        android:gravity="center"
+        android:onClick="onClickSubmit"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

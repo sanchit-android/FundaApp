@@ -17,22 +17,10 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Welcome...");
+        setContentView(R.layout.activity_welcome);
+
         sharedPref = getSharedPreferences(getString(R.string.main_preference_file_key), Context.MODE_PRIVATE);
-        boolean result = checkPreferences();
-
-        if (!result) {
-            setTitle("Welcome...");
-            setContentView(R.layout.activity_welcome);
-        }
-    }
-
-    private boolean checkPreferences() {
-        String termsAccepted = sharedPref.getString(getString(R.string.preference_terms_accepted), "N");
-        if ("Y".equals(termsAccepted)) {
-            onClickProceedDataCapture(null);
-            return true;
-        }
-        return false;
     }
 
     public void onClickProceedDataCapture(View view) {

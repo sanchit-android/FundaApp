@@ -15,16 +15,18 @@ public class NSDL_CASAsyncLoader extends AsyncTask<Uri, Void, List<MFPosition>> 
 
     private final Activity activity;
     private final OnEnrichmentCompleted<List<MFPosition>> callback;
+    private final String PAN;
 
-    public NSDL_CASAsyncLoader(Activity activity, OnEnrichmentCompleted<List<MFPosition>> callback) {
+    public NSDL_CASAsyncLoader(Activity activity, OnEnrichmentCompleted<List<MFPosition>> callback, String PAN) {
         this.activity = activity;
         this.callback = callback;
+        this.PAN = PAN;
     }
 
     @Override
     protected List<MFPosition> doInBackground(Uri... args) {
         try {
-            return new NSDL_CASContentParser().parse(activity, args[0]);
+            return new NSDL_CASContentParser(PAN).parse(activity, args[0]);
         } catch (IOException e) {
             return null;
         }

@@ -3,31 +3,39 @@
     <color name="green_800">#2E7D32</color>
     <color name="red_A700">#D50000</color>
 
-    <color name="colorPrimary">#C6ECDF</color><!-- C6ECDF -->
-    <color name="colorPrimaryDark">#B6D8D3</color><!-- B6D8D3 -->
-    <color name="colorAccent">#F2BFAB</color><!-- F2BFAB -->
+    <color name="colorPrimaryLight">#56FCCBCB</color>
+    <color name="colorPrimary">#ad9d9d</color><!-- C6ECDF -->
+    <color name="colorPrimaryDark">#838383</color><!-- B6D8D3 -->
+    <color name="colorAccent">#3282b8</color><!-- F2BFAB -->
     <color name="colorBackground">#ffffff</color>
     <color name="colorDisabled">#CFCFCF</color>
-    <color name="colorText">#202020</color>
+    <color name="colorTextDark">#0B0B0B</color>
+    <color name="colorTextLight">#F6F6F6</color>
     <color name="colorSubText">#616161</color>
 
     <color name="buttonColor">@color/colorPrimaryDark</color>
 
     <color name="main_card_top_bg">@color/colorPrimary</color>
-    <color name="main_card_top_text">@color/colorText</color>
+    <color name="main_card_top_text">@color/colorTextLight</color>
     <color name="main_card_sec_bg">@color/colorPrimaryDark</color>
-    <color name="main_card_sec_text">@color/colorText</color>
+    <color name="main_card_sec_text">@color/colorTextLight</color>
 
     <color name="home_summary_1_bg">@color/colorBackground</color>
-    <color name="home_summary_1_text">@color/colorText</color>
+    <color name="home_summary_1_text">@color/colorTextDark</color>
     <color name="home_summary_2_bg">@color/colorBackground</color>
-    <color name="home_summary_2_text">@color/colorText</color>
+    <color name="home_summary_2_text">@color/colorTextDark</color>
     <color name="home_summary_3_bg">@color/main_card_sec_bg</color>
-    <color name="home_summary_3_text">@color/colorText</color>
+    <color name="home_summary_3_text">@color/colorTextDark</color>
 
     <color name="positions_view_bg">@color/colorBackground</color>
-    <color name="positions_view_text">@color/colorText</color>
+    <color name="positions_view_text">@color/colorTextDark</color>
     <color name="positions_view_subtext">@color/colorSubText</color>
 
-    <color name="welcome_text">@color/colorText</color>
+    <color name="welcome_text">@color/colorTextDark</color>
+    <color name="into_logo_color">@color/colorAccent</color>
+
+    <color name="card_fund_detail_fund_name">@color/colorAccent</color>
+    <color name="card_fund_detail_nav">@color/colorSubText</color>
+    <color name="card_fund_detail_nav_bar">@color/colorPrimaryLight</color>
+    <color name="card_fund_detail_divider">@color/colorDisabled</color>
 </resources>

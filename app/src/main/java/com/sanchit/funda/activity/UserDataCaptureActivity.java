@@ -1,11 +1,14 @@
 package com.sanchit.funda.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,8 +25,12 @@ public class UserDataCaptureActivity extends AppCompatActivity {
 
     private Button submitButton;
     private TextView ecasPathTextView;
+    private EditText PANEditText;
+    private EditText nameEditText;
 
     private Uri uri;
+
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +40,49 @@ public class UserDataCaptureActivity extends AppCompatActivity {
 
         submitButton = findViewById(R.id.user_data_submit);
         ecasPathTextView = findViewById(R.id.user_data_ecas_path);
+        PANEditText = findViewById(R.id.user_data_pan);
+        nameEditText = findViewById(R.id.user_data_name);
+
+        sharedPref = getSharedPreferences(getString(R.string.main_preference_file_key), Context.MODE_PRIVATE);
 
         if (savedInstanceState != null) {
-            uri = savedInstanceState.getParcelable("ecas");
-            if (uri != null) {
-                ecasPathTextView.setText(uri.toString());
+            extractSavedState(savedInstanceState);
+        } else {
+            extractSavedState();
+        }
+    }
+
+    private void extractSavedState() {
+        String termsAccepted = sharedPref.getString(getString(R.string.preference_terms_accepted), "N");
+        String name = sharedPref.getString(getString(R.string.investor_name), null);
+        String pan = sharedPref.getString(getString(R.string.investor_PAN), null);
+        String ecasFilePath = sharedPref.getString(getString(R.string.investor_ecas_file_path), null);
+        if ("Y".equals(termsAccepted)) {
+            if (ecasFilePath != null) {
+                ecasPathTextView.setText(ecasFilePath);
+                uri = Uri.parse(ecasFilePath);
             }
+            if (name != null) {
+                nameEditText.setText(name);
+            }
+            if (pan != null) {
+                PANEditText.setText(pan);
+            }
+        }
+    }
+
+    private void extractSavedState(Bundle savedInstanceState) {
+        uri = savedInstanceState.getParcelable("ecas");
+        if (uri != null) {
+            ecasPathTextView.setText(uri.toString());
+        }
+        String name = savedInstanceState.getString("name");
+        if (name != null) {
+            nameEditText.setText(name);
+        }
+        String pan = savedInstanceState.getString("pan");
+        if (pan != null) {
+            PANEditText.setText(pan);
         }
     }
 
@@ -66,8 +110,17 @@ public class UserDataCaptureActivity extends AppCompatActivity {
     }
 
     public void onClickSubmit(View view) {
+        String PAN = PANEditText.getText().toString();
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.investor_name), "Sanchit Srivastava");
+        editor.putString(getString(R.string.investor_PAN), PAN);
+        editor.putString(getString(R.string.investor_ecas_file_path), uri.toString());
+        editor.commit();
+
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("uri", (Uri) uri);
+        i.putExtra("PAN", PAN);
         startActivity(i);
     }
 
@@ -75,6 +128,8 @@ public class UserDataCaptureActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable("ecas", uri);
+        outState.putString("name", nameEditText.getText().toString());
+        outState.putString("pan", PANEditText.getText().toString());
     }
 
     @Override

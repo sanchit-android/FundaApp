@@ -10,6 +10,9 @@
     <string name="main_preference_file_key">com.sanchit.funda.MAIN_PREFERENCE_FILE_KEY</string>
 
     <string name="preference_terms_accepted">preference_terms_accepted</string>
+    <string name="investor_ecas_file_path">investor_ecas_file_path</string>
+    <string name="investor_PAN">investor_PAN</string>
+    <string name="investor_name">investor_name</string>
 
     <string-array name="positions_view_grouping">
         <item>Funds</item>

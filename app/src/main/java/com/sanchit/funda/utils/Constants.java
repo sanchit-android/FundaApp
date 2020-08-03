@@ -64,13 +64,16 @@ public class Constants {
         String Descending = "D";
     }
 
-    public static final class Duration {
-        public static final String T = "T";
-        public static final String T_1 = "T Minus 1";
-        public static final String T_10 = "T Minus 10";
-        public static final String T_30 = "T Minus 30";
-        public static final String T_90 = "T Minus 90";
-        public static final String T_180 = "T Minus 180";
-        public static final String T_365 = "T Minus 365";
+    public interface Duration {
+        String T = "T";
+        String T_1 = "T Minus 1";
+        String T_10 = "T Minus 10";
+        String T_30 = "T Minus 30";
+        String T_90 = "T Minus 90";
+        String T_180 = "T Minus 180";
+        String T_365 = "T Minus 365";
+
+        String High52W = "52WHigh";
+        String Low52W = "52WLow";
     }
 }

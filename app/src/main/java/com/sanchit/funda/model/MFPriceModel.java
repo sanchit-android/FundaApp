@@ -39,4 +39,8 @@ public class MFPriceModel implements Serializable {
     public String getPriceString(String key) {
         return NumberUtils.formatMoney(priceMap.get(key));
     }
+
+    public String getPriceString(String key, int rounding) {
+        return NumberUtils.formatMoney(priceMap.get(key), rounding);
+    }
 }

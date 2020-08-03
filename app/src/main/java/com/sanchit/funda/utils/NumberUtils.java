@@ -13,7 +13,11 @@ public class NumberUtils {
     }
 
     public static String formatMoney(BigDecimal money) {
-        return String.format(MONEY_FORMAT, money);
+        return BigDecimal.ZERO.equals(money) ? "-" : String.format(MONEY_FORMAT, money);
+    }
+
+    public static String formatMoney(BigDecimal money, int rounding) {
+        return BigDecimal.ZERO.equals(money) ? "-" : String.format("%,." + rounding + "f", money);
     }
 
     public static String toPercentage(BigDecimal val) {

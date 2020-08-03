@@ -1,6 +1,7 @@
 package com.sanchit.funda.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanchit.funda.R;
+import com.sanchit.funda.activity.PositionLineItemDetailActivity;
 import com.sanchit.funda.model.MFPriceModel;
 import com.sanchit.funda.model.PositionViewModel;
 import com.sanchit.funda.utils.NumberUtils;
@@ -27,6 +29,8 @@ public class PositionsViewTableAdapter extends RecyclerView.Adapter<PositionsVie
     private final Context context;
     private final Map<String, MFPriceModel> priceMap;
 
+    private String grouping;
+
     public PositionsViewTableAdapter(Context context,
                                      List<PositionViewModel> itemList, Map<String, MFPriceModel> priceMap) {
         this.context = context;
@@ -39,7 +43,7 @@ public class PositionsViewTableAdapter extends RecyclerView.Adapter<PositionsVie
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.cards_positions_table, null);
         ViewUtils.setRecyclerViewItemLayoutParams(layoutView);
-        ViewHolder rcv = new ViewHolder(layoutView, context);
+        ViewHolder rcv = new ViewHolder(layoutView, context, this);
         return rcv;
     }
 
@@ -80,9 +84,14 @@ public class PositionsViewTableAdapter extends RecyclerView.Adapter<PositionsVie
         return this.itemList.size();
     }
 
+    public void setGrouping(String item) {
+        this.grouping = item;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final Context context;
+        private final PositionsViewTableAdapter parent;
+
         private final TextView textViewSymbol;
         private final TextView textViewValuation;
         private final TextView textViewCost;
@@ -94,7 +103,7 @@ public class PositionsViewTableAdapter extends RecyclerView.Adapter<PositionsVie
 
         private int barWidth = -1;
 
-        public ViewHolder(View itemView, Context context) {
+        public ViewHolder(View itemView, Context context, PositionsViewTableAdapter positionsViewTableAdapter) {
             super(itemView);
             itemView.setOnClickListener(this);
             this.textViewSymbol = itemView.findViewById(R.id.positions_table_symbol);
@@ -105,6 +114,7 @@ public class PositionsViewTableAdapter extends RecyclerView.Adapter<PositionsVie
             this.linearLayoutFundWeight = itemView.findViewById(R.id.positions_table_fund_weight);
             this.linearLayoutFundWeightText = itemView.findViewById(R.id.positions_table_fund_weight_text);
             this.context = context;
+            this.parent = positionsViewTableAdapter;
 
             ViewTreeObserver vto = linearLayoutFundWeight.getViewTreeObserver();
             vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -122,7 +132,7 @@ public class PositionsViewTableAdapter extends RecyclerView.Adapter<PositionsVie
         }
 
         private void setCostBarWidth() {
-            if(barWidth > 0) {
+            if (barWidth > 0) {
                 BigDecimal ratio = new BigDecimal(linearLayoutFundWeightText.getText().toString());
                 BigDecimal newBarWidth = ratio.multiply(new BigDecimal(barWidth));
 
@@ -133,6 +143,11 @@ public class PositionsViewTableAdapter extends RecyclerView.Adapter<PositionsVie
 
         @Override
         public void onClick(View v) {
+            Intent i = new Intent(context, PositionLineItemDetailActivity.class);
+            TextView symbolView = v.findViewById(R.id.positions_table_symbol);
+            i.putExtra("itemName", symbolView.getText());
+            i.putExtra("grouping", parent.grouping);
+            context.startActivity(i);
         }
     }
 

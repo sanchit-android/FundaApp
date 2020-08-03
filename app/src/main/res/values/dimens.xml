@@ -7,8 +7,13 @@
     <dimen name="home_summary_2_content">12sp</dimen>
     <dimen name="home_summary_2_sub_content">12sp</dimen>
 
-    <dimen name="welcome_text">16sp</dimen>
     <dimen name="positions_view_header">15sp</dimen>
     <dimen name="positions_view_text">17sp</dimen>
     <dimen name="positions_view_subtext">15sp</dimen>
+
+    <dimen name="welcome_text">16sp</dimen>
+    <dimen name="intro_logo_text">40sp</dimen>
+
+    <dimen name="card_fund_detail_fund_name">20sp</dimen>
+    <dimen name="card_fund_detail_nav">15sp</dimen>
 </resources>
