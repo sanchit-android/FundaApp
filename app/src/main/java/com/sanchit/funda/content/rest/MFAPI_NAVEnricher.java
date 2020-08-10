@@ -46,8 +46,6 @@ public class MFAPI_NAVEnricher extends AbstractRestEnricher<String, MFPriceModel
             JSONObject jo = callEndpoint(mfAPI + input);
             if (MFAPI_NAVAsyncLoader.EnrichmentModel.Default.equals(enrichmentModel)) {
                 parseJSONResponse(jo, model);
-            } else if (MFAPI_NAVAsyncLoader.EnrichmentModel.HL_52W.equals(enrichmentModel)) {
-                parseJSONResponseFor52W_HL(jo, model);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,41 +60,41 @@ public class MFAPI_NAVEnricher extends AbstractRestEnricher<String, MFPriceModel
         return model;
     }
 
-    private void parseJSONResponse(JSONObject jo, MFPriceModel model) {
+    private void parseJSONResponse(JSONObject jo, MFPriceModel model) throws java.text.ParseException {
         if (model.getPriceMap() == null) {
             model.setPriceMap(new HashMap<>());
         }
         Map<String, BigDecimal> navMap = model.getPriceMap();
-        for (Map.Entry<String, Integer> entry : PRICE_MAP.entrySet()) {
-            BigDecimal price = parseTMinusXNAV(jo, entry.getValue());
-            navMap.put(entry.getKey(), price);
+        for (Map.Entry<String, Constants.DurationData> entry : PRICE_MAP.entrySet()) {
+            Constants.DurationData durationData = entry.getValue();
+            String key = entry.getKey();
+
+            if (Constants.DurationBasis.IndexBased.equals(durationData.getDurationBasis())) {
+                BigDecimal price = parseIndexBasedNAV(jo, durationData);
+                navMap.put(entry.getKey(), price);
+            } else if (Constants.DurationBasis.DurationBased.equals(durationData.getDurationBasis())) {
+                parseDurationBasedNAV(jo, durationData, key, navMap);
+            }
         }
     }
 
-    private void parseJSONResponseFor52W_HL(JSONObject jo, MFPriceModel model) throws java.text.ParseException {
-        if (model.getPriceMap() == null) {
-            model.setPriceMap(new HashMap<>());
-        }
-        Map<String, BigDecimal> navMap = model.getPriceMap();
-
-        // Latest Price
-        BigDecimal price = parseTMinusXNAV(jo, 1);
-        navMap.put(Constants.Duration.T, price);
-
-        // 52W Old Price
-        Calendar todayMinus52W = DateUtils.customDate(Calendar.YEAR, -1);
+    private void parseDurationBasedNAV(JSONObject jo, Constants.DurationData durationData, String key, Map<String, BigDecimal> navMap) throws java.text.ParseException {
+        Calendar todayMinusXDays = DateUtils.customDate(durationData.getDurationType(), durationData.getDuration());
         JSONArray data = (JSONArray) jo.get("data");
         Iterator itr = data.iterator();
 
         BigDecimal highPrice = null;
         BigDecimal lowPrice = null;
+        BigDecimal price = null;
         while (itr.hasNext()) {
             JSONObject x = (JSONObject) itr.next();
             BigDecimal nav = new BigDecimal(x.get("nav").toString());
             Calendar cal = DateUtils.parseCal(x.get("date").toString(), "dd-MM-yyyy");
-            if (cal.before(todayMinus52W)) {
+            if (cal.before(todayMinusXDays)) {
                 break;
             }
+
+            price = nav;
 
             if (highPrice == null || nav.compareTo(highPrice) > 0) {
                 highPrice = nav;
@@ -105,8 +103,21 @@ public class MFAPI_NAVEnricher extends AbstractRestEnricher<String, MFPriceModel
                 lowPrice = nav;
             }
         }
-        navMap.put(Constants.Duration.High52W, highPrice);
-        navMap.put(Constants.Duration.Low52W, lowPrice);
+
+        if (durationData.isHighLowKeyAvailable()) {
+            navMap.put(durationData.getHighKey(), highPrice);
+            navMap.put(durationData.getLowKey(), lowPrice);
+        }
+        navMap.put(key, price);
+    }
+
+    private BigDecimal parseIndexBasedNAV(JSONObject jsonObject, Constants.DurationData x) {
+        JSONArray data = (JSONArray) jsonObject.get("data");
+        if (data != null && data.size() > x.getIndex()) {
+            BigDecimal latestNAV = new BigDecimal(((JSONObject) data.get(x.getIndex())).get("nav").toString());
+            return latestNAV;
+        }
+        return Constants.EMPTY_PRICE;
     }
 
     private JSONObject callEndpoint(String apiURL) throws IOException, ParseException {
@@ -120,15 +131,4 @@ public class MFAPI_NAVEnricher extends AbstractRestEnricher<String, MFPriceModel
         // typecasting obj to JSONObject
         return (JSONObject) obj;
     }
-
-
-    private BigDecimal parseTMinusXNAV(JSONObject jsonObject, int x) {
-        JSONArray data = (JSONArray) jsonObject.get("data");
-        if (data != null && data.size() >= x) {
-            BigDecimal latestNAV = new BigDecimal(((JSONObject) data.get(x - 1)).get("nav").toString());
-            return latestNAV;
-        }
-        return Constants.EMPTY_PRICE;
-    }
-
 }

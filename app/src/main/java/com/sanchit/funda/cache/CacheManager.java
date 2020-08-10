@@ -13,7 +13,9 @@ public class CacheManager {
     }
 
     public static final void registerCache(String cacheName, Cache cache) {
-        _caches.put(cacheName, cache);
+        if (!_caches.containsKey(cacheName)) {
+            _caches.put(cacheName, cache);
+        }
     }
 
     public static final Object get(String cacheName) {
@@ -21,6 +23,15 @@ public class CacheManager {
             return _caches.get(cacheName);
         }
         return _raw_caches.get(cacheName);
+    }
+
+    public static final <Z> Cache<String, Z> getOrRegisterCache(String cacheName, Class<Z> zClass) {
+        if (_caches.containsKey(cacheName)) {
+            return (Cache<String, Z>) _caches.get(cacheName);
+        }
+        Cache<String, Z> cache = new Cache<String, Z>();
+        _caches.put(cacheName, cache);
+        return cache;
     }
 
     public static class Cache<K, V> {

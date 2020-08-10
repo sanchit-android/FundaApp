@@ -2,7 +2,6 @@ package com.sanchit.funda.content.file;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.widget.Toast;
 
 import com.sanchit.funda.model.MFPosition;
 import com.sanchit.funda.model.MutualFund;
@@ -135,15 +134,6 @@ public class NSDL_CASContentParser extends AbstractFileParser<MFPosition> {
 
     @Override
     public List<MFPosition> parse(Activity activity, Uri uri) throws IOException {
-        if (!checkPermission(activity)) {
-            requestPermission(activity);
-        }
-
-        if (!checkPermission(activity)) {
-            Toast.makeText(activity, "Permissions Missing", Toast.LENGTH_LONG).show();
-            return null;
-        }
-
         try (InputStream inputStream = activity.getContentResolver().openInputStream(uri)) {
             PDDocument document = PDDocument.load(inputStream, PAN);
             PDFTextStripper stripper = new PDFTextStripper();

@@ -4,4 +4,9 @@
     <color name="colorPrimary1">#C6ECDF</color><!-- C6ECDF -->
     <color name="colorPrimaryDark1">#B6D8D3</color><!-- B6D8D3 -->
     <color name="colorAccent1">#F2BFAB</color><!-- F2BFAB -->
+
+    <color name="colorPrimaryLight2">#56FCCBCB</color>
+    <color name="colorPrimary2">#ad9d9d</color><!-- C6ECDF -->
+    <color name="colorPrimaryDark2">#838383</color><!-- B6D8D3 -->
+    <color name="colorAccent2">#3282b8</color><!-- F2BFAB -->
 </resources>

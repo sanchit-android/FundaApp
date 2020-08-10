@@ -37,6 +37,6 @@ public class MFAPI_NAVAsyncLoader extends AsyncTask<String, Void, MFPriceModel> 
     }
 
     public enum EnrichmentModel {
-        Default, HL_52W;
+        Default;
     }
 }

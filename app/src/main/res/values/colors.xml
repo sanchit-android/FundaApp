@@ -3,22 +3,22 @@
     <color name="green_800">#2E7D32</color>
     <color name="red_A700">#D50000</color>
 
-    <color name="colorPrimaryLight">#56FCCBCB</color>
-    <color name="colorPrimary">#ad9d9d</color><!-- C6ECDF -->
-    <color name="colorPrimaryDark">#838383</color><!-- B6D8D3 -->
-    <color name="colorAccent">#3282b8</color><!-- F2BFAB -->
+    <color name="colorPrimaryLight">#f1faee</color>
+    <color name="colorPrimary">#a8dadc</color><!-- C6ECDF -->
+    <color name="colorPrimaryDark">#457b9d</color><!-- B6D8D3 -->
+    <color name="colorAccent">#e63946</color><!-- F2BFAB -->
     <color name="colorBackground">#ffffff</color>
     <color name="colorDisabled">#CFCFCF</color>
     <color name="colorTextDark">#0B0B0B</color>
-    <color name="colorTextLight">#F6F6F6</color>
+    <color name="colorTextLight">@color/colorPrimaryLight</color>
     <color name="colorSubText">#616161</color>
 
     <color name="buttonColor">@color/colorPrimaryDark</color>
 
-    <color name="main_card_top_bg">@color/colorPrimary</color>
+    <color name="main_card_top_bg">@color/colorPrimaryDark</color>
     <color name="main_card_top_text">@color/colorTextLight</color>
-    <color name="main_card_sec_bg">@color/colorPrimaryDark</color>
-    <color name="main_card_sec_text">@color/colorTextLight</color>
+    <color name="main_card_sec_bg">@color/colorPrimaryLight</color>
+    <color name="main_card_sec_text">@color/colorTextDark</color>
 
     <color name="home_summary_1_bg">@color/colorBackground</color>
     <color name="home_summary_1_text">@color/colorTextDark</color>

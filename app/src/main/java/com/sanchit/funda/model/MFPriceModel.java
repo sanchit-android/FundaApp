@@ -1,5 +1,6 @@
 package com.sanchit.funda.model;
 
+import com.sanchit.funda.utils.Constants;
 import com.sanchit.funda.utils.NumberUtils;
 
 import java.io.Serializable;
@@ -42,5 +43,38 @@ public class MFPriceModel implements Serializable {
 
     public String getPriceString(String key, int rounding) {
         return NumberUtils.formatMoney(priceMap.get(key), rounding);
+    }
+
+    public String get1YearReturn() {
+        return getReturns(Constants.Duration.T_1Y, Constants.Duration.T);
+    }
+
+    public BigDecimal get1YearReturnComparable() {
+        return getComparableReturns(Constants.Duration.T_1Y, Constants.Duration.T);
+    }
+
+    public String get6MonthsReturn() {
+        return getReturns(Constants.Duration.T_6M, Constants.Duration.T);
+    }
+
+    public String get3MonthsReturn() {
+        return getReturns(Constants.Duration.T_3M, Constants.Duration.T);
+    }
+
+    public String get1MonthReturn() {
+        return getReturns(Constants.Duration.T_1M, Constants.Duration.T);
+    }
+
+    private String getReturns(String tOld, String tNow) {
+        BigDecimal priceOld = getPrice(tOld);
+        BigDecimal priceNow = getPrice(tNow);
+        return NumberUtils.toPercentage((priceNow.subtract(priceOld)).divide(priceOld, 4, BigDecimal.ROUND_HALF_UP), 2);
+    }
+
+
+    private BigDecimal getComparableReturns(String tOld, String tNow) {
+        BigDecimal priceOld = getPrice(tOld);
+        BigDecimal priceNow = getPrice(tNow);
+        return (priceNow.subtract(priceOld)).divide(priceOld, 4, BigDecimal.ROUND_HALF_UP);
     }
 }

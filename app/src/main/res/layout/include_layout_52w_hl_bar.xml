@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/card_fund_detail_52hl_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/card_fund_detail_52wlow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textColor="@color/card_fund_detail_nav"
+            android:textSize="@dimen/card_fund_detail_nav"
+            android:textStyle="normal"
+            android:text="low" />
+
+        <LinearLayout
+            android:id="@+id/card_fund_detail_52hl_bar"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_weight="5"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="10dp"
+            android:background="@color/card_fund_detail_nav_bar" />
+
+        <TextView
+            android:id="@+id/card_fund_detail_52whigh"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/card_fund_detail_nav"
+            android:textSize="@dimen/card_fund_detail_nav"
+            android:textStyle="normal"
+            android:text="high" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/card_fund_detail_curent_nav_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_arrow_upward_24"
+        android:layout_marginLeft="1px" />
+
+    <TextView
+        android:id="@+id/card_fund_detail_curent_nav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1px"
+        android:textColor="@color/card_fund_detail_nav"
+        android:textSize="@dimen/card_fund_detail_nav"
+        android:textStyle="normal"
+        android:text="now" />
+
+</LinearLayout>

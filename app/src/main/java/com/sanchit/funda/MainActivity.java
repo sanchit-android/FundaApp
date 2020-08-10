@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,8 @@ import com.sanchit.funda.model.MutualFund;
 import com.sanchit.funda.utils.Constants;
 import com.sanchit.funda.utils.DummyDataGenerator;
 import com.sanchit.funda.utils.NumberUtils;
+import com.sanchit.funda.utils.SecurityUtils;
+import com.sanchit.funda.utils.ViewUtils;
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader;
 
 import java.math.BigDecimal;
@@ -79,7 +82,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setElevation(0);
+        ViewUtils.setActionBarColor(this, R.color.colorPrimaryDark);
+        setTitleColor(getResources().getColor(R.color.colorTextLight));
         setContentView(R.layout.activity_main);
+
+        SecurityUtils.setupPermissions(this);
 
         spinner = (ProgressBar) findViewById(R.id.progressBar_home_summary);
         spinner.setVisibility(View.VISIBLE);
@@ -216,7 +223,9 @@ public class MainActivity extends AppCompatActivity {
     private class OnECASFileLoadedHandler implements OnEnrichmentCompleted<List<MFPosition>> {
         @Override
         public void updateView(List<MFPosition> data) {
-            positions.addAll(data);
+            if (data != null) {
+                positions.addAll(data);
+            }
         }
     }
 
@@ -255,6 +264,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private void updateSummary() {
+            if (positions == null || positions.isEmpty()) {
+                Toast.makeText(activity, "No Data", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             BigDecimal investment = BigDecimal.ZERO;
             BigDecimal valuation = BigDecimal.ZERO;
             Set<String> funds = new HashSet<>();

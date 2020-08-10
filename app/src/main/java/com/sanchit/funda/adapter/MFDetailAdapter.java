@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanchit.funda.R;
 import com.sanchit.funda.async.MFAPI_NAVAsyncLoader;
-import com.sanchit.funda.async.event.OnEnrichmentCompleted;
 import com.sanchit.funda.model.MFDetailModel;
 import com.sanchit.funda.model.MFPriceModel;
 import com.sanchit.funda.utils.Constants;
+import com.sanchit.funda.utils.NumberUtils;
 import com.sanchit.funda.utils.ViewUtils;
 
 import java.math.BigDecimal;
@@ -47,13 +47,38 @@ public class MFDetailAdapter extends RecyclerView.Adapter<MFDetailAdapter.ViewHo
         MFDetailModel p = itemList.get(position);
         holder.textViewSymbol.setText(p.getFund().getFundName());
 
-        new MFAPI_NAVAsyncLoader(activity, new OnMFAPI_PriceLoadedHandler(activity, p, holder), MFAPI_NAVAsyncLoader.EnrichmentModel.HL_52W)
-                .execute(p.getFund().getAmfiID());
+        MFPriceModel data = p.getPriceModel();
+
+        holder.textView52WHigh.setText(data.getPriceString(Constants.Duration.T_1YHigh, 2));
+        holder.textView52WLow.setText(data.getPriceString(Constants.Duration.T_1YLow, 2));
+        holder.textViewCurrent.setText(data.getPriceString(Constants.Duration.T, 2));
+
+        int margin = ViewUtils.getWidth(holder.textView52WLow);
+        margin += marginDelta(data.getPrice(Constants.Duration.T),
+                data.getPrice(Constants.Duration.T_1YLow),
+                data.getPrice(Constants.Duration.T_1YHigh),
+                ViewUtils.getWidth(holder.bar52wHL));
+
+        ViewUtils.setLeftMarginOnLinearLayout(activity, holder.textViewCurrent, margin);
+        ViewUtils.setLeftMarginOnLinearLayout(activity, holder.arrowImage, margin);
+        holder.textViewCurrent.requestLayout();
+        holder.arrowImage.requestLayout();
+
+        holder.textView1YPct.setText(data.get1YearReturn());
+        holder.textView6MPct.setText(data.get6MonthsReturn());
+        holder.textView3MPct.setText(data.get3MonthsReturn());
+        holder.textView1MPct.setText(data.get1MonthReturn());
     }
 
     @Override
     public int getItemCount() {
         return itemList.size();
+    }
+
+    private int marginDelta(BigDecimal p, BigDecimal l, BigDecimal h, int measuredWidth) {
+        BigDecimal w = new BigDecimal(measuredWidth);
+        BigDecimal delta = w.divide(h.subtract(l), 6, BigDecimal.ROUND_HALF_UP).multiply(p.subtract(l));
+        return delta.intValue();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -64,6 +89,10 @@ public class MFDetailAdapter extends RecyclerView.Adapter<MFDetailAdapter.ViewHo
         private final TextView textViewCurrent;
         private final LinearLayout bar52wHL;
         private final ImageView arrowImage;
+        private final TextView textView1YPct;
+        private final TextView textView6MPct;
+        private final TextView textView3MPct;
+        private final TextView textView1MPct;
 
         public ViewHolder(View itemView, Context context) {
             super(itemView);
@@ -74,46 +103,17 @@ public class MFDetailAdapter extends RecyclerView.Adapter<MFDetailAdapter.ViewHo
             this.textViewCurrent = itemView.findViewById(R.id.card_fund_detail_curent_nav);
             this.bar52wHL = itemView.findViewById(R.id.card_fund_detail_52hl_bar);
             this.arrowImage = itemView.findViewById(R.id.card_fund_detail_curent_nav_arrow);
+
+            this.textView1YPct = itemView.findViewById(R.id.card_fund_detail_1Y_pct);
+            this.textView6MPct = itemView.findViewById(R.id.card_fund_detail_6M_pct);
+            this.textView3MPct = itemView.findViewById(R.id.card_fund_detail_3M_pct);
+            this.textView1MPct = itemView.findViewById(R.id.card_fund_detail_1M_pct);
+
             this.context = context;
         }
 
         @Override
         public void onClick(View v) {
-        }
-    }
-
-    private static class OnMFAPI_PriceLoadedHandler implements OnEnrichmentCompleted<MFPriceModel> {
-        private final MFDetailModel parentModel;
-        private final ViewHolder viewModel;
-        private final Context context;
-
-        public OnMFAPI_PriceLoadedHandler(Context context, MFDetailModel p, ViewHolder holder) {
-            this.context = context;
-            this.parentModel = p;
-            this.viewModel = holder;
-        }
-
-        @Override
-        public void updateView(MFPriceModel data) {
-            this.viewModel.textView52WHigh.setText(data.getPriceString(Constants.Duration.High52W, 2));
-            this.viewModel.textView52WLow.setText(data.getPriceString(Constants.Duration.Low52W, 2));
-            this.viewModel.textViewCurrent.setText(data.getPriceString(Constants.Duration.T, 2));
-
-            int margin = this.viewModel.textView52WLow.getMeasuredWidth();
-            margin += marginDelta(data.getPrice(Constants.Duration.T),
-                    data.getPrice(Constants.Duration.Low52W),
-                    data.getPrice(Constants.Duration.High52W),
-                    this.viewModel.bar52wHL.getMeasuredWidth());
-
-            ViewUtils.setLeftMarginOnConstrainLayout(context, this.viewModel.textViewCurrent, margin);
-            ViewUtils.setLeftMarginOnConstrainLayout(context, this.viewModel.arrowImage, margin);
-        }
-
-        private int marginDelta(BigDecimal p, BigDecimal l, BigDecimal h, int measuredWidth) {
-            BigDecimal w = new BigDecimal(measuredWidth);
-
-            BigDecimal delta = w.divide(h.subtract(l), 4, BigDecimal.ROUND_HALF_UP).multiply(p.subtract(l));
-            return delta.intValue();
         }
     }
 }

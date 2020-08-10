@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.sanchit.funda.MainActivity;
 import com.sanchit.funda.R;
+import com.sanchit.funda.dao.UserDataDao;
+import com.sanchit.funda.dao.entity.UserDataModel;
+import com.sanchit.funda.dao.task.SelectActionTask;
+import com.sanchit.funda.database.AppDatabase;
+import com.sanchit.funda.database.DatabaseHelper;
 
 public class UserDataCaptureActivity extends AppCompatActivity {
 
@@ -42,6 +49,12 @@ public class UserDataCaptureActivity extends AppCompatActivity {
         ecasPathTextView = findViewById(R.id.user_data_ecas_path);
         PANEditText = findViewById(R.id.user_data_pan);
         nameEditText = findViewById(R.id.user_data_name);
+
+        UserDataDao dao = AppDatabase.getInstance(this).userDataDao();
+        SelectActionTask.SelectActionCallback<UserDataModel> selectActionCallback = resultSet -> {
+            Toast.makeText(UserDataCaptureActivity.this, resultSet.toString(), Toast.LENGTH_SHORT).show();
+        };
+        DatabaseHelper.selectAll(dao, selectActionCallback);
 
         sharedPref = getSharedPreferences(getString(R.string.main_preference_file_key), Context.MODE_PRIVATE);
 
@@ -100,6 +113,9 @@ public class UserDataCaptureActivity extends AppCompatActivity {
             // The result data contains a URI for the document or directory that the user selected.
             if (resultData != null) {
                 uri = resultData.getData();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    this.getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                }
                 if (uri != null) {
                     ecasPathTextView.setText(uri.toString());
                     submitButton.setEnabled(true);
@@ -110,13 +126,16 @@ public class UserDataCaptureActivity extends AppCompatActivity {
     }
 
     public void onClickSubmit(View view) {
+        String name = nameEditText.getText().toString();
         String PAN = PANEditText.getText().toString();
 
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.investor_name), "Sanchit Srivastava");
+        editor.putString(getString(R.string.investor_name), name);
         editor.putString(getString(R.string.investor_PAN), PAN);
         editor.putString(getString(R.string.investor_ecas_file_path), uri.toString());
         editor.commit();
+
+        DatabaseHelper.insert(AppDatabase.getInstance(this).userDataDao(), new UserDataModel(name, PAN, uri.toString()));
 
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("uri", (Uri) uri);

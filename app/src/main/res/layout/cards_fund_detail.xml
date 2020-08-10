@@ -1,93 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/card_fund_detail_fund_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:textColor="@color/card_fund_detail_fund_name"
         android:textSize="@dimen/card_fund_detail_fund_name"
         android:textStyle="bold"
         android:text="Some XYZ Fund" />
 
-    <LinearLayout
+    <include
         android:id="@+id/card_fund_detail_52hl_layout"
+        layout="@layout/include_layout_52w_hl_bar" />
+
+    <LinearLayout
+        android:id="@+id/card_fund_detail_growth_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_fund_detail_fund_name"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/card_fund_detail_52wlow"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/card_fund_detail_nav"
-            android:textSize="@dimen/card_fund_detail_nav"
-            android:textStyle="normal"
-            android:text="low" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="1Yr" />
+
+            <TextView
+                android:id="@+id/card_fund_detail_1Y_pct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="10%" />
+
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/card_fund_detail_52hl_bar"
-            android:layout_width="0dp"
-            android:layout_height="10dp"
-            android:layout_weight="6"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical"
-            android:layout_marginHorizontal="10dp"
-            android:background="@color/card_fund_detail_nav_bar" />
-
-        <TextView
-            android:id="@+id/card_fund_detail_52whigh"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/card_fund_detail_nav"
-            android:textSize="@dimen/card_fund_detail_nav"
-            android:textStyle="normal"
-            android:text="high" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="6M" />
+
+            <TextView
+                android:id="@+id/card_fund_detail_6M_pct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="10%" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="3M" />
+
+            <TextView
+                android:id="@+id/card_fund_detail_3M_pct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="10%" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="1M" />
+
+            <TextView
+                android:id="@+id/card_fund_detail_1M_pct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="10%" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/card_fund_detail_curent_nav_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_arrow_upward_24"
-        android:layout_marginLeft="100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_fund_detail_52hl_layout" />
-
-    <TextView
-        android:id="@+id/card_fund_detail_curent_nav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_fund_detail_curent_nav_arrow"
-        android:layout_marginLeft="100dp"
-        android:textColor="@color/card_fund_detail_nav"
-        android:textSize="@dimen/card_fund_detail_nav"
-        android:textStyle="normal"
-        android:text="now" />
-
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:orientation="horizontal"
         android:layout_gravity="center_vertical"
+        android:background="@color/card_fund_detail_divider"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_fund_detail_curent_nav"
-        android:background="@color/card_fund_detail_divider" />
+        app:layout_constraintTop_toBottomOf="@+id/card_fund_detail_growth_section" />
 
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

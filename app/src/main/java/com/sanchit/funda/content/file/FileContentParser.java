@@ -15,15 +15,6 @@ import java.util.Objects;
 public class FileContentParser extends AbstractFileParser {
 
     public List<String> parse(Activity activity, Uri uri) throws IOException {
-        if (!checkPermission(activity)) {
-            requestPermission(activity);
-        }
-
-        if (!checkPermission(activity)) {
-            Toast.makeText(activity, "Permissions Missing", Toast.LENGTH_LONG).show();
-            return null;
-        }
-
         StringBuilder stringBuilder = new StringBuilder();
         try (InputStream inputStream =
                      activity.getContentResolver().openInputStream(uri);

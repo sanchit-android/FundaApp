@@ -4,6 +4,7 @@ import com.sanchit.funda.R;
 import com.sanchit.funda.model.PositionViewModel;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -13,19 +14,19 @@ public class Constants {
 
     public static final BigDecimal EMPTY_PRICE = new BigDecimal(-1);
 
-    public static final Map<String, Integer> PRICE_MAP = new HashMap<>();
+    public static final Map<String, DurationData> PRICE_MAP = new HashMap<>();
 
     private static final Map<Integer, Map<String, Comparator<PositionViewModel>>> POSITIONS_VIEW_COMPARATOR_MAP = new HashMap<>();
     private static final Map<Integer, Integer> POSITIONS_VIEW_SORT_ICON_MAP = new HashMap<>();
 
     static {
-        PRICE_MAP.put(Constants.Duration.T, 1);
-        PRICE_MAP.put(Constants.Duration.T_1, 2);
-        PRICE_MAP.put(Constants.Duration.T_10, 10);
-        PRICE_MAP.put(Constants.Duration.T_30, 30);
-        PRICE_MAP.put(Constants.Duration.T_90, 90);
-        PRICE_MAP.put(Constants.Duration.T_180, 180);
-        PRICE_MAP.put(Constants.Duration.T_365, 365);
+        PRICE_MAP.put(Duration.T, new DurationData(DurationBasis.IndexBased, 0));
+        PRICE_MAP.put(Duration.T_1d, new DurationData(DurationBasis.IndexBased, 1));
+        PRICE_MAP.put(Duration.T_10d, new DurationData(DurationBasis.DurationBased, Calendar.DATE, -10));
+        PRICE_MAP.put(Duration.T_1M, new DurationData(DurationBasis.DurationBased, Calendar.MONTH, -1));
+        PRICE_MAP.put(Duration.T_3M, new DurationData(DurationBasis.DurationBased, Calendar.MONTH, -3));
+        PRICE_MAP.put(Duration.T_6M, new DurationData(DurationBasis.DurationBased, Calendar.MONTH, -6));
+        PRICE_MAP.put(Duration.T_1Y, new DurationData(DurationBasis.DurationBased, Calendar.YEAR, -1, Duration.T_1YHigh, Duration.T_1YLow));
 
         POSITIONS_VIEW_COMPARATOR_MAP.put(R.id.positions_view_header_fund, newMap((o1, o2) -> o1.getHead().compareTo(o2.getHead()), (o1, o2) -> o2.getHead().compareTo(o1.getHead())));
         POSITIONS_VIEW_COMPARATOR_MAP.put(R.id.positions_view_header_cost, newMap((o1, o2) -> o1.getInvestment().compareTo(o2.getInvestment()), (o1, o2) -> o2.getInvestment().compareTo(o1.getInvestment())));
@@ -59,21 +60,86 @@ public class Constants {
         return POSITIONS_VIEW_SORT_ICON_MAP.values();
     }
 
-    public static interface SortType {
+    public enum DurationBasis {
+        IndexBased, DurationBased;
+    }
+
+    public interface SortType {
         String Ascending = "A";
         String Descending = "D";
     }
 
     public interface Duration {
         String T = "T";
-        String T_1 = "T Minus 1";
-        String T_10 = "T Minus 10";
-        String T_30 = "T Minus 30";
-        String T_90 = "T Minus 90";
-        String T_180 = "T Minus 180";
-        String T_365 = "T Minus 365";
+        String T_1d = "T_1d";
+        String T_10d = "T_10d";
+        String T_1M = "T_1M";
+        String T_3M = "T_3M";
+        String T_6M = "T_6M";
+        String T_1Y = "T_1Y";
 
-        String High52W = "52WHigh";
-        String Low52W = "52WLow";
+        String T_1YHigh = "T_1YHigh";
+        String T_1YLow = "T_1YLow";
+    }
+
+    public static class DurationData {
+        private DurationBasis durationBasis;
+        private int index;
+        private int durationType;
+        private int duration;
+
+        private String highKey;
+        private String lowKey;
+        private boolean highLowKeyAvailable;
+
+        public DurationData(DurationBasis durationBasis, int index) {
+            this.durationBasis = durationBasis;
+            this.index = index;
+            highLowKeyAvailable = false;
+        }
+
+        public DurationData(DurationBasis durationBasis, int durationType, int duration) {
+            this.durationBasis = durationBasis;
+            this.durationType = durationType;
+            this.duration = duration;
+            highLowKeyAvailable = false;
+        }
+
+        public DurationData(DurationBasis durationBasis, int durationType, int duration, String highKey, String lowKey) {
+            this.durationBasis = durationBasis;
+            this.durationType = durationType;
+            this.duration = duration;
+            this.highKey = highKey;
+            this.lowKey = lowKey;
+            highLowKeyAvailable = true;
+        }
+
+        public DurationBasis getDurationBasis() {
+            return durationBasis;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public int getDurationType() {
+            return durationType;
+        }
+
+        public int getDuration() {
+            return duration;
+        }
+
+        public String getHighKey() {
+            return highKey;
+        }
+
+        public String getLowKey() {
+            return lowKey;
+        }
+
+        public boolean isHighLowKeyAvailable() {
+            return highLowKeyAvailable;
+        }
     }
 }

@@ -56,16 +56,12 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
         trades = (List<MFTrade>) getIntent().getSerializableExtra("trades");
 
         setupCustomActionBar();
-        setupPositions();
+        setupPositions("Custom Categories");
 
         recyclerViewPositionsView = findViewById(R.id.recycler_view_positions_view_table);
         recyclerViewPositionsView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        positionsViewAdapter = new PositionsViewTableAdapter(this, positions, priceMap);
+        positionsViewAdapter = new PositionsViewTableAdapter(this, positions);
         recyclerViewPositionsView.setAdapter(positionsViewAdapter);
-    }
-
-    private void setupPositions() {
-        setupPositions("Funds");
     }
 
     private void setupPositions(String key) {
@@ -81,7 +77,7 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
 
             MFPriceModel priceModel = priceMap.get(mfPosition.getFund().getAmfiID());
             BigDecimal priceLatest = priceModel.getPrice(Constants.Duration.T);
-            BigDecimal priceLast = priceModel.getPrice(Constants.Duration.T_1);
+            BigDecimal priceLast = priceModel.getPrice(Constants.Duration.T_1d);
             BigDecimal valuation = mfPosition.getQuantity().multiply(priceLatest);
             BigDecimal valuationLast = mfPosition.getQuantity().multiply(priceLast);
 
@@ -100,7 +96,7 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
 
             MFPriceModel priceModel = priceMap.get(trade.getFund().getAmfiID());
             BigDecimal priceLatest = priceModel.getPrice(Constants.Duration.T);
-            BigDecimal priceLast = priceModel.getPrice(Constants.Duration.T_1);
+            BigDecimal priceLast = priceModel.getPrice(Constants.Duration.T_1d);
             BigDecimal valuation = trade.getQuantity().multiply(priceLatest);
             BigDecimal valuationLast = trade.getQuantity().multiply(priceLast);
 

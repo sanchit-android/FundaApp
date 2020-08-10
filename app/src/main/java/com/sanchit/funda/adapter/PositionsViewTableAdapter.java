@@ -2,11 +2,9 @@ package com.sanchit.funda.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,28 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanchit.funda.R;
 import com.sanchit.funda.activity.PositionLineItemDetailActivity;
-import com.sanchit.funda.model.MFPriceModel;
 import com.sanchit.funda.model.PositionViewModel;
 import com.sanchit.funda.utils.NumberUtils;
 import com.sanchit.funda.utils.ViewUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 public class PositionsViewTableAdapter extends RecyclerView.Adapter<PositionsViewTableAdapter.ViewHolder> {
 
     private final List<PositionViewModel> itemList;
     private final Context context;
-    private final Map<String, MFPriceModel> priceMap;
 
     private String grouping;
 
-    public PositionsViewTableAdapter(Context context,
-                                     List<PositionViewModel> itemList, Map<String, MFPriceModel> priceMap) {
+    public PositionsViewTableAdapter(Context context, List<PositionViewModel> itemList) {
         this.context = context;
         this.itemList = itemList;
-        this.priceMap = priceMap;
     }
 
     @Override
@@ -58,15 +51,20 @@ public class PositionsViewTableAdapter extends RecyclerView.Adapter<PositionsVie
         holder.textViewDayPNL.setText(NumberUtils.toPercentage(p.getPnlDay(), 2));
 
         BigDecimal ratio = p.getInvestment().divide(p.getTotalCost(), 4, BigDecimal.ROUND_HALF_UP);
-        //BigDecimal newBarWidth = ratio.multiply(new BigDecimal(holder.barWidth));
-
-        //holder.linearLayoutFundWeight.getLayoutParams().width = newBarWidth.intValue();
-        //holder.linearLayoutFundWeight.requestLayout();
         holder.linearLayoutFundWeightText.setText(ratio.toPlainString());
-        holder.setCostBarWidth();
+        setCostBarWidth(holder, ratio);
 
         setValuationTone(holder.textViewOverallPNL, p.getPnlOverall());
         setValuationTone(holder.textViewDayPNL, p.getPnlDay());
+    }
+
+    private void setCostBarWidth(ViewHolder holder, BigDecimal ratio) {
+        int barWidth = ViewUtils.getWidth(holder.divider);
+        BigDecimal newBarWidth = ratio.multiply(new BigDecimal(barWidth));
+
+        holder.linearLayoutFundWeight.getLayoutParams().width = newBarWidth.intValue();
+        holder.linearLayoutFundWeight.requestLayout();
+
     }
 
     private void setValuationTone(TextView view, BigDecimal value) {
@@ -99,9 +97,8 @@ public class PositionsViewTableAdapter extends RecyclerView.Adapter<PositionsVie
         private final TextView textViewOverallPNL;
 
         private final LinearLayout linearLayoutFundWeight;
+        private final LinearLayout divider;
         private final TextView linearLayoutFundWeightText;
-
-        private int barWidth = -1;
 
         public ViewHolder(View itemView, Context context, PositionsViewTableAdapter positionsViewTableAdapter) {
             super(itemView);
@@ -113,32 +110,9 @@ public class PositionsViewTableAdapter extends RecyclerView.Adapter<PositionsVie
             this.textViewOverallPNL = itemView.findViewById(R.id.positions_table_overall_pnl);
             this.linearLayoutFundWeight = itemView.findViewById(R.id.positions_table_fund_weight);
             this.linearLayoutFundWeightText = itemView.findViewById(R.id.positions_table_fund_weight_text);
+            divider = itemView.findViewById(R.id.positions_table_divider);
             this.context = context;
             this.parent = positionsViewTableAdapter;
-
-            ViewTreeObserver vto = linearLayoutFundWeight.getViewTreeObserver();
-            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                        linearLayoutFundWeight.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    } else {
-                        linearLayoutFundWeight.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    }
-                    barWidth = linearLayoutFundWeight.getMeasuredWidth();
-                    setCostBarWidth();
-                }
-            });
-        }
-
-        private void setCostBarWidth() {
-            if (barWidth > 0) {
-                BigDecimal ratio = new BigDecimal(linearLayoutFundWeightText.getText().toString());
-                BigDecimal newBarWidth = ratio.multiply(new BigDecimal(barWidth));
-
-                linearLayoutFundWeight.getLayoutParams().width = newBarWidth.intValue();
-                linearLayoutFundWeight.requestLayout();
-            }
         }
 
         @Override

@@ -3,6 +3,7 @@ package com.sanchit.funda.async;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.sanchit.funda.async.event.OnEnrichmentCompleted;
 import com.sanchit.funda.content.file.NSDL_CASContentParser;
@@ -28,6 +29,7 @@ public class NSDL_CASAsyncLoader extends AsyncTask<Uri, Void, List<MFPosition>> 
         try {
             return new NSDL_CASContentParser(PAN).parse(activity, args[0]);
         } catch (IOException e) {
+            Toast.makeText(activity, e.getMessage(), Toast.LENGTH_LONG).show();
             return null;
         }
     }
