@@ -11,19 +11,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanchit.funda.MainActivity;
 import com.sanchit.funda.R;
+import com.sanchit.funda.adapter.UserDataListAdapter;
 import com.sanchit.funda.dao.UserDataDao;
 import com.sanchit.funda.dao.entity.UserDataModel;
 import com.sanchit.funda.dao.task.SelectActionTask;
 import com.sanchit.funda.database.AppDatabase;
 import com.sanchit.funda.database.DatabaseHelper;
+import com.sanchit.funda.utils.ViewUtils;
+
+import java.util.List;
 
 public class UserDataCaptureActivity extends AppCompatActivity {
 
@@ -35,6 +40,10 @@ public class UserDataCaptureActivity extends AppCompatActivity {
     private EditText PANEditText;
     private EditText nameEditText;
 
+    private RecyclerView userDataRecyclerView;
+    private List<UserDataModel> userDataList;
+    private UserDataListAdapter userDataListAdapter;
+
     private Uri uri;
 
     private SharedPreferences sharedPref;
@@ -43,6 +52,7 @@ public class UserDataCaptureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Setup...");
+        ViewUtils.setActionBarColor(this, R.color.colorPrimaryDark);
         setContentView(R.layout.activity_user_data_capture);
 
         submitButton = findViewById(R.id.user_data_submit);
@@ -50,9 +60,14 @@ public class UserDataCaptureActivity extends AppCompatActivity {
         PANEditText = findViewById(R.id.user_data_pan);
         nameEditText = findViewById(R.id.user_data_name);
 
+        userDataRecyclerView = findViewById(R.id.recycler_view_user_data_entries);
+        userDataRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
         UserDataDao dao = AppDatabase.getInstance(this).userDataDao();
         SelectActionTask.SelectActionCallback<UserDataModel> selectActionCallback = resultSet -> {
-            Toast.makeText(UserDataCaptureActivity.this, resultSet.toString(), Toast.LENGTH_SHORT).show();
+            userDataList = resultSet;
+            userDataListAdapter = new UserDataListAdapter(this, userDataList);
+            userDataRecyclerView.setAdapter(userDataListAdapter);
         };
         DatabaseHelper.selectAll(dao, selectActionCallback);
 
@@ -140,6 +155,7 @@ public class UserDataCaptureActivity extends AppCompatActivity {
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("uri", (Uri) uri);
         i.putExtra("PAN", PAN);
+        i.putExtra("name", name);
         startActivity(i);
     }
 

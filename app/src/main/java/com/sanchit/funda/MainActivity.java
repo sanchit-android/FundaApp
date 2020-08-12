@@ -77,10 +77,17 @@ public class MainActivity extends AppCompatActivity {
 
     private Uri ecasFilePath;
     private String PAN;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ecasFilePath = (Uri) getIntent().getParcelableExtra("uri");
+        PAN = getIntent().getStringExtra("PAN");
+        name = getIntent().getStringExtra("name");
+
+        setTitle("Hi " + name + "!");
         getSupportActionBar().setElevation(0);
         ViewUtils.setActionBarColor(this, R.color.colorPrimaryDark);
         setTitleColor(getResources().getColor(R.color.colorTextLight));
@@ -90,9 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
         spinner = (ProgressBar) findViewById(R.id.progressBar_home_summary);
         spinner.setVisibility(View.VISIBLE);
-
-        ecasFilePath = (Uri) getIntent().getParcelableExtra("uri");
-        PAN = getIntent().getStringExtra("PAN");
 
         PDFBoxResourceLoader.init(getApplicationContext());
         new NSDL_CASAsyncLoader(this, new OnECASFileLoadedHandler(), PAN).execute(ecasFilePath);

@@ -35,11 +35,13 @@ public class IntroLogoActivity extends AppCompatActivity {
 
     public void proceedToMain() {
         Intent i = new Intent(this, MainActivity.class);
+        String name = sharedPref.getString(getString(R.string.investor_name), null);
         String PAN = sharedPref.getString(getString(R.string.investor_PAN), null);
         String ecasFilePath = sharedPref.getString(getString(R.string.investor_ecas_file_path), null);
         if (PAN != null && ecasFilePath != null) {
             i.putExtra("uri", (Uri) Uri.parse(ecasFilePath));
             i.putExtra("PAN", PAN);
+            i.putExtra("name", name);
         }
         startActivity(i);
     }
