@@ -68,6 +68,9 @@ public class MFPriceModel implements Serializable {
     private String getReturns(String tOld, String tNow) {
         BigDecimal priceOld = getPrice(tOld);
         BigDecimal priceNow = getPrice(tNow);
+        if(priceOld == null) {
+            return "-";
+        }
         return NumberUtils.toPercentage((priceNow.subtract(priceOld)).divide(priceOld, 4, BigDecimal.ROUND_HALF_UP), 2);
     }
 
@@ -75,6 +78,9 @@ public class MFPriceModel implements Serializable {
     private BigDecimal getComparableReturns(String tOld, String tNow) {
         BigDecimal priceOld = getPrice(tOld);
         BigDecimal priceNow = getPrice(tNow);
+        if(priceOld == null) {
+            return BigDecimal.ZERO;
+        }
         return (priceNow.subtract(priceOld)).divide(priceOld, 4, BigDecimal.ROUND_HALF_UP);
     }
 }

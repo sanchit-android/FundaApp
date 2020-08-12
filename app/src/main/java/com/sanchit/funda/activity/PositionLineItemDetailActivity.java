@@ -90,7 +90,7 @@ public class PositionLineItemDetailActivity extends AppCompatActivity {
         Collections.sort(fundDetailModels, new Comparator<MFDetailModel>() {
             @Override
             public int compare(MFDetailModel o1, MFDetailModel o2) {
-                return o1.getPriceModel().get1YearReturnComparable().compareTo(o2.getPriceModel().get1YearReturnComparable());
+                return o1.getPriceModel().get1YearReturnComparable().compareTo(o2.getPriceModel().get1YearReturnComparable()) * -1;
             }
         });
 

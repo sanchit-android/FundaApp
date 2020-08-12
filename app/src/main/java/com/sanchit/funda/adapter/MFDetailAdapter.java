@@ -76,6 +76,10 @@ public class MFDetailAdapter extends RecyclerView.Adapter<MFDetailAdapter.ViewHo
     }
 
     private int marginDelta(BigDecimal p, BigDecimal l, BigDecimal h, int measuredWidth) {
+        if (p == null || l == null || h == null) {
+            return 0;
+
+        }
         BigDecimal w = new BigDecimal(measuredWidth);
         BigDecimal delta = w.divide(h.subtract(l), 6, BigDecimal.ROUND_HALF_UP).multiply(p.subtract(l));
         return delta.intValue();
