@@ -13,6 +13,9 @@
     <string name="investor_ecas_file_path">investor_ecas_file_path</string>
     <string name="investor_PAN">investor_PAN</string>
     <string name="investor_name">investor_name</string>
+    <string name="Sort_Funds">Sort Funds...</string>
+    <string name="Sort">Sort</string>
+    <string name="Cancel">Cancel</string>
 
     <string-array name="positions_view_grouping">
         <item>Funds</item>

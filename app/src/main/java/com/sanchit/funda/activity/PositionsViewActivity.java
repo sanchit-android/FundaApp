@@ -20,6 +20,7 @@ import com.sanchit.funda.model.MFTrade;
 import com.sanchit.funda.model.MutualFund;
 import com.sanchit.funda.model.PositionViewModel;
 import com.sanchit.funda.utils.Constants;
+import com.sanchit.funda.utils.ViewUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
+        ViewUtils.setActionBarColor(this, R.color.colorPrimaryDark);
         setContentView(R.layout.activity_positions_view);
 
         originalPositions = (List<MFPosition>) getIntent().getSerializableExtra("positions");

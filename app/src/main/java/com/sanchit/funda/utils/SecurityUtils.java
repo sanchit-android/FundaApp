@@ -19,6 +19,8 @@ public class SecurityUtils {
     public static void setupPermissions(Activity activity) {
         if (!SecurityUtils.checkPermission(activity)) {
             SecurityUtils.requestPermission(activity);
+        } else {
+            SecurityUtils.requestPermission(activity);
         }
 
         if (!SecurityUtils.checkPermission(activity)) {

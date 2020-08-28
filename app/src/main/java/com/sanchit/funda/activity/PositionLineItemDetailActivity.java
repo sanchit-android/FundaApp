@@ -2,27 +2,34 @@ package com.sanchit.funda.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanchit.funda.R;
-import com.sanchit.funda.adapter.MFDetailAdapter;
+import com.sanchit.funda.adapter.MFListingAdapter;
 import com.sanchit.funda.async.MFAPI_NAVAsyncLoader;
 import com.sanchit.funda.async.event.OnEnrichmentCompleted;
 import com.sanchit.funda.cache.CacheManager;
 import com.sanchit.funda.cache.Caches;
+import com.sanchit.funda.dialog.SortingOptionDialog;
 import com.sanchit.funda.model.MFDetailModel;
 import com.sanchit.funda.model.MFPriceModel;
 import com.sanchit.funda.model.MutualFund;
+import com.sanchit.funda.utils.Constants;
+import com.sanchit.funda.utils.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-public class PositionLineItemDetailActivity extends AppCompatActivity {
+public class PositionLineItemDetailActivity extends AppCompatActivity implements SortingOptionDialog.SortingDialogListener {
 
     int priceEnrichmentReqs = 0;
     private String item;
@@ -30,7 +37,9 @@ public class PositionLineItemDetailActivity extends AppCompatActivity {
     private List<MutualFund> funds;
     private RecyclerView recyclerViewOtherFunds;
     private List<MFDetailModel> fundDetailModels;
-    private MFDetailAdapter mfDetailAdapter;
+    private MFListingAdapter mfDetailAdapter;
+
+    private String currentSortOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +49,9 @@ public class PositionLineItemDetailActivity extends AppCompatActivity {
         String trimmedTitle = trim(item);
 
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setElevation(0);
         setTitle(trimmedTitle);
+        ViewUtils.setActionBarColor(this, R.color.colorPrimaryDark);
         setContentView(R.layout.activity_position_line_item_detail);
 
         recyclerViewOtherFunds = findViewById(R.id.recycler_view_position_line_item_other_funds);
@@ -48,9 +59,28 @@ public class PositionLineItemDetailActivity extends AppCompatActivity {
         fundDetailModels = generateDataModel();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_position_line_item_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_position_detail_sort_option:
+                showNoticeDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private String trim(String item) {
-        if (item != null && item.length() > 7) {
-            return item.substring(0, 7) + "...";
+        int trimLength = 10;
+        if (item != null && item.length() > trimLength) {
+            return item.substring(0, trimLength) + "...";
         }
         return item;
     }
@@ -86,26 +116,37 @@ public class PositionLineItemDetailActivity extends AppCompatActivity {
         return fund.getFundName().equals(item);
     }
 
-    private void updateAdapter() {
-        Collections.sort(fundDetailModels, new Comparator<MFDetailModel>() {
-            @Override
-            public int compare(MFDetailModel o1, MFDetailModel o2) {
-                return o1.getPriceModel().get1YearReturnComparable().compareTo(o2.getPriceModel().get1YearReturnComparable()) * -1;
-            }
-        });
+    private void initAdapter() {
+        Collections.sort(fundDetailModels, (o1, o2) -> o1.getPriceModel().get1YearReturnComparable().compareTo(o2.getPriceModel().get1YearReturnComparable()) * -1);
 
-        mfDetailAdapter = new MFDetailAdapter(this, fundDetailModels);
+        mfDetailAdapter = new MFListingAdapter(this, fundDetailModels);
         recyclerViewOtherFunds.setAdapter(mfDetailAdapter);
 
         mfDetailAdapter.notifyDataSetChanged();
     }
 
+    public void showNoticeDialog() {
+        // Create an instance of the dialog fragment and show it
+        DialogFragment dialog = new SortingOptionDialog(currentSortOption);
+        dialog.show(getSupportFragmentManager(), "Sort Funds!");
+    }
+
+    @Override
+    public void onDialogSortClick(DialogFragment dialog, String sortOption) {
+        currentSortOption = sortOption;
+        Collections.sort(fundDetailModels, Constants.getPositionDetailComparator(sortOption));
+        mfDetailAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDialogCancelClick(DialogFragment dialog) {
+
+    }
+
     private class OnMFAPI_PriceLoadedHandler implements OnEnrichmentCompleted<MFPriceModel> {
-        private final Context context;
         private final MFDetailModel model;
 
         public OnMFAPI_PriceLoadedHandler(Context context, MFDetailModel model) {
-            this.context = context;
             this.model = model;
         }
 
@@ -115,7 +156,7 @@ public class PositionLineItemDetailActivity extends AppCompatActivity {
             --priceEnrichmentReqs;
 
             if (priceEnrichmentReqs == 0) {
-                updateAdapter();
+                initAdapter();
             }
         }
     }

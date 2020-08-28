@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PositionLineItemDetailActivity"></activity>
+        <activity android:name=".activity.MutualFundInfoActivity"></activity>
+        <activity android:name=".activity.PositionLineItemDetailActivity" />
         <activity android:name=".activity.MFTradeEntryActivity" />
         <activity
             android:name=".activity.IntroLogoActivity"
@@ -32,9 +33,9 @@
             android:name=".MainActivity"
             android:launchMode="singleTask" />
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

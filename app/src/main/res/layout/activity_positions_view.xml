@@ -11,10 +11,19 @@
 
     <include layout="@layout/include_layout_table_header_positions_view" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_positions_view_table"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"/>
+        android:background="@drawable/round_rect_2"
+        android:orientation="vertical"
+        android:layout_marginTop="-20dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_positions_view_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"/>
+
+    </LinearLayout>
 
 </LinearLayout>

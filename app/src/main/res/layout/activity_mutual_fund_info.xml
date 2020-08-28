@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryLight"
+    tools:context=".activity.MutualFundInfoActivity">
+
+    <include layout="@layout/include_layout_mutual_fund_info_top_summary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_rect_2"
+        android:orientation="vertical"
+        android:layout_marginTop="-20dp"
+        android:paddingHorizontal="10dp">
+
+        <include layout="@layout/include_section_mf_detail_returns" />
+
+    </LinearLayout>
+
+</LinearLayout>

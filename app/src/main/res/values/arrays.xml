@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_options">
+        <item>1M Returns Ascending</item>
+        <item>1M Returns Descending</item>
+        <item>3M Returns Ascending</item>
+        <item>3M Returns Descending</item>
+        <item>6M Returns Ascending</item>
+        <item>6M Returns Descending</item>
+        <item>1Y Returns Ascending</item>
+        <item>1Y Returns Descending</item>
+    </string-array>
+</resources>

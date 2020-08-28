@@ -2,6 +2,7 @@ package com.sanchit.funda.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,42 +14,49 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanchit.funda.R;
-import com.sanchit.funda.async.MFAPI_NAVAsyncLoader;
+import com.sanchit.funda.activity.MutualFundInfoActivity;
+import com.sanchit.funda.cache.CacheManager;
+import com.sanchit.funda.cache.Caches;
 import com.sanchit.funda.model.MFDetailModel;
+import com.sanchit.funda.model.MFPosition;
 import com.sanchit.funda.model.MFPriceModel;
 import com.sanchit.funda.utils.Constants;
-import com.sanchit.funda.utils.NumberUtils;
 import com.sanchit.funda.utils.ViewUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class MFDetailAdapter extends RecyclerView.Adapter<MFDetailAdapter.ViewHolder> {
+public class MFListingAdapter extends RecyclerView.Adapter<MFListingAdapter.ViewHolder> {
 
     private final Activity activity;
     private final List<MFDetailModel> itemList;
 
-    public MFDetailAdapter(Activity activity, List<MFDetailModel> model) {
+    private final CacheManager.Cache<String, MFPosition> positions;
+
+    public MFListingAdapter(Activity activity, List<MFDetailModel> model) {
         this.activity = activity;
         this.itemList = model;
+        positions = CacheManager.get(Caches.POSITIONS, MFPosition.class);
     }
 
     @NonNull
     @Override
-    public MFDetailAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MFListingAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_fund_detail, null);
         ViewUtils.setRecyclerViewItemLayoutParams(layoutView);
-        MFDetailAdapter.ViewHolder rcv = new MFDetailAdapter.ViewHolder(layoutView, activity);
+        MFListingAdapter.ViewHolder rcv = new MFListingAdapter.ViewHolder(layoutView, activity);
         return rcv;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MFDetailAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MFListingAdapter.ViewHolder holder, int position) {
         MFDetailModel p = itemList.get(position);
         holder.textViewSymbol.setText(p.getFund().getFundName());
 
         MFPriceModel data = p.getPriceModel();
 
+        holder.amfiID = p.getFund().getAmfiID();
+        holder.fundName = p.getFund().getFundName();
         holder.textView52WHigh.setText(data.getPriceString(Constants.Duration.T_1YHigh, 2));
         holder.textView52WLow.setText(data.getPriceString(Constants.Duration.T_1YLow, 2));
         holder.textViewCurrent.setText(data.getPriceString(Constants.Duration.T, 2));
@@ -68,6 +76,12 @@ public class MFDetailAdapter extends RecyclerView.Adapter<MFDetailAdapter.ViewHo
         holder.textView6MPct.setText(data.get6MonthsReturn());
         holder.textView3MPct.setText(data.get3MonthsReturn());
         holder.textView1MPct.setText(data.get1MonthReturn());
+
+        if (!positions.exists(p.getFund().getAmfiID())) {
+            holder.textViewMyPortfolio.setVisibility(View.GONE);
+        } else {
+            holder.textViewMyPortfolio.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -78,7 +92,6 @@ public class MFDetailAdapter extends RecyclerView.Adapter<MFDetailAdapter.ViewHo
     private int marginDelta(BigDecimal p, BigDecimal l, BigDecimal h, int measuredWidth) {
         if (p == null || l == null || h == null) {
             return 0;
-
         }
         BigDecimal w = new BigDecimal(measuredWidth);
         BigDecimal delta = w.divide(h.subtract(l), 6, BigDecimal.ROUND_HALF_UP).multiply(p.subtract(l));
@@ -97,6 +110,10 @@ public class MFDetailAdapter extends RecyclerView.Adapter<MFDetailAdapter.ViewHo
         private final TextView textView6MPct;
         private final TextView textView3MPct;
         private final TextView textView1MPct;
+        private final TextView textViewMyPortfolio;
+
+        private String amfiID;
+        private String fundName;
 
         public ViewHolder(View itemView, Context context) {
             super(itemView);
@@ -113,11 +130,17 @@ public class MFDetailAdapter extends RecyclerView.Adapter<MFDetailAdapter.ViewHo
             this.textView3MPct = itemView.findViewById(R.id.card_fund_detail_3M_pct);
             this.textView1MPct = itemView.findViewById(R.id.card_fund_detail_1M_pct);
 
+            this.textViewMyPortfolio = itemView.findViewById(R.id.card_fund_detail_my_portfolio);
+
             this.context = context;
         }
 
         @Override
         public void onClick(View v) {
+            Intent i = new Intent(this.context, MutualFundInfoActivity.class);
+            i.putExtra("amfiID", amfiID);
+            i.putExtra("fundName", fundName);
+            this.context.startActivity(i);
         }
     }
 }

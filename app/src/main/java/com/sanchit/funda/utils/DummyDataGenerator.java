@@ -1,6 +1,5 @@
 package com.sanchit.funda.utils;
 
-import com.sanchit.funda.model.HomeSummary1Model;
 import com.sanchit.funda.model.HomeSummary2Model;
 import com.sanchit.funda.model.HomeSummary3Model;
 
@@ -9,14 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DummyDataGenerator {
-
-    public static List<HomeSummary1Model> generateHomeSumary1Model() {
-        List<HomeSummary1Model> model = new ArrayList<>();
-        model.add(new HomeSummary1Model("Top Fund", "Axis Bluechip Fund"));
-        model.add(new HomeSummary1Model("Top Category", "FoF Overses - Emerging Markets"));
-        model.add(new HomeSummary1Model("Least Performing Fund", "L&T Emerging Business Fund"));
-        return model;
-    }
 
     public static List<HomeSummary2Model> generateHomeSumary2Model() {
         List<HomeSummary2Model> model = new ArrayList<>();

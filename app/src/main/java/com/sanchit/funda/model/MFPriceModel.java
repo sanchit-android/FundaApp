@@ -57,18 +57,30 @@ public class MFPriceModel implements Serializable {
         return getReturns(Constants.Duration.T_6M, Constants.Duration.T);
     }
 
+    public BigDecimal get6MonthsReturnComparable() {
+        return getComparableReturns(Constants.Duration.T_6M, Constants.Duration.T);
+    }
+
     public String get3MonthsReturn() {
         return getReturns(Constants.Duration.T_3M, Constants.Duration.T);
+    }
+
+    public BigDecimal get3MonthsReturnComparable() {
+        return getComparableReturns(Constants.Duration.T_3M, Constants.Duration.T);
     }
 
     public String get1MonthReturn() {
         return getReturns(Constants.Duration.T_1M, Constants.Duration.T);
     }
 
+    public BigDecimal get1MonthReturnComparable() {
+        return getComparableReturns(Constants.Duration.T_1M, Constants.Duration.T);
+    }
+
     private String getReturns(String tOld, String tNow) {
         BigDecimal priceOld = getPrice(tOld);
         BigDecimal priceNow = getPrice(tNow);
-        if(priceOld == null) {
+        if (priceOld == null) {
             return "-";
         }
         return NumberUtils.toPercentage((priceNow.subtract(priceOld)).divide(priceOld, 4, BigDecimal.ROUND_HALF_UP), 2);
@@ -78,7 +90,7 @@ public class MFPriceModel implements Serializable {
     private BigDecimal getComparableReturns(String tOld, String tNow) {
         BigDecimal priceOld = getPrice(tOld);
         BigDecimal priceNow = getPrice(tNow);
-        if(priceOld == null) {
+        if (priceOld == null) {
             return BigDecimal.ZERO;
         }
         return (priceNow.subtract(priceOld)).divide(priceOld, 4, BigDecimal.ROUND_HALF_UP);

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.sanchit.funda.MainActivity;
 import com.sanchit.funda.R;
+import com.sanchit.funda.utils.Constants;
 
 public class IntroLogoActivity extends AppCompatActivity {
 
@@ -23,6 +24,8 @@ public class IntroLogoActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_intro_logo);
+
+        Constants.initData(this);
 
         sharedPref = getSharedPreferences(getString(R.string.main_preference_file_key), Context.MODE_PRIVATE);
         new Forwarder().execute();

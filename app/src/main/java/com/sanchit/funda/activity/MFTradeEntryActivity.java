@@ -26,7 +26,6 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 public class MFTradeEntryActivity extends AppCompatActivity {
@@ -89,7 +88,7 @@ public class MFTradeEntryActivity extends AppCompatActivity {
         BigDecimal price = new BigDecimal(((EditText) findViewById(R.id.mf_trade_entry_price)).getText().toString());
         String date = ((EditText) findViewById(R.id.mf_trade_entry_date)).getText().toString();
 
-        MutualFund fund = ((CacheManager.Cache<String, MutualFund>) CacheManager.get(Caches.FUNDS_BY_KEY)).get(fundName);
+        MutualFund fund = ((CacheManager.Cache<String, MutualFund>) CacheManager.get(Caches.FUNDS_BY_NAME)).get(fundName);
 
         trade.setFund(fund);
         trade.setCostPrice(price);

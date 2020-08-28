@@ -28,12 +28,13 @@ import com.sanchit.funda.async.NSDL_CASAsyncLoader;
 import com.sanchit.funda.async.event.OnEnrichmentCompleted;
 import com.sanchit.funda.cache.CacheManager;
 import com.sanchit.funda.cache.Caches;
-import com.sanchit.funda.model.HomeSummary1Model;
 import com.sanchit.funda.model.HomeSummary2Model;
 import com.sanchit.funda.model.MFPosition;
 import com.sanchit.funda.model.MFPriceModel;
 import com.sanchit.funda.model.MFTrade;
 import com.sanchit.funda.model.MutualFund;
+import com.sanchit.funda.model.homesummary.AbstractHomeSummary1Model;
+import com.sanchit.funda.model.homesummary.DataFactory;
 import com.sanchit.funda.utils.Constants;
 import com.sanchit.funda.utils.DummyDataGenerator;
 import com.sanchit.funda.utils.NumberUtils;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private final List<MFTrade> trades = new ArrayList<>();
 
     private RecyclerView recyclerViewHomeSummary1;
-    private List<HomeSummary1Model> homeSummary1Model;
+    private List<AbstractHomeSummary1Model> homeSummary1Model;
     private HomeSummary1Adapter homeSummary1Adapter;
 
     private RecyclerView recyclerViewHomeSummary2;
@@ -104,9 +105,6 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerViewHomeSummary1 = findViewById(R.id.recycler_view_home_summary_1);
         recyclerViewHomeSummary1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        homeSummary1Model = DummyDataGenerator.generateHomeSumary1Model();
-        homeSummary1Adapter = new HomeSummary1Adapter(this, homeSummary1Model);
-        recyclerViewHomeSummary1.setAdapter(homeSummary1Adapter);
 
         recyclerViewHomeSummary2 = findViewById(R.id.recycler_view_home_summary_2);
         recyclerViewHomeSummary2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -201,6 +199,11 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.home_summary_pnl)).setText(NumberUtils.toPercentage(pnl, 2));
 
         spinner.setVisibility(View.GONE);
+
+        // Setup Summary1 section
+        homeSummary1Model = DataFactory.generateHomeSumary1Model(positions, trades);
+        homeSummary1Adapter = new HomeSummary1Adapter(this, homeSummary1Model);
+        recyclerViewHomeSummary1.setAdapter(homeSummary1Adapter);
     }
 
     public void onClickHomeSummary(View view) {
@@ -220,6 +223,14 @@ public class MainActivity extends AppCompatActivity {
         CacheManager.Cache<String, MutualFund> cache = new CacheManager.Cache<>();
         for (MutualFund fund : data) {
             cache.add(fund.getFundName(), fund);
+        }
+        return cache;
+    }
+
+    private CacheManager.Cache<String, MutualFund> generateCacheByAmfiId(List<MutualFund> data) {
+        CacheManager.Cache<String, MutualFund> cache = new CacheManager.Cache<>();
+        for (MutualFund fund : data) {
+            cache.add(fund.getAmfiID(), fund);
         }
         return cache;
     }
@@ -244,13 +255,23 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void updateView(List<MutualFund> data) {
             CacheManager.registerRawData(Caches.FUNDS, data);
-            CacheManager.registerCache(Caches.FUNDS_BY_KEY, generateCacheByName(data));
+            CacheManager.registerCache(Caches.FUNDS_BY_NAME, generateCacheByName(data));
+            CacheManager.registerCache(Caches.FUNDS_BY_AMFI_ID, generateCacheByAmfiId(data));
 
             Map<String, MutualFund> isinToFundMap = toISINMap(data);
             updateFundDataIntoPositions(isinToFundMap);
             updateSummary();
 
             initiatePriceUpdateRequests();
+            CacheManager.registerCache(Caches.POSITIONS, toCache(positions));
+        }
+
+        private CacheManager.Cache<String, MFPosition> toCache(List<MFPosition> data) {
+            CacheManager.Cache<String, MFPosition> cache = new CacheManager.Cache<>();
+            for (MFPosition pos : data) {
+                cache.add(pos.getFund().getAmfiID(), pos);
+            }
+            return cache;
         }
 
         private void initiatePriceUpdateRequests() {
@@ -304,6 +325,8 @@ public class MainActivity extends AppCompatActivity {
         public void updateView(MFPriceModel data) {
             priceMap.put(data.getAmfiID(), data);
             --priceRequestsPending;
+
+            CacheManager.getOrRegisterCache(Caches.PRICES_BY_AMFI_ID, MFPriceModel.class).add(data.getAmfiID(), data);
 
             if (priceRequestsPending == 0) {
                 // Update the latest Valuation and enrich further data

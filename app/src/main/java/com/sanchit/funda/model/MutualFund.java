@@ -1,5 +1,7 @@
 package com.sanchit.funda.model;
 
+import com.sanchit.funda.model.homesummary.MFRankModel;
+
 import java.io.Serializable;
 
 public class MutualFund implements Serializable {
@@ -11,6 +13,12 @@ public class MutualFund implements Serializable {
 
     private String isin;
     private String amfiID;
+
+    private MFRankModel rankModel = new MFRankModel();
+
+    public MFRankModel getRankModel() {
+        return rankModel;
+    }
 
     public String getFundName() {
         return fundName;

@@ -1,11 +1,14 @@
 package com.sanchit.funda.content.file;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 
+import com.sanchit.funda.activity.WelcomeActivity;
 import com.sanchit.funda.model.MFPosition;
 import com.sanchit.funda.model.MutualFund;
 import com.sanchit.funda.utils.NumberUtils;
+import com.sanchit.funda.utils.SecurityUtils;
 import com.tom_roush.pdfbox.pdmodel.PDDocument;
 import com.tom_roush.pdfbox.text.PDFTextStripper;
 
@@ -134,6 +137,7 @@ public class NSDL_CASContentParser extends AbstractFileParser<MFPosition> {
 
     @Override
     public List<MFPosition> parse(Activity activity, Uri uri) throws IOException {
+        SecurityUtils.setupPermissions(activity);
         try (InputStream inputStream = activity.getContentResolver().openInputStream(uri)) {
             PDDocument document = PDDocument.load(inputStream, PAN);
             PDFTextStripper stripper = new PDFTextStripper();
@@ -170,6 +174,10 @@ public class NSDL_CASContentParser extends AbstractFileParser<MFPosition> {
             List<MFPosition> positions = extractPositions(parseableLines);
             positions = cleanupPositions(positions);
             return positions;
+        } catch (Exception e) {
+            Intent i = new Intent(activity, WelcomeActivity.class);
+            activity.startActivity(i);
+            return null;
         }
     }
 

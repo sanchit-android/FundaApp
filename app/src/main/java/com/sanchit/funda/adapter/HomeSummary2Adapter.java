@@ -10,7 +10,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanchit.funda.R;
-import com.sanchit.funda.model.HomeSummary1Model;
 import com.sanchit.funda.model.HomeSummary2Model;
 
 import java.util.List;

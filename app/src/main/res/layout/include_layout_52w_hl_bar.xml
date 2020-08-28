@@ -5,6 +5,15 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1px"
+        android:textColor="@color/card_fund_detail_nav"
+        android:textSize="@dimen/card_fund_detail_52w_hl_text"
+        android:textStyle="bold"
+        android:text="52 W High/Low" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

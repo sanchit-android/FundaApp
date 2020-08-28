@@ -1,6 +1,9 @@
 package com.sanchit.funda.utils;
 
+import android.content.Context;
+
 import com.sanchit.funda.R;
+import com.sanchit.funda.model.MFDetailModel;
 import com.sanchit.funda.model.PositionViewModel;
 
 import java.math.BigDecimal;
@@ -18,6 +21,8 @@ public class Constants {
 
     private static final Map<Integer, Map<String, Comparator<PositionViewModel>>> POSITIONS_VIEW_COMPARATOR_MAP = new HashMap<>();
     private static final Map<Integer, Integer> POSITIONS_VIEW_SORT_ICON_MAP = new HashMap<>();
+
+    private static final Map<String, Comparator<MFDetailModel>> POSITIONS_DETAIL_VIEW_COMPARATOR_MAP = new HashMap<>();
 
     static {
         PRICE_MAP.put(Duration.T, new DurationData(DurationBasis.IndexBased, 0));
@@ -39,6 +44,18 @@ public class Constants {
         POSITIONS_VIEW_SORT_ICON_MAP.put(R.id.positions_view_header_cost, R.id.positions_view_header_cost_sort_icon);
         POSITIONS_VIEW_SORT_ICON_MAP.put(R.id.positions_view_header_daypnl, R.id.positions_view_header_daypnl_sort_icon);
         POSITIONS_VIEW_SORT_ICON_MAP.put(R.id.positions_view_header_overallpnl, R.id.positions_view_header_overallpnl_sort_icon);
+
+    }
+
+    public static void initData(Context context) {
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[0], (o1, o2) -> o1.getPriceModel().get1MonthReturnComparable().compareTo(o2.getPriceModel().get1MonthReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[1], (o1, o2) -> o2.getPriceModel().get1MonthReturnComparable().compareTo(o1.getPriceModel().get1MonthReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[2], (o1, o2) -> o1.getPriceModel().get3MonthsReturnComparable().compareTo(o2.getPriceModel().get3MonthsReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[3], (o1, o2) -> o2.getPriceModel().get3MonthsReturnComparable().compareTo(o1.getPriceModel().get3MonthsReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[4], (o1, o2) -> o1.getPriceModel().get6MonthsReturnComparable().compareTo(o2.getPriceModel().get6MonthsReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[5], (o1, o2) -> o2.getPriceModel().get6MonthsReturnComparable().compareTo(o1.getPriceModel().get6MonthsReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[6], (o1, o2) -> o1.getPriceModel().get1YearReturnComparable().compareTo(o2.getPriceModel().get1YearReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[7], (o1, o2) -> o2.getPriceModel().get1YearReturnComparable().compareTo(o1.getPriceModel().get1YearReturnComparable()));
     }
 
     private static final Map<String, Comparator<PositionViewModel>> newMap(Comparator<PositionViewModel> c1, Comparator<PositionViewModel> c2) {
@@ -50,6 +67,10 @@ public class Constants {
 
     public static final Comparator<PositionViewModel> getComparator(Integer viewId, String sortType) {
         return POSITIONS_VIEW_COMPARATOR_MAP.get(viewId).get(sortType);
+    }
+
+    public static Comparator<MFDetailModel> getPositionDetailComparator(String key) {
+        return POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.get(key);
     }
 
     public static final Integer getSortImage(Integer viewId) {

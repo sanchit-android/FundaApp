@@ -7,14 +7,36 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/card_fund_detail_fund_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/card_fund_detail_fund_name"
-        android:textSize="@dimen/card_fund_detail_fund_name"
-        android:textStyle="bold"
-        android:text="Some XYZ Fund" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/card_fund_detail_fund_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:layout_weight="3"
+            android:textColor="@color/card_fund_detail_fund_name"
+            android:textSize="@dimen/card_fund_detail_fund_name"
+            android:textStyle="bold"
+            android:text="Some XYZ Fund" />
+
+        <TextView
+            android:id="@+id/card_fund_detail_my_portfolio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/card_fund_detail_my_portfolio_fg"
+            android:textSize="@dimen/card_fund_detail_fund_name"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/round_rect_3"
+            android:padding="4dp"
+            android:text="My Portfolio" />
+
+    </LinearLayout>
 
     <include
         android:id="@+id/card_fund_detail_52hl_layout"
@@ -37,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="1Yr" />
 
             <TextView
@@ -60,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="6M" />
 
             <TextView
@@ -83,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="3M" />
 
             <TextView
@@ -106,6 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="1M" />
 
             <TextView
@@ -129,8 +155,5 @@
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_fund_detail_growth_section" />
-
-
-
 
 </LinearLayout>
