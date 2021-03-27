@@ -2,25 +2,21 @@ package com.sanchit.funda.async;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.sanchit.funda.async.event.OnEnrichmentCompleted;
+import com.sanchit.funda.async.task.ChainedTask;
 import com.sanchit.funda.content.file.NSDL_CASContentParser;
 import com.sanchit.funda.model.MFPosition;
 
 import java.io.IOException;
 import java.util.List;
 
-public class NSDL_CASAsyncLoader extends AsyncTask<Uri, Void, List<MFPosition>> {
+public class NSDL_CASAsyncLoader extends ChainedTask<Uri, Void, List<MFPosition>> {
 
-    private final Activity activity;
-    private final OnEnrichmentCompleted<List<MFPosition>> callback;
     private final String PAN;
 
     public NSDL_CASAsyncLoader(Activity activity, OnEnrichmentCompleted<List<MFPosition>> callback, String PAN) {
-        this.activity = activity;
-        this.callback = callback;
+        super(activity, callback);
         this.PAN = PAN;
     }
 
@@ -29,13 +25,8 @@ public class NSDL_CASAsyncLoader extends AsyncTask<Uri, Void, List<MFPosition>> 
         try {
             return new NSDL_CASContentParser(PAN).parse(activity, args[0]);
         } catch (IOException e) {
-            Toast.makeText(activity, e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    protected void onPostExecute(List<MFPosition> data) {
-        callback.updateView(data);
     }
 }

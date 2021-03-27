@@ -37,6 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:gravity="right"
             android:text="Rank in Category"
             android:textColor="@color/fund_detail_section_cat_name"
             android:textSize="@dimen/fund_detail_section_cat_name" />
@@ -65,7 +66,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Returns"
+            android:text="-"
             android:textColor="@color/fund_detail_section_cat_name"
             android:textSize="@dimen/fund_detail_section_cat_name" />
 
@@ -74,7 +75,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Rank in Category"
+            android:gravity="right"
+            android:text="-"
             android:textColor="@color/fund_detail_section_cat_name"
             android:textSize="@dimen/fund_detail_section_cat_name" />
 
@@ -97,7 +99,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Returns"
+            android:text="-"
             android:textColor="@color/fund_detail_section_cat_name"
             android:textSize="@dimen/fund_detail_section_cat_name" />
 
@@ -106,7 +108,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Rank in Category"
+            android:gravity="right"
+            android:text="-"
             android:textColor="@color/fund_detail_section_cat_name"
             android:textSize="@dimen/fund_detail_section_cat_name" />
 
@@ -129,7 +132,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Returns"
+            android:text="-"
             android:textColor="@color/fund_detail_section_cat_name"
             android:textSize="@dimen/fund_detail_section_cat_name" />
 
@@ -138,7 +141,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Rank in Category"
+            android:gravity="right"
+            android:text="-"
             android:textColor="@color/fund_detail_section_cat_name"
             android:textSize="@dimen/fund_detail_section_cat_name" />
 
@@ -161,7 +165,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Returns"
+            android:text="-"
             android:textColor="@color/fund_detail_section_cat_name"
             android:textSize="@dimen/fund_detail_section_cat_name" />
 
@@ -170,7 +174,107 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Rank in Category"
+            android:gravity="right"
+            android:text="-"
+            android:textColor="@color/fund_detail_section_cat_name"
+            android:textSize="@dimen/fund_detail_section_cat_name" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="2 Years"
+            android:textColor="@color/fund_detail_section_cat_name"
+            android:textSize="@dimen/fund_detail_section_cat_name" />
+
+        <TextView
+            android:id="@+id/mf_detail_2Y_return"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="-"
+            android:textColor="@color/fund_detail_section_cat_name"
+            android:textSize="@dimen/fund_detail_section_cat_name" />
+
+        <TextView
+            android:id="@+id/mf_detail_2Y_rank"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:text="-"
+            android:textColor="@color/fund_detail_section_cat_name"
+            android:textSize="@dimen/fund_detail_section_cat_name" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="3 Years"
+            android:textColor="@color/fund_detail_section_cat_name"
+            android:textSize="@dimen/fund_detail_section_cat_name" />
+
+        <TextView
+            android:id="@+id/mf_detail_3Y_return"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="-"
+            android:textColor="@color/fund_detail_section_cat_name"
+            android:textSize="@dimen/fund_detail_section_cat_name" />
+
+        <TextView
+            android:id="@+id/mf_detail_3Y_rank"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:text="-"
+            android:textColor="@color/fund_detail_section_cat_name"
+            android:textSize="@dimen/fund_detail_section_cat_name" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="5 Years"
+            android:textColor="@color/fund_detail_section_cat_name"
+            android:textSize="@dimen/fund_detail_section_cat_name" />
+
+        <TextView
+            android:id="@+id/mf_detail_5Y_return"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="-"
+            android:textColor="@color/fund_detail_section_cat_name"
+            android:textSize="@dimen/fund_detail_section_cat_name" />
+
+        <TextView
+            android:id="@+id/mf_detail_5Y_rank"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:text="-"
             android:textColor="@color/fund_detail_section_cat_name"
             android:textSize="@dimen/fund_detail_section_cat_name" />
 

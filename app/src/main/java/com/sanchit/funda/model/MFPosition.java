@@ -3,12 +3,7 @@ package com.sanchit.funda.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class MFPosition implements Serializable {
-
-    private MutualFund fund;
-    private BigDecimal quantity;
-    private BigDecimal costPrice;
-    private BigDecimal cost;
+public class MFPosition extends AbstractMFObject implements Serializable {
 
     // As specified in NSDL-CAS
     private BigDecimal currentNAV;
@@ -22,38 +17,6 @@ public class MFPosition implements Serializable {
     private BigDecimal valuation;
 
     private String folioNo;
-
-    public MutualFund getFund() {
-        return fund;
-    }
-
-    public void setFund(MutualFund fund) {
-        this.fund = fund;
-    }
-
-    public BigDecimal getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(BigDecimal quantity) {
-        this.quantity = quantity;
-    }
-
-    public BigDecimal getCostPrice() {
-        return costPrice;
-    }
-
-    public void setCostPrice(BigDecimal costPrice) {
-        this.costPrice = costPrice;
-    }
-
-    public BigDecimal getCost() {
-        return cost;
-    }
-
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
-    }
 
     public BigDecimal getCurrentNAV() {
         return currentNAV;

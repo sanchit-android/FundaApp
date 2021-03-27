@@ -1,6 +1,5 @@
 package com.sanchit.funda.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,14 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanchit.funda.R;
 import com.sanchit.funda.adapter.MFListingAdapter;
-import com.sanchit.funda.async.MFAPI_NAVAsyncLoader;
-import com.sanchit.funda.async.event.OnEnrichmentCompleted;
-import com.sanchit.funda.cache.CacheManager;
-import com.sanchit.funda.cache.Caches;
 import com.sanchit.funda.dialog.SortingOptionDialog;
 import com.sanchit.funda.model.MFDetailModel;
-import com.sanchit.funda.model.MFPriceModel;
-import com.sanchit.funda.model.MutualFund;
+import com.sanchit.funda.model.factory.MFDetailModelFactory;
 import com.sanchit.funda.utils.Constants;
 import com.sanchit.funda.utils.ViewUtils;
 
@@ -31,12 +25,10 @@ import java.util.List;
 
 public class PositionLineItemDetailActivity extends AppCompatActivity implements SortingOptionDialog.SortingDialogListener {
 
-    int priceEnrichmentReqs = 0;
     private String item;
     private String grouping;
-    private List<MutualFund> funds;
     private RecyclerView recyclerViewOtherFunds;
-    private List<MFDetailModel> fundDetailModels;
+    private List<MFDetailModel> fundDetailModels = new ArrayList<>();
     private MFListingAdapter mfDetailAdapter;
 
     private String currentSortOption;
@@ -56,7 +48,7 @@ public class PositionLineItemDetailActivity extends AppCompatActivity implements
 
         recyclerViewOtherFunds = findViewById(R.id.recycler_view_position_line_item_other_funds);
         recyclerViewOtherFunds.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        fundDetailModels = generateDataModel();
+        generateDataModel();
     }
 
     @Override
@@ -85,35 +77,11 @@ public class PositionLineItemDetailActivity extends AppCompatActivity implements
         return item;
     }
 
-    private List<MFDetailModel> generateDataModel() {
-        funds = (List<MutualFund>) CacheManager.get(Caches.FUNDS);
-        List<MFDetailModel> fundDetailModels = new ArrayList<>();
-
-        for (MutualFund fund : funds) {
-            if (included(fund)) {
-                MFDetailModel mfDetailModel = new MFDetailModel();
-                mfDetailModel.setFund(fund);
-                fundDetailModels.add(mfDetailModel);
-
-                new MFAPI_NAVAsyncLoader(this, new OnMFAPI_PriceLoadedHandler(this, mfDetailModel), MFAPI_NAVAsyncLoader.EnrichmentModel.Default)
-                        .execute(mfDetailModel.getFund().getAmfiID());
-                ++priceEnrichmentReqs;
-            }
-        }
-        return fundDetailModels;
-    }
-
-    private boolean included(MutualFund fund) {
-        if (getResources().getStringArray(R.array.positions_view_grouping)[0].equals(grouping)) {
-            return fund.getFundName().equals(item);
-        } else if (getResources().getStringArray(R.array.positions_view_grouping)[1].equals(grouping)) {
-            return fund.getCategory().equals(item);
-        } else if (getResources().getStringArray(R.array.positions_view_grouping)[2].equals(grouping)) {
-            return fund.getSubCategory().equals(item);
-        } else if (getResources().getStringArray(R.array.positions_view_grouping)[3].equals(grouping)) {
-            return fund.getAppDefinedCategory().equals(item);
-        }
-        return fund.getFundName().equals(item);
+    private void generateDataModel() {
+        new MFDetailModelFactory(item, MFDetailModelFactory.getCriteria(this, grouping), mfDetailModelList -> {
+            fundDetailModels.addAll(mfDetailModelList);
+            initAdapter();
+        });
     }
 
     private void initAdapter() {
@@ -140,24 +108,5 @@ public class PositionLineItemDetailActivity extends AppCompatActivity implements
 
     @Override
     public void onDialogCancelClick(DialogFragment dialog) {
-
-    }
-
-    private class OnMFAPI_PriceLoadedHandler implements OnEnrichmentCompleted<MFPriceModel> {
-        private final MFDetailModel model;
-
-        public OnMFAPI_PriceLoadedHandler(Context context, MFDetailModel model) {
-            this.model = model;
-        }
-
-        @Override
-        public void updateView(MFPriceModel data) {
-            model.setPriceModel(data);
-            --priceEnrichmentReqs;
-
-            if (priceEnrichmentReqs == 0) {
-                initAdapter();
-            }
-        }
     }
 }

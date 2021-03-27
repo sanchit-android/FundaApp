@@ -1,5 +1,6 @@
 package com.sanchit.funda.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
@@ -7,6 +8,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,5 +65,10 @@ public class ViewUtils {
         ActionBar actionBar = activity.getSupportActionBar();
         ColorDrawable colorDrawable = new ColorDrawable(activity.getResources().getColor(R.color.colorPrimaryDark));
         actionBar.setBackgroundDrawable(colorDrawable);
+    }
+
+    public static void setTextViewData(Activity activity, int viewId, String fundName) {
+        TextView view = activity.findViewById(viewId);
+        view.setText(fundName);
     }
 }

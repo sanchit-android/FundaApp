@@ -38,15 +38,47 @@
 
     </LinearLayout>
 
-    <include
-        android:id="@+id/card_fund_detail_52hl_layout"
-        layout="@layout/include_layout_52w_hl_bar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/card_fund_detail_nav"
+            android:textStyle="bold"
+            android:text="NAV   " />
+
+        <TextView
+            android:id="@+id/card_fund_detail_curent_nav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/card_fund_detail_nav"
+            android:textSize="@dimen/card_fund_detail_nav"
+            android:textStyle="italic"
+            android:text="12.5" />
+
+        <TextView
+            android:id="@+id/card_fund_detail_curent_nav_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/card_fund_detail_nav"
+            android:textStyle="normal"
+            android:text="NAV   " />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/card_fund_detail_growth_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -60,34 +92,10 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="1Yr" />
+                android:text="1M" />
 
             <TextView
-                android:id="@+id/card_fund_detail_1Y_pct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="10%" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:text="6M" />
-
-            <TextView
-                android:id="@+id/card_fund_detail_6M_pct"
+                android:id="@+id/card_fund_detail_1M_pct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -132,10 +140,34 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="1M" />
+                android:text="6M" />
 
             <TextView
-                android:id="@+id/card_fund_detail_1M_pct"
+                android:id="@+id/card_fund_detail_6M_pct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="10%" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="1Yr" />
+
+            <TextView
+                android:id="@+id/card_fund_detail_1Y_pct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -147,13 +179,99 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/card_fund_detail_growth_section_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="2Y" />
+
+            <TextView
+                android:id="@+id/card_fund_detail_2Y_pct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="10%" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="3Y" />
+
+            <TextView
+                android:id="@+id/card_fund_detail_3Y_pct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="10%" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="5Y" />
+
+            <TextView
+                android:id="@+id/card_fund_detail_5Y_pct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="10%" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--include
+        android:id="@+id/card_fund_detail_52hl_layout"
+        layout="@layout/include_layout_52w_hl_bar"
+        android:layout_marginTop="5dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" /-->
+
+    <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_gravity="center_vertical"
         android:background="@color/card_fund_detail_divider"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_fund_detail_growth_section" />
+        android:orientation="horizontal" />
 
 </LinearLayout>

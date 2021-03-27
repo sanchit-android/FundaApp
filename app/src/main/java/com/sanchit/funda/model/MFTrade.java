@@ -4,13 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class MFTrade implements Serializable {
+public class MFTrade extends AbstractMFObject implements Serializable {
 
-    private MutualFund fund;
-    private BigDecimal quantity;
-    private BigDecimal costPrice;
-    private BigDecimal cost;
     private Date investmentDate;
+    private String side;
 
     private BigDecimal currentNAV;
     private BigDecimal valuation;
@@ -21,36 +18,12 @@ public class MFTrade implements Serializable {
 
     private String folioNo;
 
-    public MutualFund getFund() {
-        return fund;
+    public String getSide() {
+        return side;
     }
 
-    public void setFund(MutualFund fund) {
-        this.fund = fund;
-    }
-
-    public BigDecimal getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(BigDecimal quantity) {
-        this.quantity = quantity;
-    }
-
-    public BigDecimal getCostPrice() {
-        return costPrice;
-    }
-
-    public void setCostPrice(BigDecimal costPrice) {
-        this.costPrice = costPrice;
-    }
-
-    public BigDecimal getCost() {
-        return cost;
-    }
-
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
+    public void setSide(String side) {
+        this.side = side;
     }
 
     public BigDecimal getCurrentNAV() {

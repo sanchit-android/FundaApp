@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MutualFundInfoActivity"></activity>
+        <activity android:name=".activity.LoggingActivity"></activity>
+        <activity android:name=".activity.PositionCashflowViewActivity" />
+        <activity android:name=".activity.MutualFundInfoActivity" />
         <activity android:name=".activity.PositionLineItemDetailActivity" />
         <activity android:name=".activity.MFTradeEntryActivity" />
         <activity

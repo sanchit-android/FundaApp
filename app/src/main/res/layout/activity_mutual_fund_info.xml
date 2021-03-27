@@ -18,6 +18,8 @@
         android:layout_marginTop="-20dp"
         android:paddingHorizontal="10dp">
 
+        <include layout="@layout/include_section_mf_detail_basic" />
+
         <include layout="@layout/include_section_mf_detail_returns" />
 
     </LinearLayout>

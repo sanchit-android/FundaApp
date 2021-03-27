@@ -9,6 +9,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sanchit.funda.R;
+import com.sanchit.funda.utils.ViewUtils;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -18,6 +19,8 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Welcome...");
+        getSupportActionBar().setElevation(0);
+        ViewUtils.setActionBarColor(this, R.color.colorPrimaryDark);
         setContentView(R.layout.activity_welcome);
 
         sharedPref = getSharedPreferences(getString(R.string.main_preference_file_key), Context.MODE_PRIVATE);

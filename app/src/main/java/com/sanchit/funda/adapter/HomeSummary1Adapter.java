@@ -36,8 +36,9 @@ public class HomeSummary1Adapter extends RecyclerView.Adapter<HomeSummary1Adapte
 
     @Override
     public void onBindViewHolder(InvestmentSynopsis2ViewHolder holder, int position) {
-        holder.textViewBoxHeader.setText(itemList.get(position).getHeader());
-        holder.textViewBoxContent.setText(itemList.get(position).getContent());
+        AbstractHomeSummary1Model homeSummary1Model = itemList.get(position);
+        holder.textViewBoxHeader.setText(homeSummary1Model.getHeader());
+        holder.textViewBoxContent.setText(homeSummary1Model.getContent());
     }
 
     @Override
@@ -65,5 +66,6 @@ public class HomeSummary1Adapter extends RecyclerView.Adapter<HomeSummary1Adapte
         public void onClick(View v) {
         }
     }
+
 }
 

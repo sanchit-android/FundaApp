@@ -17,7 +17,7 @@ public abstract class AbstractFileParser<T> {
 
 
 
-    public abstract List<T> parse(Activity activity, Uri uri) throws IOException;
+    public abstract List<T> parse(Activity activity, Uri uri) throws IOException, Exception;
 
     protected boolean isNumeric(String string) {
         try {

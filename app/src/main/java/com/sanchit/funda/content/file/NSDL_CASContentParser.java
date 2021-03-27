@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.sanchit.funda.activity.WelcomeActivity;
+import com.sanchit.funda.cache.CacheManager;
+import com.sanchit.funda.cache.Caches;
 import com.sanchit.funda.model.MFPosition;
 import com.sanchit.funda.model.MutualFund;
 import com.sanchit.funda.utils.NumberUtils;
@@ -16,15 +18,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NSDL_CASContentParser extends AbstractFileParser<MFPosition> {
 
     private static final String NA = "NOT AVAILABLE";
     private final String PAN;
 
+    private final Map<String, MutualFund> isinToFundMap;
+
     public NSDL_CASContentParser(String PAN) {
         this.PAN = PAN;
+        isinToFundMap = toISINMap();
+    }
+
+    private Map<String, MutualFund> toISINMap() {
+        List<MutualFund> funds = (List<MutualFund>) CacheManager.get(Caches.FUNDS);
+        Map<String, MutualFund> isinToFundMap = new HashMap<>();
+        for (MutualFund fund : funds) {
+            isinToFundMap.put(fund.getIsin(), fund);
+        }
+        return isinToFundMap;
     }
 
     private List<MFPosition> cleanupPositions(List<MFPosition> positions) {
@@ -39,8 +55,6 @@ public class NSDL_CASContentParser extends AbstractFileParser<MFPosition> {
         for (List<String> section : parseableLines) {
             StringBuffer fundName = new StringBuffer();
             MFPosition position = new MFPosition();
-            MutualFund fund = new MutualFund();
-            position.setFund(fund);
 
             int folioIndex = 0;
 
@@ -58,7 +72,9 @@ public class NSDL_CASContentParser extends AbstractFileParser<MFPosition> {
                             break;
                         }
                     }
-                    position.getFund().setIsin(words[0]);
+                    String isin = words[0];
+                    MutualFund fund = isinToFundMap.get(isin);
+                    position.setFund(fund);
                     position.setFolioNo(words[folioIndex]);
                     position.setQuantity(NumberUtils.parseNumber(words[folioIndex + 1]));
                     position.setCostPrice(NumberUtils.parseNumber(words[folioIndex + 2]));
@@ -69,12 +85,8 @@ public class NSDL_CASContentParser extends AbstractFileParser<MFPosition> {
                     if (words.length > folioIndex + 7) {
                         position.setAnnualizedReturn(NumberUtils.parseNumber(words[folioIndex + 7]).divide(new BigDecimal(100)));
                     }
-                } else {
-                    fundName.append(line);
                 }
             }
-
-            fund.setFundName(fundName.toString());
             positions.add(position);
         }
         return positions;
@@ -173,8 +185,12 @@ public class NSDL_CASContentParser extends AbstractFileParser<MFPosition> {
             parseableLines = cleanupParseableData(parseableLines);
             List<MFPosition> positions = extractPositions(parseableLines);
             positions = cleanupPositions(positions);
+
+            document.close();
+            inputStream.close();
             return positions;
         } catch (Exception e) {
+            e.printStackTrace();
             Intent i = new Intent(activity, WelcomeActivity.class);
             activity.startActivity(i);
             return null;

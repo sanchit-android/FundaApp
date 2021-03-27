@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:paddingRight="15dp"
             android:gravity="right|bottom"
             android:text="Fund Name" />
@@ -27,6 +27,7 @@
             android:gravity="left"
             android:layout_weight="5"
             android:layout_width="0dp"
+            android:textColor="@color/colorTextDark"
             android:background="@drawable/edit_text_background_1"
             android:layout_height="wrap_content" />
 
@@ -42,7 +43,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:paddingRight="15dp"
             android:gravity="right|bottom"
             android:text="Order Date" />
@@ -68,10 +69,10 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:paddingRight="15dp"
             android:gravity="right|bottom"
-            android:text="Fund Units/Quantity" />
+            android:text="Units" />
 
         <EditText
             android:id="@+id/mf_trade_entry_quantity"
@@ -94,7 +95,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:paddingRight="15dp"
             android:gravity="right|bottom"
             android:text="Price" />
@@ -120,10 +121,10 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:paddingRight="15dp"
             android:gravity="right|bottom"
-            android:text="Cost of Investment" />
+            android:text="Investment" />
 
         <EditText
             android:id="@+id/mf_trade_entry_cost"
@@ -134,6 +135,45 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:paddingRight="15dp"
+            android:gravity="right|bottom"
+            android:text="Side" />
+
+        <RadioGroup
+            android:id="@+id/mf_trade_entry_side"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/side_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BUY"
+                android:onClick="onSideSelectionClicked" />
+
+            <RadioButton
+                android:id="@+id/side_sell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SELL"
+                android:onClick="onSideSelectionClicked" />
+
+        </RadioGroup>
 
     </LinearLayout>
 

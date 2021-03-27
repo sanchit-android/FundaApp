@@ -26,9 +26,15 @@ public class FundsRawDataParser extends AbstractFileParser<MutualFund> {
             String csvLine;
             while ((csvLine = reader.readLine()) != null) {
                 String[] row = csvLine.split(",");
+                boolean direct = row[3].equals("Direct");
+                if (!direct) {
+                    continue;
+                }
+
                 MutualFund fund = new MutualFund();
                 fund.setAmfiID(row[0]);
                 fund.setFundHouse(row[1]);
+                fund.setDirect(direct);
                 fund.setFundName(row[2]);
                 fund.setCategory(row[6]);
                 fund.setSubCategory(row[7]);

@@ -3,21 +3,25 @@
     <color name="green_800">#2E7D32</color>
     <color name="red_A700">#D50000</color>
 
-    <color name="colorPrimaryLight">#e2e2df</color>
-    <color name="colorPrimary">#cbc0d3</color><!-- C6ECDF -->
-    <color name="colorPrimaryDark">#8e9aaf</color><!-- B6D8D3 -->
-    <color name="colorAccent">#003459</color><!-- F2BFAB -->
-    <color name="colorAccentLight">#00a8e8</color>
+    <color name="colorPrimaryLight">#E6ECE8</color>
+    <color name="colorPrimary">#89BEB5</color><!-- C6ECDF -->
+    <color name="colorPrimaryDark">#639F95</color><!-- B6D8D3 -->
+    <color name="colorAccent">#404C50</color><!-- F2BFAB -->
+    <color name="colorAccentLight">#EAE1CD</color>
     <color name="colorBackground">@android:color/white</color>
     <color name="colorDisabled">#CFCFCF</color>
+    <color name="colorHeaderTextDark">#717171</color>
     <color name="colorTextDark">#0B0B0B</color>
-    <color name="colorTextLight">@android:color/white</color>
+    <color name="colorTextLight">#FFFFFF</color>
+    <color name="colorTextPrimaryLight">#CAE5F3</color>
     <color name="colorSubText">#616161</color>
 
-    <color name="buttonColor">@color/colorPrimaryDark</color>
+    <color name="buttonColor">@color/colorPrimary</color>
 
     <color name="main_card_top_bg">@color/colorPrimaryDark</color>
+    <color name="main_card_top_bg_2">@color/colorPrimary</color>
     <color name="main_card_top_text">@color/colorTextLight</color>
+    <color name="main_card_top_text_cat">@color/colorTextPrimaryLight</color>
     <color name="main_card_sec_bg">@color/colorPrimaryLight</color>
     <color name="main_card_sec_text">@color/colorTextDark</color>
 
@@ -39,13 +43,14 @@
 
     <color name="card_fund_detail_fund_name">@color/colorAccent</color>
     <color name="card_fund_detail_nav">@color/colorSubText</color>
-    <color name="card_fund_detail_nav_bar">@color/colorAccentLight</color>
+    <color name="card_fund_detail_nav_bar">@color/colorAccent</color>
     <color name="card_fund_detail_divider">@color/colorDisabled</color>
     <color name="card_fund_detail_my_portfolio_bg">@color/colorAccent</color>
     <color name="card_fund_detail_my_portfolio_fg">@color/colorTextLight</color>
 
     <color name="funds_listing_detail_text">@color/colorTextLight</color>
 
+    <color name="fund_detail_top_summary_fund_name">@color/colorPrimaryLight</color>
     <color name="fund_detail_section_header">@color/colorAccent</color>
     <color name="fund_detail_section_cat_name">@color/colorSubText</color>
     <color name="fund_detail_section_cat_value">@color/colorSubText</color>

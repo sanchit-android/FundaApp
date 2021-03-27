@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left|center_vertical"
         android:text="Positions"
+        android:textColor="@color/colorTextLight"
         android:textSize="20sp"
         android:layout_marginLeft="15dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,6 +22,7 @@
 
     <Spinner
         android:id="@+id/positions_view_menu_spinner"
+        android:textColor="@color/colorTextLight"
         android:layout_width="160dp"
         android:layout_height="match_parent"
         android:layout_marginTop="3dp"

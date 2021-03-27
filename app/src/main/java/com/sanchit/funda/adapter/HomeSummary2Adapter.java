@@ -10,17 +10,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanchit.funda.R;
-import com.sanchit.funda.model.HomeSummary2Model;
+import com.sanchit.funda.model.homesummary.AbstractHomeSummary2Model;
 
 import java.util.List;
 
 public class HomeSummary2Adapter extends RecyclerView.Adapter<HomeSummary2Adapter.InvestmentSynopsis2ViewHolder> {
 
-    private final List<HomeSummary2Model> itemList;
+    private final List<AbstractHomeSummary2Model> itemList;
     private final Context context;
 
     public HomeSummary2Adapter(Context context,
-                               List<HomeSummary2Model> itemList) {
+                               List<AbstractHomeSummary2Model> itemList) {
         this.context = context;
         this.itemList = itemList;
     }
@@ -38,7 +38,7 @@ public class HomeSummary2Adapter extends RecyclerView.Adapter<HomeSummary2Adapte
     public void onBindViewHolder(InvestmentSynopsis2ViewHolder holder, int position) {
         holder.textViewBoxHeader.setText(itemList.get(position).getHeader());
         holder.textViewBoxContent.setText(itemList.get(position).getContent());
-        holder.textViewBoxSubContent.setText(itemList.get(position).getSubContent());
+        holder.textViewBoxSubContent.setText(itemList.get(position).getDetail());
     }
 
     @Override

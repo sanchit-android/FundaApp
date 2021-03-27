@@ -1,6 +1,6 @@
 package com.sanchit.funda.model.homesummary;
 
-import com.sanchit.funda.model.MFPosition;
+import com.sanchit.funda.model.MutualFund;
 
 public abstract class AbstractHomeSummary1Model {
 
@@ -26,11 +26,11 @@ public abstract class AbstractHomeSummary1Model {
     }
 
     public interface KeyProvider {
-        KeyProvider FundNameKey = position -> position.getFund().getFundName();
-        KeyProvider CategoryKey = position -> position.getFund().getCategory();
-        KeyProvider SubCategoryKey = position -> position.getFund().getSubCategory();
-        KeyProvider CustomCategoryKey = position -> position.getFund().getAppDefinedCategory();
+        KeyProvider FundNameKey = fund -> fund.getFundName();
+        KeyProvider CategoryKey = fund -> fund.getCategory();
+        KeyProvider SubCategoryKey = fund -> fund.getSubCategory();
+        KeyProvider CustomCategoryKey = fund -> fund.getAppDefinedCategory();
 
-        String fetchKey(MFPosition position);
+        String fetchKey(MutualFund fund);
     }
 }

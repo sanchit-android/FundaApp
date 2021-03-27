@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="home_summary_name">13sp</dimen>
     <dimen name="home_summary_1_header">14sp</dimen>
     <dimen name="home_summary_1_content">12sp</dimen>
 
@@ -23,4 +24,7 @@
     <dimen name="fund_detail_section_header">23sp</dimen>
     <dimen name="fund_detail_section_cat_name">15sp</dimen>
     <dimen name="fund_detail_section_cat_value">15sp</dimen>
+
+    <dimen name="cashflow_trade_list_item_cat">14sp</dimen>
+    <dimen name="cashflow_trade_list_item">17sp</dimen>
 </resources>

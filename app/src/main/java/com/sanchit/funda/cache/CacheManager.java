@@ -17,9 +17,7 @@ public class CacheManager {
     }
 
     public static final <Z> Cache<String, Z> registerCache(String cacheName, Cache<String, Z> cache) {
-        if (!_caches.containsKey(cacheName)) {
-            _caches.put(cacheName, cache);
-        }
+        _caches.put(cacheName, cache);
         return cache;
     }
 

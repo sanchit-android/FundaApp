@@ -59,7 +59,7 @@ public class TopGrowthModel extends AbstractHomeSummary1Model {
         CacheManager.Cache<String, MFPriceModel> priceCache = CacheManager.get(Caches.PRICES_BY_AMFI_ID, MFPriceModel.class);
 
         for (MFPosition position : positions) {
-            String key = keyProvider.fetchKey(position);
+            String key = keyProvider.fetchKey(position.getFund());
             MFPriceModel prices = priceCache.get(position.getFund().getAmfiID());
 
             if (!investedMap.containsKey(key)) {
@@ -73,6 +73,24 @@ public class TopGrowthModel extends AbstractHomeSummary1Model {
                 valuationMap.put(key, new BigDecimal(0));
             }
             BigDecimal valuation = valuationMap.get(key).add(position.getQuantity().multiply(prices.getPrice(Constants.Duration.T)).setScale(SCALE_DISPLAY, BigDecimal.ROUND_HALF_DOWN));
+            valuationMap.put(key, valuation);
+        }
+
+        for (MFTrade trade : trades) {
+            String key = keyProvider.fetchKey(trade.getFund());
+            MFPriceModel prices = priceCache.get(trade.getFund().getAmfiID());
+
+            if (!investedMap.containsKey(key)) {
+                investedMap.put(key, new BigDecimal(0));
+            }
+            BigDecimal invested = investedMap.get(key).add(trade.getQuantity().multiply(prices.getPrice(baseDuration)).setScale(SCALE_DISPLAY, BigDecimal.ROUND_HALF_DOWN));
+            investedMap.put(key, invested);
+
+
+            if (!valuationMap.containsKey(key)) {
+                valuationMap.put(key, new BigDecimal(0));
+            }
+            BigDecimal valuation = valuationMap.get(key).add(trade.getQuantity().multiply(prices.getPrice(Constants.Duration.T)).setScale(SCALE_DISPLAY, BigDecimal.ROUND_HALF_DOWN));
             valuationMap.put(key, valuation);
         }
 

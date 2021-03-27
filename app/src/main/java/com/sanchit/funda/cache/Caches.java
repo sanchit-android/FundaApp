@@ -10,5 +10,11 @@ public interface Caches {
 
     String POSITIONS = "com.sanchit.funda.POSITIONS";
 
+    String TRADES = "com.sanchit.funda.TRADES";
+    String TRADES_BY_AMFI_ID = "com.sanchit.funda.TRADES_BY_AMFI_ID";
+
     String VIEW_DATA = "com.sanchit.funda.VIEWS.data";
+
+    String CASHFLOW_POSITION_RAW = "com.sanchit.funda.CASHFLOW_POSITION_RAW";
+    String CASHFLOW_POSITION_BY_AMFI_ID = "com.sanchit.funda.CASHFLOW_POSITION_BY_AMFI_ID";
 }

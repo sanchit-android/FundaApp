@@ -11,6 +11,9 @@ public class PositionViewModel {
     private BigDecimal previousValuation = BigDecimal.ZERO;
 
     private BigDecimal totalCost;
+    private BigDecimal maxCost;
+    private String amfiId;
+    private String fundCategory;
 
     public String getHead() {
         return head;
@@ -58,5 +61,29 @@ public class PositionViewModel {
 
     public void setTotalCost(BigDecimal totalCost) {
         this.totalCost = totalCost;
+    }
+
+    public BigDecimal getMaxCost() {
+        return maxCost;
+    }
+
+    public void setMaxCost(BigDecimal maxCost) {
+        this.maxCost = maxCost;
+    }
+
+    public String getAmfiId() {
+        return amfiId;
+    }
+
+    public void setAmfiId(String amfiID) {
+        this.amfiId = amfiID;
+    }
+
+    public String getFundCategory() {
+        return fundCategory;
+    }
+
+    public void setFundCategory(String fundCategory) {
+        this.fundCategory = fundCategory;
     }
 }

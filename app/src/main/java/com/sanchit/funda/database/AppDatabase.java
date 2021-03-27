@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.sanchit.funda.dao.UserDataDao;
 import com.sanchit.funda.dao.entity.UserDataModel;
 
-@Database(entities = {UserDataModel.class}, version = 1)
+@Database(entities = {UserDataModel.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase db;
 
@@ -20,7 +20,8 @@ public abstract class AppDatabase extends RoomDatabase {
 
         synchronized (AppDatabase.class) {
             if (db == null) {
-                db = Room.databaseBuilder(context, AppDatabase.class, "funda").build();
+                db = Room.databaseBuilder(context, AppDatabase.class, "funda")
+                        .fallbackToDestructiveMigration().build();
             }
             return db;
         }

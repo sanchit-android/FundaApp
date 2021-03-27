@@ -8,7 +8,7 @@
     android:background="@color/colorPrimaryLight"
     tools:context=".MainActivity">
 
-    <include layout="@layout/include_layout_home_summary" />
+    <include layout="@layout/include_layout_home_summary_2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,11 +20,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Key Highlights"
+            android:text="Key Portfolio Highlights"
             android:textStyle="bold|italic"
             android:paddingTop="10dp"
             android:paddingLeft="10dp"
-            android:textSize="12sp"
+            android:textSize="@dimen/home_summary_name"
             android:textColor="@color/main_card_sec_text" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -41,31 +41,6 @@
 
     </LinearLayout>
 
-    <!--LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_rect_2"
-        android:orientation="vertical"
-        android:layout_marginTop="15dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Market Today"
-            android:textStyle="bold|italic"
-            android:textSize="12sp"
-            android:layout_marginLeft="8dp"
-            android:paddingTop="10dp"
-            android:paddingLeft="10dp"
-            android:textColor="@color/main_card_sec_text" />
-
-        <include layout="@layout/include_layout_table_header_home_market_today" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_home_summary_3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout-->
+    <include layout="@layout/include_layout_home_top_funds" />
 
 </LinearLayout>

@@ -10,6 +10,31 @@
     android:background="@color/positions_view_header_bg">
 
     <LinearLayout
+        android:id="@+id/positions_view_header_fund_category_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/positions_view_header_fund_category"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Category"
+            android:textColor="@color/positions_view_header_text"
+            android:textSize="@dimen/positions_view_header"
+            android:textStyle="bold"
+            android:onClick="onClickPositionsViewDataSort" />
+
+        <ImageView
+            android:id="@+id/positions_view_header_fund_category_sort_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_outline_sort_919191_24" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_marginBottom="4dp"
         android:layout_marginTop="2dp"
         android:layout_width="match_parent"

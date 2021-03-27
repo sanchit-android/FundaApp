@@ -2,6 +2,8 @@ package com.sanchit.funda.content.rest.factsheet;
 
 import android.graphics.RectF;
 
+import com.sanchit.funda.cache.CacheManager;
+import com.sanchit.funda.cache.Caches;
 import com.sanchit.funda.content.rest.AbstractRestEnricher;
 import com.sanchit.funda.model.MutualFund;
 import com.tom_roush.pdfbox.pdmodel.PDDocument;
@@ -12,25 +14,24 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
 import java.util.Map;
 
-public class SBIFactSheetParser extends AbstractRestEnricher<String, Map<String, MutualFund>> {
+public class SBIFactSheetParser extends AbstractFactSheetParser {
 
     private static String sectionStart = "•";
     private static String dropPart1 = "`";
 
-    private final List<MutualFund> funds;
+    private final CacheManager.Cache<String, MutualFund> funds;
 
-    public SBIFactSheetParser(List<MutualFund> funds) {
-        this.funds = funds;
+    public SBIFactSheetParser() {
+        funds = CacheManager.get(Caches.FUNDS_BY_NAME, MutualFund.class);
     }
 
     @Override
-    public Map<String, MutualFund> enrich(String input) {
-        input = "https://www.sbimf.com/en-us/Lists/SchemeFactsheets/August%202020.pdf";
+    public Void enrich(String input) {
+        String path = "https://www.sbimf.com/en-us/Lists/SchemeFactsheets/August%202020.pdf";
         try {
-            URL url = new URL(input);
+            URL url = new URL(path);
             URLConnection conn = url.openConnection();
             InputStream is = conn.getInputStream();
             PDDocument document = PDDocument.load(is);
@@ -41,7 +42,6 @@ public class SBIFactSheetParser extends AbstractRestEnricher<String, Map<String,
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
@@ -112,18 +112,24 @@ public class SBIFactSheetParser extends AbstractRestEnricher<String, Map<String,
             stripper.addRegion("fundName", new RectF(254, 516, 554, 781));
             stripper.extractRegions(document.getPage(page));
             String pageText = stripper.getTextForRegion("class1");
-            String fundName = stripper.getTextForRegion("fundName");
+            String fundNameRegionData = stripper.getTextForRegion("fundName");
 
             if (!pageText.contains("Benchmark")) {
                 continue;
             }
 
-            String fund = extractFundName(fundName);
-            if (!fund.contains("SBI")) {
+            String fundName = extractFundName(fundNameRegionData);
+            if (!fundName.contains("SBI")) {
                 continue;
             }
 
-            System.out.println("Fund Name" + "-" + fund);
+            System.out.println("Fund Name" + "-" + fundName);
+            MutualFund fund = funds.get(fundName);
+
+            if (fund == null) {
+                continue;
+            }
+
             extractInfoPart1(pageText, "Benchmark", true);
             extractInfoPart1(pageText, "AAUM for the Month of July 2020", false);
             extractInfoPart1(pageText, "Fund Manager", true);

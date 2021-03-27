@@ -11,6 +11,7 @@
 
     <string name="preference_terms_accepted">preference_terms_accepted</string>
     <string name="investor_ecas_file_path">investor_ecas_file_path</string>
+    <string name="investor_ecas_file_type">investor_ecas_file_type</string>
     <string name="investor_PAN">investor_PAN</string>
     <string name="investor_name">investor_name</string>
     <string name="Sort_Funds">Sort Funds...</string>
@@ -22,5 +23,56 @@
         <item>Categories</item>
         <item>Sub-Categories</item>
         <item>Custom Categories</item>
+    </string-array>
+
+    <string-array name="file_types">
+        <item>NSDL eCAS</item>
+        <item>Groww.in Transaction Statement</item>
+    </string-array>
+
+    <string-array name="fund_categories">
+        <item>Large Cap Fund</item>
+        <item>Large &amp; Mid Cap Fund</item>
+        <item>Multi Cap Fund</item>
+        <item>Small Cap Fund</item>
+        <item>Value Fund</item>
+        <item>Mid Cap Fund</item>
+        <item>Focussed Fund</item>
+        <item>Dividend Yield Fund</item>
+        <item>Sectoral/ Thematic</item>
+        <item>ELSS</item>
+        <item>Contra Fund</item>
+        <item>Index Funds</item>
+        <item>FoF Domestic</item>
+        <item>FoF Overseas</item>
+        <item>FoF Overseas - US</item>
+        <item>FoF Overseas - Japan</item>
+        <item>FoF Overseas - EM</item>
+        <item>FoF Overseas - BR</item>
+        <item>FoF Overseas - EU</item>
+        <item>FoF Overseas - China</item>
+        <item>Gold Fund</item>
+        <item>Aggressive Hybrid Fund</item>
+        <item>Dynamic Asset Allocation or Balanced Advantage</item>
+        <item>Conservative Hybrid Fund</item>
+        <item>Balanced Hybrid Fund</item>
+        <item>Multi Asset Allocation</item>
+        <item>Equity Savings</item>
+        <item>Arbitrage Fund</item>
+        <item>Liquid Fund</item>
+        <item>Medium Duration Fund</item>
+        <item>Money Market Fund</item>
+        <item>Dynamic Bond</item>
+        <item>Long Duration Fund</item>
+        <item>Low Duration Fund</item>
+        <item>Corporate Bond Fund</item>
+        <item>Overnight Fund</item>
+        <item>Floater Fund</item>
+        <item>Ultra Short Duration Fund</item>
+        <item>Short Duration Fund</item>
+        <item>Credit Risk Fund</item>
+        <item>Banking and PSU Fund</item>
+        <item>Gilt Fund</item>
+        <item>Gilt Fund with 10 year constant duration</item>
     </string-array>
 </resources>

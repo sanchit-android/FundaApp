@@ -8,8 +8,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,18 +37,17 @@ public class UserDataCaptureActivity extends AppCompatActivity {
 
     // Request code for selecting a PDF document.
     private static final int PICK_PDF_FILE = 2;
-
+    boolean disableSavedState = true;
     private Button submitButton;
     private TextView ecasPathTextView;
     private EditText PANEditText;
     private EditText nameEditText;
-
     private RecyclerView userDataRecyclerView;
     private List<UserDataModel> userDataList;
     private UserDataListAdapter userDataListAdapter;
-
+    private Spinner fileTypeSpinner;
+    private ProgressBar progressBarUserData;
     private Uri uri;
-
     private SharedPreferences sharedPref;
 
     @Override
@@ -60,6 +62,14 @@ public class UserDataCaptureActivity extends AppCompatActivity {
         PANEditText = findViewById(R.id.user_data_pan);
         nameEditText = findViewById(R.id.user_data_name);
 
+        fileTypeSpinner = findViewById(R.id.user_data_file_type_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.file_types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        fileTypeSpinner.setAdapter(adapter);
+
+        progressBarUserData = findViewById(R.id.progressBar_user_data_existing_profiles);
+        progressBarUserData.setVisibility(View.VISIBLE);
+
         userDataRecyclerView = findViewById(R.id.recycler_view_user_data_entries);
         userDataRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
@@ -68,6 +78,8 @@ public class UserDataCaptureActivity extends AppCompatActivity {
             userDataList = resultSet;
             userDataListAdapter = new UserDataListAdapter(this, userDataList);
             userDataRecyclerView.setAdapter(userDataListAdapter);
+
+            progressBarUserData.setVisibility(View.INVISIBLE);
         };
         DatabaseHelper.selectAll(dao, selectActionCallback);
 
@@ -80,11 +92,28 @@ public class UserDataCaptureActivity extends AppCompatActivity {
         }
     }
 
+    public void loadSavedProfiles() {
+        UserDataDao dao = AppDatabase.getInstance(this).userDataDao();
+        SelectActionTask.SelectActionCallback<UserDataModel> selectActionCallback = resultSet -> {
+            userDataList = resultSet;
+            userDataListAdapter = new UserDataListAdapter(this, userDataList);
+            userDataRecyclerView.setAdapter(userDataListAdapter);
+
+            progressBarUserData.setVisibility(View.INVISIBLE);
+        };
+        DatabaseHelper.selectAll(dao, selectActionCallback);
+    }
+
     private void extractSavedState() {
+        if (disableSavedState) {
+            return;
+        }
+
         String termsAccepted = sharedPref.getString(getString(R.string.preference_terms_accepted), "N");
         String name = sharedPref.getString(getString(R.string.investor_name), null);
         String pan = sharedPref.getString(getString(R.string.investor_PAN), null);
         String ecasFilePath = sharedPref.getString(getString(R.string.investor_ecas_file_path), null);
+        String fileType = sharedPref.getString(getString(R.string.investor_ecas_file_type), null);
         if ("Y".equals(termsAccepted)) {
             if (ecasFilePath != null) {
                 ecasPathTextView.setText(ecasFilePath);
@@ -96,10 +125,17 @@ public class UserDataCaptureActivity extends AppCompatActivity {
             if (pan != null) {
                 PANEditText.setText(pan);
             }
+            if (fileType != null) {
+                fileTypeSpinner.setSelection("NSDL eCAS".equals(fileType) ? 0 : 1, true);
+            }
         }
     }
 
     private void extractSavedState(Bundle savedInstanceState) {
+        if (disableSavedState) {
+            return;
+        }
+
         uri = savedInstanceState.getParcelable("ecas");
         if (uri != null) {
             ecasPathTextView.setText(uri.toString());
@@ -111,6 +147,10 @@ public class UserDataCaptureActivity extends AppCompatActivity {
         String pan = savedInstanceState.getString("pan");
         if (pan != null) {
             PANEditText.setText(pan);
+        }
+        String fileType = savedInstanceState.getString("fileType");
+        if (fileType != null) {
+            fileTypeSpinner.setSelection("NSDL eCAS".equals(fileType) ? 0 : 1, true);
         }
     }
 
@@ -145,19 +185,22 @@ public class UserDataCaptureActivity extends AppCompatActivity {
     public void onClickSubmit(View view) {
         String name = nameEditText.getText().toString();
         String PAN = PANEditText.getText().toString();
+        String fileType = fileTypeSpinner.getSelectedItem().toString();
 
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.investor_name), name);
         editor.putString(getString(R.string.investor_PAN), PAN);
         editor.putString(getString(R.string.investor_ecas_file_path), uri.toString());
+        editor.putString(getString(R.string.investor_ecas_file_type), fileType);
         editor.commit();
 
-        DatabaseHelper.insert(AppDatabase.getInstance(this).userDataDao(), new UserDataModel(name, PAN, uri.toString()));
+        DatabaseHelper.insert(AppDatabase.getInstance(this).userDataDao(), new UserDataModel(name, PAN, uri.toString(), fileType));
 
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("uri", (Uri) uri);
         i.putExtra("PAN", PAN);
         i.putExtra("name", name);
+        i.putExtra("fileType", fileType);
         startActivity(i);
     }
 
@@ -167,6 +210,7 @@ public class UserDataCaptureActivity extends AppCompatActivity {
         outState.putParcelable("ecas", uri);
         outState.putString("name", nameEditText.getText().toString());
         outState.putString("pan", PANEditText.getText().toString());
+        outState.putString("fileType", fileTypeSpinner.getSelectedItem().toString());
     }
 
     @Override

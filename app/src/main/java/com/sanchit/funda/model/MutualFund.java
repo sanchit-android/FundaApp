@@ -1,7 +1,5 @@
 package com.sanchit.funda.model;
 
-import com.sanchit.funda.model.homesummary.MFRankModel;
-
 import java.io.Serializable;
 
 public class MutualFund implements Serializable {
@@ -14,6 +12,14 @@ public class MutualFund implements Serializable {
     private String isin;
     private String amfiID;
 
+    private String benchmark;
+    private String aaum;
+    private String fundManager;
+    private String exitLoad;
+    private String fundAim;
+
+    private boolean isDirect;
+
     private MFRankModel rankModel = new MFRankModel();
 
     public MFRankModel getRankModel() {
@@ -24,8 +30,16 @@ public class MutualFund implements Serializable {
         return fundName;
     }
 
+    public void setDirect(boolean direct) {
+        isDirect = direct;
+    }
+
     public void setFundName(String fundName) {
         this.fundName = fundName;
+    }
+
+    public String getFundNameComplete() {
+        return fundName + " - " + (isDirect ? "Direct Plan" : "Regular Plan");
     }
 
     public String getFundHouse() {
@@ -74,5 +88,45 @@ public class MutualFund implements Serializable {
 
     public void setAmfiID(String amfiID) {
         this.amfiID = amfiID;
+    }
+
+    public String getBenchmark() {
+        return benchmark;
+    }
+
+    public void setBenchmark(String benchmark) {
+        this.benchmark = benchmark;
+    }
+
+    public String getAaum() {
+        return aaum;
+    }
+
+    public void setAaum(String aaum) {
+        this.aaum = aaum;
+    }
+
+    public String getFundManager() {
+        return fundManager;
+    }
+
+    public void setFundManager(String fundManager) {
+        this.fundManager = fundManager;
+    }
+
+    public String getExitLoad() {
+        return exitLoad;
+    }
+
+    public void setExitLoad(String exitLoad) {
+        this.exitLoad = exitLoad;
+    }
+
+    public String getFundAim() {
+        return fundAim;
+    }
+
+    public void setFundAim(String fundAim) {
+        this.fundAim = fundAim;
     }
 }

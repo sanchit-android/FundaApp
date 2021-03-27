@@ -6,6 +6,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,12 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanchit.funda.R;
 import com.sanchit.funda.adapter.PositionsViewTableAdapter;
+import com.sanchit.funda.cache.CacheManager;
+import com.sanchit.funda.cache.Caches;
 import com.sanchit.funda.model.MFPosition;
 import com.sanchit.funda.model.MFPriceModel;
 import com.sanchit.funda.model.MFTrade;
 import com.sanchit.funda.model.MutualFund;
 import com.sanchit.funda.model.PositionViewModel;
+import com.sanchit.funda.model.cashflow.CashflowPosition;
 import com.sanchit.funda.utils.Constants;
+import com.sanchit.funda.utils.NumberUtils;
 import com.sanchit.funda.utils.ViewUtils;
 
 import java.math.BigDecimal;
@@ -41,9 +46,11 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
     private RecyclerView recyclerViewPositionsView;
     private PositionsViewTableAdapter positionsViewAdapter;
     private List<PositionViewModel> positions = new ArrayList<>();
+    private List<CashflowPosition> cashflowPositions;
 
     private Integer lastSortID;
     private String lastSortType;
+    private MutualFund fund;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +62,8 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
 
         originalPositions = (List<MFPosition>) getIntent().getSerializableExtra("positions");
         priceMap = (Map<String, MFPriceModel>) getIntent().getSerializableExtra("prices");
-        trades = (List<MFTrade>) getIntent().getSerializableExtra("trades");
+        trades = (List<MFTrade>) CacheManager.get(Caches.TRADES);
+        cashflowPositions = (List<CashflowPosition>) CacheManager.get(Caches.CASHFLOW_POSITION_RAW);
 
         setupCustomActionBar();
         setupPositions("Custom Categories");
@@ -67,51 +75,61 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
     }
 
     private void setupPositions(String key) {
+        LinearLayout layout = findViewById(R.id.positions_view_header_fund_category_wrapper);
+        if (getResources().getStringArray(R.array.positions_view_grouping)[0].equals(key)) {
+            layout.setVisibility(View.VISIBLE);
+        } else {
+            layout.setVisibility(View.GONE);
+        }
         positions.clear();
         Map<String, PositionViewModel> data = new HashMap<>();
         BigDecimal total = BigDecimal.ZERO;
-        for (MFPosition mfPosition : originalPositions) {
-            String keyValue = getKeyValue(mfPosition.getFund(), key);
-            if (!data.containsKey(keyValue)) {
-                data.put(keyValue, new PositionViewModel());
-                data.get(keyValue).setHead(keyValue);
+        for (CashflowPosition pos : cashflowPositions) {
+            if (pos.getUnclosedTaxlotGroup().getUnrealizedQuantity() == null || NumberUtils.equals(BigDecimal.ZERO, pos.getUnclosedTaxlotGroup().getUnrealizedQuantity())) {
+                continue;
             }
-
-            MFPriceModel priceModel = priceMap.get(mfPosition.getFund().getAmfiID());
-            BigDecimal priceLatest = priceModel.getPrice(Constants.Duration.T);
-            BigDecimal priceLast = priceModel.getPrice(Constants.Duration.T_1d);
-            BigDecimal valuation = mfPosition.getQuantity().multiply(priceLatest);
-            BigDecimal valuationLast = mfPosition.getQuantity().multiply(priceLast);
-
-            data.get(keyValue).addPreviousValuation(valuationLast);
-            data.get(keyValue).addValuation(valuation);
-            data.get(keyValue).addInvestment(mfPosition.getCost());
-
-            total = total.add(mfPosition.getCost());
+            total = aggregateMFObject(key, data, total, pos);
         }
-        for (MFTrade trade : trades) {
-            String keyValue = getKeyValue(trade.getFund(), key);
-            if (!data.containsKey(keyValue)) {
-                data.put(keyValue, new PositionViewModel());
-                data.get(keyValue).setHead(keyValue);
-            }
-
-            MFPriceModel priceModel = priceMap.get(trade.getFund().getAmfiID());
-            BigDecimal priceLatest = priceModel.getPrice(Constants.Duration.T);
-            BigDecimal priceLast = priceModel.getPrice(Constants.Duration.T_1d);
-            BigDecimal valuation = trade.getQuantity().multiply(priceLatest);
-            BigDecimal valuationLast = trade.getQuantity().multiply(priceLast);
-
-            data.get(keyValue).addPreviousValuation(valuationLast);
-            data.get(keyValue).addValuation(valuation);
-            data.get(keyValue).addInvestment(trade.getCost());
-
-            total = total.add(trade.getCost());
-        }
+        BigDecimal maxCost = BigDecimal.ZERO;
         for (Map.Entry<String, PositionViewModel> entry : data.entrySet()) {
             entry.getValue().setTotalCost(total);
+            if (entry.getValue().getInvestment().compareTo(maxCost) > 0) {
+                maxCost = entry.getValue().getInvestment();
+            }
+        }
+        for (Map.Entry<String, PositionViewModel> entry : data.entrySet()) {
+            entry.getValue().setMaxCost(maxCost);
         }
         positions.addAll(data.values());
+    }
+
+    private BigDecimal aggregateMFObject(String key, Map<String, PositionViewModel> data, BigDecimal total, CashflowPosition object) {
+        MutualFund fund = object.getFund();
+        String keyValue = getKeyValue(fund, key);
+        if (!data.containsKey(keyValue)) {
+            data.put(keyValue, new PositionViewModel());
+            data.get(keyValue).setHead(keyValue);
+            if (getResources().getStringArray(R.array.positions_view_grouping)[0].equals(key)) {
+                data.get(keyValue).setAmfiId(fund.getAmfiID());
+                data.get(keyValue).setFundCategory(fund.getAppDefinedCategory());
+            }
+        }
+
+        BigDecimal quantity = object.getUnclosedTaxlotGroup().getUnrealizedQuantity();
+        BigDecimal cost = object.getUnclosedTaxlotGroup().getCostOfUnrealizedInvestments();
+
+        MFPriceModel priceModel = priceMap.get(fund.getAmfiID());
+        BigDecimal priceLatest = priceModel.getPrice(Constants.Duration.T);
+        BigDecimal priceLast = priceModel.getPrice(Constants.Duration.T_1d);
+        BigDecimal valuation = quantity.multiply(priceLatest);
+        BigDecimal valuationLast = quantity.multiply(priceLast);
+
+        data.get(keyValue).addPreviousValuation(valuationLast);
+        data.get(keyValue).addValuation(valuation);
+        data.get(keyValue).addInvestment(cost);
+
+        total = total.add(cost);
+        return total;
     }
 
     private String getKeyValue(MutualFund fund, String key) {
@@ -177,7 +195,7 @@ public class PositionsViewActivity extends AppCompatActivity implements AdapterV
     }
 
     private void setSortImage(View view, String sortType) {
-        Integer imageId = Constants.SortType.Ascending.equals(sortType) ? R.drawable.ic_baseline_arrow_upward_24 : R.drawable.ic_baseline_arrow_downward_24;
+        Integer imageId = Constants.SortType.Ascending.equals(sortType) ? R.drawable.ic_baseline_arrow_upward_white_24 : R.drawable.ic_baseline_arrow_downward_24;
         Integer imageViewId = Constants.getSortImage(view.getId());
         ImageView imageView = findViewById(imageViewId);
         imageView.setImageResource(imageId);

@@ -5,11 +5,14 @@ import com.sanchit.funda.utils.NumberUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MFPriceModel implements Serializable {
     private String amfiID;
+
+    private Date latestNAVDate;
 
     private Map<String, BigDecimal> priceMap = new HashMap<>();
 
@@ -53,6 +56,30 @@ public class MFPriceModel implements Serializable {
         return getComparableReturns(Constants.Duration.T_1Y, Constants.Duration.T);
     }
 
+    public String get2YearReturn() {
+        return getReturns(Constants.Duration.T_2Y, Constants.Duration.T);
+    }
+
+    public BigDecimal get2YearReturnComparable() {
+        return getComparableReturns(Constants.Duration.T_2Y, Constants.Duration.T);
+    }
+
+    public String get3YearReturn() {
+        return getReturns(Constants.Duration.T_3Y, Constants.Duration.T);
+    }
+
+    public BigDecimal get3YearReturnComparable() {
+        return getComparableReturns(Constants.Duration.T_3Y, Constants.Duration.T);
+    }
+
+    public String get5YearReturn() {
+        return getReturns(Constants.Duration.T_5Y, Constants.Duration.T);
+    }
+
+    public BigDecimal get5YearReturnComparable() {
+        return getComparableReturns(Constants.Duration.T_5Y, Constants.Duration.T);
+    }
+
     public String get6MonthsReturn() {
         return getReturns(Constants.Duration.T_6M, Constants.Duration.T);
     }
@@ -94,5 +121,13 @@ public class MFPriceModel implements Serializable {
             return BigDecimal.ZERO;
         }
         return (priceNow.subtract(priceOld)).divide(priceOld, 4, BigDecimal.ROUND_HALF_UP);
+    }
+
+    public Date getLatestNAVDate() {
+        return latestNAVDate;
+    }
+
+    public void setLatestNAVDate(Date latestNAVDate) {
+        this.latestNAVDate = latestNAVDate;
     }
 }

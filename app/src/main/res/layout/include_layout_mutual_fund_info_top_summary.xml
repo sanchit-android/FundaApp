@@ -16,33 +16,13 @@
             android:id="@+id/mf_detail_fund_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/main_card_top_text"
+            android:layout_marginLeft="12dp"
+            android:textColor="@color/fund_detail_top_summary_fund_name"
+            android:layout_marginBottom="9dp"
             android:text="XYZ Fund"
             android:textStyle="bold"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/mf_detail_nav"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp"
-            android:textColor="@color/main_card_top_text"
-            android:text="XYZ Fund"
-            android:gravity="right"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
     </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar_home_summary"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:outlineSpotShadowColor="@color/colorTextLight"
-        android:layout_centerInParent="true"
-        android:outlineAmbientShadowColor="@color/colorPrimary"/>
 
 </RelativeLayout>

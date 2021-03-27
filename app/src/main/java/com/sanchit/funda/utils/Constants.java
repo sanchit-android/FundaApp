@@ -32,30 +32,36 @@ public class Constants {
         PRICE_MAP.put(Duration.T_3M, new DurationData(DurationBasis.DurationBased, Calendar.MONTH, -3));
         PRICE_MAP.put(Duration.T_6M, new DurationData(DurationBasis.DurationBased, Calendar.MONTH, -6));
         PRICE_MAP.put(Duration.T_1Y, new DurationData(DurationBasis.DurationBased, Calendar.YEAR, -1, Duration.T_1YHigh, Duration.T_1YLow));
+        PRICE_MAP.put(Duration.T_2Y, new DurationData(DurationBasis.DurationBased, Calendar.YEAR, -2));
+        PRICE_MAP.put(Duration.T_3Y, new DurationData(DurationBasis.DurationBased, Calendar.YEAR, -3));
+        PRICE_MAP.put(Duration.T_5Y, new DurationData(DurationBasis.DurationBased, Calendar.YEAR, -5));
 
         POSITIONS_VIEW_COMPARATOR_MAP.put(R.id.positions_view_header_fund, newMap((o1, o2) -> o1.getHead().compareTo(o2.getHead()), (o1, o2) -> o2.getHead().compareTo(o1.getHead())));
         POSITIONS_VIEW_COMPARATOR_MAP.put(R.id.positions_view_header_cost, newMap((o1, o2) -> o1.getInvestment().compareTo(o2.getInvestment()), (o1, o2) -> o2.getInvestment().compareTo(o1.getInvestment())));
         POSITIONS_VIEW_COMPARATOR_MAP.put(R.id.positions_view_header_valuation, newMap((o1, o2) -> o1.getValuation().compareTo(o2.getValuation()), (o1, o2) -> o2.getValuation().compareTo(o1.getValuation())));
         POSITIONS_VIEW_COMPARATOR_MAP.put(R.id.positions_view_header_daypnl, newMap((o1, o2) -> o1.getPnlDay().compareTo(o2.getPnlDay()), (o1, o2) -> o2.getPnlDay().compareTo(o1.getPnlDay())));
         POSITIONS_VIEW_COMPARATOR_MAP.put(R.id.positions_view_header_overallpnl, newMap((o1, o2) -> o1.getPnlOverall().compareTo(o2.getPnlOverall()), (o1, o2) -> o2.getPnlOverall().compareTo(o1.getPnlOverall())));
+        POSITIONS_VIEW_COMPARATOR_MAP.put(R.id.positions_view_header_fund_category, newMap((o1, o2) -> o1.getFundCategory().compareTo(o2.getFundCategory()), (o1, o2) -> o2.getFundCategory().compareTo(o1.getFundCategory())));
 
         POSITIONS_VIEW_SORT_ICON_MAP.put(R.id.positions_view_header_fund, R.id.positions_view_header_fund_sort_icon);
         POSITIONS_VIEW_SORT_ICON_MAP.put(R.id.positions_view_header_valuation, R.id.positions_view_header_valuation_sort_icon);
         POSITIONS_VIEW_SORT_ICON_MAP.put(R.id.positions_view_header_cost, R.id.positions_view_header_cost_sort_icon);
         POSITIONS_VIEW_SORT_ICON_MAP.put(R.id.positions_view_header_daypnl, R.id.positions_view_header_daypnl_sort_icon);
         POSITIONS_VIEW_SORT_ICON_MAP.put(R.id.positions_view_header_overallpnl, R.id.positions_view_header_overallpnl_sort_icon);
-
+        POSITIONS_VIEW_SORT_ICON_MAP.put(R.id.positions_view_header_fund_category, R.id.positions_view_header_fund_category_sort_icon);
     }
 
     public static void initData(Context context) {
-        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[0], (o1, o2) -> o1.getPriceModel().get1MonthReturnComparable().compareTo(o2.getPriceModel().get1MonthReturnComparable()));
-        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[1], (o1, o2) -> o2.getPriceModel().get1MonthReturnComparable().compareTo(o1.getPriceModel().get1MonthReturnComparable()));
-        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[2], (o1, o2) -> o1.getPriceModel().get3MonthsReturnComparable().compareTo(o2.getPriceModel().get3MonthsReturnComparable()));
-        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[3], (o1, o2) -> o2.getPriceModel().get3MonthsReturnComparable().compareTo(o1.getPriceModel().get3MonthsReturnComparable()));
-        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[4], (o1, o2) -> o1.getPriceModel().get6MonthsReturnComparable().compareTo(o2.getPriceModel().get6MonthsReturnComparable()));
-        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[5], (o1, o2) -> o2.getPriceModel().get6MonthsReturnComparable().compareTo(o1.getPriceModel().get6MonthsReturnComparable()));
-        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[6], (o1, o2) -> o1.getPriceModel().get1YearReturnComparable().compareTo(o2.getPriceModel().get1YearReturnComparable()));
-        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[7], (o1, o2) -> o2.getPriceModel().get1YearReturnComparable().compareTo(o1.getPriceModel().get1YearReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[0], (o1, o2) -> o2.getPriceModel().get1MonthReturnComparable().compareTo(o1.getPriceModel().get1MonthReturnComparable()));
+        //POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[1], (o1, o2) -> o1.getPriceModel().get3MonthsReturnComparable().compareTo(o2.getPriceModel().get3MonthsReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[1], (o1, o2) -> o2.getPriceModel().get3MonthsReturnComparable().compareTo(o1.getPriceModel().get3MonthsReturnComparable()));
+        //POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[3], (o1, o2) -> o1.getPriceModel().get6MonthsReturnComparable().compareTo(o2.getPriceModel().get6MonthsReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[2], (o1, o2) -> o2.getPriceModel().get6MonthsReturnComparable().compareTo(o1.getPriceModel().get6MonthsReturnComparable()));
+        //POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[5], (o1, o2) -> o1.getPriceModel().get1YearReturnComparable().compareTo(o2.getPriceModel().get1YearReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[3], (o1, o2) -> o2.getPriceModel().get1YearReturnComparable().compareTo(o1.getPriceModel().get1YearReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[4], (o1, o2) -> o2.getPriceModel().get2YearReturnComparable().compareTo(o1.getPriceModel().get2YearReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[5], (o1, o2) -> o2.getPriceModel().get3YearReturnComparable().compareTo(o1.getPriceModel().get3YearReturnComparable()));
+        POSITIONS_DETAIL_VIEW_COMPARATOR_MAP.put(context.getResources().getStringArray(R.array.sort_options)[6], (o1, o2) -> o2.getPriceModel().get5YearReturnComparable().compareTo(o1.getPriceModel().get5YearReturnComparable()));
     }
 
     private static final Map<String, Comparator<PositionViewModel>> newMap(Comparator<PositionViewModel> c1, Comparator<PositionViewModel> c2) {
@@ -90,6 +96,11 @@ public class Constants {
         String Descending = "D";
     }
 
+    public interface Side {
+        String BUY = "Buy";
+        String SELL = "Sell";
+    }
+
     public interface Duration {
         String T = "T";
         String T_1d = "T_1d";
@@ -98,6 +109,9 @@ public class Constants {
         String T_3M = "T_3M";
         String T_6M = "T_6M";
         String T_1Y = "T_1Y";
+        String T_2Y = "T_2Y";
+        String T_3Y = "T_3Y";
+        String T_5Y = "T_5Y";
 
         String T_1YHigh = "T_1YHigh";
         String T_1YLow = "T_1YLow";

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cashflow_trade_side"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buy"
+                android:textSize="@dimen/cashflow_trade_list_item" />
+
+            <TextView
+                android:id="@+id/cashflow_trade_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2020-09-16"
+                android:textSize="@dimen/cashflow_trade_list_item" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|bottom"
+                    android:text="COST PRICE "
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/cashflow_trade_list_item_cat" />
+
+                <TextView
+                    android:id="@+id/cashflow_trade_cost_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="12.25"
+                    android:textSize="@dimen/cashflow_trade_list_item" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|bottom"
+                    android:text="UNITS "
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/cashflow_trade_list_item_cat" />
+
+                <TextView
+                    android:id="@+id/cashflow_trade_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="1025.22"
+                    android:textSize="@dimen/cashflow_trade_list_item" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="@string/Rs"
+                android:textSize="@dimen/cashflow_trade_list_item_cat" />
+
+            <TextView
+                android:id="@+id/cashflow_trade_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9997.5"
+                android:textSize="@dimen/cashflow_trade_list_item" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+</LinearLayout>

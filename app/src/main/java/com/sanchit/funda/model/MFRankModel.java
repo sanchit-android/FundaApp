@@ -1,4 +1,4 @@
-package com.sanchit.funda.model.homesummary;
+package com.sanchit.funda.model;
 
 import com.sanchit.funda.model.MutualFund;
 

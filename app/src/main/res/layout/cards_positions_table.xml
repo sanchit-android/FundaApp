@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/positions_table_fund_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Large Cap Fund"
+        android:textSize="15sp"
+        android:textColor="@color/colorAccent"
+        />
 
     <LinearLayout
         android:id="@+id/position_view_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/positions_table_symbol"
@@ -79,9 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:orientation="horizontal"
-        android:background="@color/colorAccent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/position_view_linear_layout">
+        android:background="@color/colorAccent">
         <TextView
             android:id="@+id/positions_table_fund_weight_text"
             android:layout_width="wrap_content"
@@ -95,8 +101,6 @@
         android:id="@+id/positions_table_divider"
         android:layout_width="match_parent"
         android:layout_height=".5dp"
-        android:background="@android:color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/positions_table_fund_weight"/>
+        android:background="@android:color/black"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
