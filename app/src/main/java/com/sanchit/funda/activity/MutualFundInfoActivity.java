@@ -1,10 +1,15 @@
 package com.sanchit.funda.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.sanchit.funda.R;
 import com.sanchit.funda.async.FactSheetAsyncLoader;
 import com.sanchit.funda.async.MFAPI_NAVAsyncLoader;
@@ -16,9 +21,11 @@ import com.sanchit.funda.model.MFDetailModel;
 import com.sanchit.funda.model.MFPriceModel;
 import com.sanchit.funda.model.MutualFund;
 import com.sanchit.funda.utils.Constants;
+import com.sanchit.funda.utils.DateUtils;
 import com.sanchit.funda.utils.ViewUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -64,6 +71,15 @@ public class MutualFundInfoActivity extends AppCompatActivity {
 
         setupData();
         setupFundDataViews();
+        setupHandlers();
+    }
+
+    private void setupHandlers() {
+        findViewById(R.id.mf_detail_grwcht_3Y_option).setOnClickListener(new OnGrowthOptionListener(T_3Y));
+        findViewById(R.id.mf_detail_grwcht_1Y_option).setOnClickListener(new OnGrowthOptionListener(T_1Y));
+        findViewById(R.id.mf_detail_grwcht_6M_option).setOnClickListener(new OnGrowthOptionListener(T_6M));
+        findViewById(R.id.mf_detail_grwcht_3M_option).setOnClickListener(new OnGrowthOptionListener(T_3M));
+        findViewById(R.id.mf_detail_grwcht_1M_option).setOnClickListener(new OnGrowthOptionListener(T_1M));
     }
 
     private void setupData() {
@@ -120,6 +136,36 @@ public class MutualFundInfoActivity extends AppCompatActivity {
         ViewUtils.setTextViewData(this, R.id.mf_detail_2Y_return, priceData.get2YearReturn());
         ViewUtils.setTextViewData(this, R.id.mf_detail_3Y_return, priceData.get3YearReturn());
         ViewUtils.setTextViewData(this, R.id.mf_detail_5Y_return, priceData.get5YearReturn());
+
+        setupChartView(Constants.Duration.T_1Y);
+    }
+
+    private void setupChartView(String range) {
+        LineChart chart = findViewById(R.id.mf_detail_growth_chart);
+        List<MFPriceModel.NAVSnap> snaps = priceData.getNavSnaps();
+
+        Calendar snap0Date = snaps.get(0).date;
+        Constants.DurationData durationData = Constants.PRICE_MAP.get(range);
+        Calendar snapTDate = DateUtils.customDate(durationData.getDurationType(), durationData.getDuration());
+
+        List<Entry> entries = new ArrayList<>();
+        int i = 0;
+        for (int j = snaps.size()-1; j >= 0;j--) {
+            MFPriceModel.NAVSnap snapJ = snaps.get(j);
+            if(snapJ.date.before(snapTDate)) {
+                continue;
+            }
+            entries.add(new Entry(++i, snapJ.price.floatValue()));
+        }
+
+        LineDataSet dataSet = new LineDataSet(entries, "");
+        dataSet.setDrawCircles(false);
+        dataSet.setColor(getResources().getColor(R.color.colorAccent));
+        dataSet.setLineWidth(2);
+        LineData lineData = new LineData(dataSet);
+        chart.setData(lineData);
+        chart.notifyDataSetChanged();
+        chart.invalidate();
     }
 
     private void setupOtherFundsDependentViews() {
@@ -186,6 +232,19 @@ public class MutualFundInfoActivity extends AppCompatActivity {
         @Override
         public void updateView(Void data) {
             setupFactSheetDependentViews();
+        }
+    }
+
+    private class OnGrowthOptionListener implements View.OnClickListener {
+        private final String duration;
+
+        public OnGrowthOptionListener(String duration) {
+            this.duration = duration;
+        }
+
+        @Override
+        public void onClick(View v) {
+            setupChartView(duration);
         }
     }
 }

@@ -5,14 +5,23 @@ import com.sanchit.funda.utils.NumberUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MFPriceModel implements Serializable {
     private String amfiID;
 
     private Date latestNAVDate;
+
+    private List<NAVSnap> navSnaps = new ArrayList<>();
+
+    public List<NAVSnap> getNavSnaps() {
+        return navSnaps;
+    }
 
     private Map<String, BigDecimal> priceMap = new HashMap<>();
 
@@ -129,5 +138,15 @@ public class MFPriceModel implements Serializable {
 
     public void setLatestNAVDate(Date latestNAVDate) {
         this.latestNAVDate = latestNAVDate;
+    }
+
+    public static final class NAVSnap {
+        public BigDecimal price;
+        public Calendar date;
+
+        public NAVSnap(BigDecimal nav, Calendar cal) {
+            this.price = nav;
+            this.date = cal;
+        }
     }
 }

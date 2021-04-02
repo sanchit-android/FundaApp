@@ -66,6 +66,7 @@ public class MFAPI_NAVEnricher extends AbstractRestEnricher<String, MFPriceModel
         }
         Map<String, BigDecimal> navMap = model.getPriceMap();
         parseLatestNAVDate(model, jo);
+        parseNAVSnaps(model, jo);
         for (Map.Entry<String, Constants.DurationData> entry : PRICE_MAP.entrySet()) {
             Constants.DurationData durationData = entry.getValue();
             String key = entry.getKey();
@@ -76,6 +77,21 @@ public class MFAPI_NAVEnricher extends AbstractRestEnricher<String, MFPriceModel
             } else if (Constants.DurationBasis.DurationBased.equals(durationData.getDurationBasis())) {
                 parseDurationBasedNAV(jo, durationData, key, navMap);
             }
+        }
+    }
+
+    private void parseNAVSnaps(MFPriceModel model, JSONObject jo) throws java.text.ParseException {
+        JSONArray data = (JSONArray) jo.get("data");
+        Iterator itr = data.iterator();
+
+        model.getNavSnaps().clear();
+        while (itr.hasNext()) {
+            JSONObject x = (JSONObject) itr.next();
+            BigDecimal nav = new BigDecimal(x.get("nav").toString());
+            Calendar cal = DateUtils.parseCal(x.get("date").toString(), "dd-MM-yyyy");
+
+            MFPriceModel.NAVSnap snap = new MFPriceModel.NAVSnap(nav, cal);
+            model.getNavSnaps().add(snap);
         }
     }
 

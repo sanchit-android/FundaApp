@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryLight"
+    tools:context=".activity.PositionCashflowViewActivity">
+
+    <include layout="@layout/include_layout_mutual_fund_info_top_summary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_rect_primary_light"
+        android:orientation="vertical"
+        android:layout_marginTop="-20dp"
+        android:paddingHorizontal="10dp">
+
+        <include layout="@layout/include_layout_cashflow_summary" />
+
+        <Switch
+            android:id="@+id/switch_realized_positions"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:layout_height="wrap_content"
+            android:text="Show Realized Trades"
+            android:checked="false"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_cashflow_trade_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

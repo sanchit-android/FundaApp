@@ -22,6 +22,8 @@
 
         <include layout="@layout/include_section_mf_detail_returns" />
 
+        <include layout="@layout/include_section_mf_detail_growth_chart" />
+
     </LinearLayout>
 
 </LinearLayout>

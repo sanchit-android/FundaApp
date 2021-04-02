@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/mf_detail_grwcht_1M_option"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="4dp"
+            android:text="1M" />
+
+        <Button
+            android:id="@+id/mf_detail_grwcht_3M_option"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="4dp"
+            android:text="3M" />
+        <Button
+            android:id="@+id/mf_detail_grwcht_6M_option"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="4dp"
+            android:text="6M" />
+
+        <Button
+            android:id="@+id/mf_detail_grwcht_1Y_option"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="4dp"
+            android:text="1Y" />
+
+        <Button
+            android:id="@+id/mf_detail_grwcht_3Y_option"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:text="3Y" />
+
+    </LinearLayout>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/mf_detail_growth_chart"
+        android:layout_width="match_parent"
+        android:layout_height="180dp" />
+
+</LinearLayout>
