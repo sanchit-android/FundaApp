@@ -30,4 +30,9 @@ public class MFAPI_NAVAsyncLoader extends ChainedTask<String, Void, MFPriceModel
     public enum EnrichmentModel {
         Default;
     }
+
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 }

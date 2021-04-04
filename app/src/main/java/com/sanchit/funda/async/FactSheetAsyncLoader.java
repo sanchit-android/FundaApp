@@ -24,4 +24,9 @@ public class FactSheetAsyncLoader extends ChainedTask<Void, String, Void> {
         }
         return null;
     }
+
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 }

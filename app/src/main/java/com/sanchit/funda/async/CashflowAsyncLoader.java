@@ -23,4 +23,9 @@ public class CashflowAsyncLoader extends ChainedTask<Void, Void, List<CashflowPo
     protected List<CashflowPosition> doInBackground(Void... voids) {
         return new FIFOCashflowEngine().process(trades);
     }
+
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 }

@@ -1,5 +1,7 @@
 package com.sanchit.funda.model;
 
+import com.sanchit.funda.dao.entity.MutualFundModel;
+
 import java.io.Serializable;
 
 public class MutualFund implements Serializable {
@@ -32,6 +34,10 @@ public class MutualFund implements Serializable {
 
     public void setDirect(boolean direct) {
         isDirect = direct;
+    }
+
+    public boolean isDirect() {
+        return isDirect;
     }
 
     public void setFundName(String fundName) {
@@ -128,5 +134,43 @@ public class MutualFund implements Serializable {
 
     public void setFundAim(String fundAim) {
         this.fundAim = fundAim;
+    }
+
+    public MutualFund(MutualFundModel dbModel) {
+        this.fundName = dbModel.fundName;
+        this.fundHouse = dbModel.fundHouse;
+        this.category = dbModel.category;
+        this.subCategory = dbModel.subCategory;
+        this.appDefinedCategory = dbModel.appDefinedCategory;
+        this.isin = dbModel.isin;
+        this.amfiID = dbModel.amfiID;
+        this.benchmark = dbModel.benchmark;
+        this.aaum = dbModel.aaum;
+        this.fundManager = dbModel.fundManager;
+        this.exitLoad = dbModel.exitLoad;
+        this.fundAim = dbModel.fundAim;
+        this.isDirect = dbModel.isDirect;
+    }
+
+    public MutualFund() {}
+
+    @Override
+    public String toString() {
+        return "MutualFund{" +
+                "fundName='" + fundName + '\'' +
+                ", fundHouse='" + fundHouse + '\'' +
+                ", category='" + category + '\'' +
+                ", subCategory='" + subCategory + '\'' +
+                ", appDefinedCategory='" + appDefinedCategory + '\'' +
+                ", isin='" + isin + '\'' +
+                ", amfiID='" + amfiID + '\'' +
+                ", benchmark='" + benchmark + '\'' +
+                ", aaum='" + aaum + '\'' +
+                ", fundManager='" + fundManager + '\'' +
+                ", exitLoad='" + exitLoad + '\'' +
+                ", fundAim='" + fundAim + '\'' +
+                ", isDirect=" + isDirect +
+                ", rankModel=" + rankModel +
+                '}';
     }
 }

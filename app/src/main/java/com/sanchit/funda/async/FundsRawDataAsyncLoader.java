@@ -25,4 +25,9 @@ public class FundsRawDataAsyncLoader extends ChainedTask<Uri, Void, List<MutualF
             return null;
         }
     }
+
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 }

@@ -29,4 +29,9 @@ public class NSDL_CASAsyncLoader extends ChainedTask<Uri, Void, List<MFPosition>
             return null;
         }
     }
+
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 }

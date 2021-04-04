@@ -41,6 +41,13 @@ public class CacheManager {
         return cache;
     }
 
+    public static boolean hasCache(String cacheName) {
+        if (_caches.containsKey(cacheName)) {
+            return true;
+        }
+        return _raw_caches.containsKey(cacheName);
+    }
+
     public static class Cache<K, V> implements Iterable<V> {
 
         private final Map<K, V> _cache = new HashMap<>();

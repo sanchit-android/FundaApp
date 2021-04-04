@@ -28,4 +28,9 @@ public class GrowwStatementAsyncLoader extends ChainedTask<Uri, Void, List<MFTra
             return null;
         }
     }
+
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 }
